@@ -59,11 +59,19 @@ use Models\UserRole as UserRole;
 
                                 <div>
                                     <label for="">Rol</label>
-                                    <select name="role" value="<?php echo $user->getRole() ?>">
+                                    <select name="role">
                                         <?php foreach ($roles as $role) {
-                                            if ($role instanceof UserRole) { ?>
-                                                <option><?php echo $role->getName(); ?></option>
-                                        <?php }
+                                            if ($role instanceof UserRole) {
+                                                if ($user->getRole() == $role->getName()) { ?>
+                                                    <option selected="selected" value="available">
+                                                    <?php } else { ?>
+                                                    <option>
+                                                    <?php } ?>
+
+                                                    <?php echo $role->getName(); ?></option>
+
+                                            <?php
+                                            }
                                         } ?>
                                     </select>
                                 </div>

@@ -67,7 +67,7 @@ class UserDAO
                 $conection = DBConection::getDBConnection();
                 $result = mysqli_query(
                     $conection,
-                    "SELECT user_id,user_dni,user_email,user_birthday,role_name
+                    "SELECT user_password,user_id,user_dni,user_email,user_birthday,role_name
                     FROM users 
                     INNER JOIN roles
                     ON roles.role_id=users.user_role
@@ -78,7 +78,7 @@ class UserDAO
                 $responseArray = mysqli_fetch_assoc($result);
                 $validatedUser = new UserModel(
                     (string)    $username,
-                    (string)    $password,
+                    (string)    password_hash($password, PASSWORD_DEFAULT),
                     (string)    $responseArray["role_name"],
                     (int)       $responseArray["user_dni"],
                     (string)    $responseArray["user_email"],

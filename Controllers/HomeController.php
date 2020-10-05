@@ -8,7 +8,7 @@ class HomeController
 {
     public function Index($message = "")
     {
-        require_once(VIEWS_PATH . "main.php");
+        HomeController::MainPage();
     }
 
     public static function MainPage()
