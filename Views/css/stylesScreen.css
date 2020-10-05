@@ -1,0 +1,32 @@
+nav.navigationBar > ul {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style-type: none;
+
+    background-color: #333333;
+}
+
+nav.navigationBar > ul > li {
+    float: left;
+}
+
+nav.navigationBar > ul > li > a {
+    font-family: Roboto;
+    display: black;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+nav.navigationBar > ul > li > a:hover {
+    color: red;
+}
+
+body, html {
+    background-color: beige;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
