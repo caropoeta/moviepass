@@ -15,14 +15,14 @@
                          <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter Password" required>
                     </div>
 
-                    <button formaction="<?php echo FRONT_ROOT ?>Log/Login" class="btn btn-primary btn-block btn-lg" type="submit">Log-In</button>
-                    <button formaction="<?php echo FRONT_ROOT ?>FacebookLog/Login" class="fblogin social btn btn-primary btn-block btn-lg" type="submit">
+                    <button formaction="<?php echo FRONT_ROOT ?>Session/Login" class="btn btn-primary btn-block btn-lg" type="submit">Log-In</button>
+                    <button formaction="<?php echo FRONT_ROOT ?>FacebookSession" class="fblogin social btn btn-primary btn-block btn-lg" type="submit">
                          <span>Login with Facebook</span>
                     </button>
                </form>
 
                <form method="post">
-                    <button name="action" value="register" formaction="<?php echo FRONT_ROOT ?>Log" class="register-btn bts-a" type="submit">
+                    <button name="action" value="register" formaction="<?php echo FRONT_ROOT ?>Session" class="register-btn bts-a" type="submit">
                          Don't have an account? Sign up!
                     </button>
                </form>

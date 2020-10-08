@@ -8,7 +8,7 @@ if ($_SESSION['current_user'])
 
 <body>
   <div>
-    <form action="<?php echo FRONT_ROOT ?>Log/Logout" method="POST">
+    <form action="<?php echo FRONT_ROOT ?>Session/Logout" method="POST">
       <button type="submit"> Logout </button>
     </form>
   </div>

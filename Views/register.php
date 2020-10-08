@@ -5,7 +5,7 @@
                <h2 class="Ctext">MoviePass Register Form</h2>
           </header>
 
-          <form action="<?php echo FRONT_ROOT ?>Log/Register" method="post" class="login-form bg-dark-alpha p-5 bg-light">
+          <form action="<?php echo FRONT_ROOT ?>Session/Register" method="post" class="login-form bg-dark-alpha p-5 bg-light">
 
                <div class="form-group">
                     <label for="">User</label>

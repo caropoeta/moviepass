@@ -1,4 +1,8 @@
-<?php if (isset($fbemail, $fbname) && $fbemail != null && $fbname != null) { ?>
+<?php if (
+    isset($fbemail, $fbname) &&
+    $fbemail != null &&
+    $fbname != null
+) { ?>
     <script>
         document.addEventListener('DOMContentLoaded', function(event) {
             document.getElementById('username').value = '<?php echo $fbname; ?>';
@@ -12,7 +16,7 @@
                 <h2 class="Ctext">MoviePass Facebook Register Form</h2>
             </header>
 
-            <form action="<?php echo FRONT_ROOT ?>FacebookLog/Register" method="post" class="login-form bg-dark-alpha p-5 bg-light">
+            <form action="<?php echo FRONT_ROOT ?>FacebookSession/Register" method="post" class="login-form bg-dark-alpha p-5 bg-light">
                 <div class="form-group">
                     <label for="">User</label>
                     <input type="text" id="username" name="username" class="form-control form-control-lg" placeholder="User" value="<?php echo $fbname; ?>" required>

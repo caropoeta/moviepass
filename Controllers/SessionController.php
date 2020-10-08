@@ -5,11 +5,11 @@ namespace Controllers;
 use DAO\UserDAO as UserDAO;
 use Models\UserModel as UserModel;
 
-class LogController
+class SessionController
 {
     public function __construct()
     {
-        LogController::ValidateSession();
+        SessionController::ValidateSession();
     }
 
     public static function ValidateSession()
@@ -27,7 +27,7 @@ class LogController
 
     public function Index(String $action = "")
     {
-        if (LogController::ValidateSession()) {
+        if (SessionController::ValidateSession()) {
             HomeController::MainPage();
             return;
         }
@@ -49,10 +49,10 @@ class LogController
 
     public function Login(String $username, String $password)
     {
-        if (!LogController::ValidateSession()) {
+        if (!SessionController::ValidateSession()) {
             $logUser = UserDAO::validateUserCredentials($username, $password);
             if ($logUser instanceof UserModel)
-                LogController::SetSession($logUser);
+                SessionController::SetSession($logUser);
         }
 
         HomeController::MainPage();
@@ -60,15 +60,15 @@ class LogController
 
     public function Logout()
     {
-        if (LogController::ValidateSession())
-            LogController::SetSession(null);
+        if (SessionController::ValidateSession())
+            SessionController::SetSession(null);
 
         HomeController::MainPage();
     }
 
     public function Register(String $username, String $password, int $dni, String $email, String $birthday)
     {
-        if (!LogController::ValidateSession()) {
+        if (!SessionController::ValidateSession()) {
             $time = strtotime($birthday);
             $newformat = date('Y-m-d', $time);
 
@@ -76,7 +76,7 @@ class LogController
             $result = UserDAO::addUser($newUser);
 
             if ($result instanceof UserModel)
-                LogController::SetSession(UserDAO::getUserByEmail($email));
+                SessionController::SetSession(UserDAO::getUserByEmail($email));
         }
         HomeController::MainPage();
     }

@@ -13,7 +13,7 @@ class HomeController
 
     public static function MainPage()
     {
-        LogController::ValidateSession();
+        SessionController::ValidateSession();
 
         if ($_SESSION['current_user'] instanceof UserModel)
             switch ($_SESSION['current_user']->getRole()) {
