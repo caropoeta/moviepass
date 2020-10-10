@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use \Models\UserModel as UserModel;
-use \DAO\UserDAO as UserDAO;
+use \DAO\UserDAOjson as UserDAO;
 
 class FacebookSessionController
 {
