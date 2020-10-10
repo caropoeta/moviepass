@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600");
+
+html {
+  height: 100%;
+}
+
+.Ctext {
+  font-family: Monserrat;
+  font-size: 50px;
+}
+
+body {
+  height: 100%;
+  background-image: url("../img/bg.png");
+}
+.social {
+  transition: background 100ms ease-in-out 0s;
+  -webkit-transition: background 100ms ease-in-out 0s;
+  -moz-transition: background 100ms ease-in-out 0s;
+  -o-transition: background 100ms ease-in-out 0s;
+  -ms-transition: background 100ms ease-in-out 0s;
+
+  margin-top: 12px;
+  -webkit-border-top-left-radius: 1px;
+  -moz-border-radius-topleft: 1px;
+  border-top-left-radius: 1px;
+  -webkit-border-top-right-radius: 1px;
+  -moz-border-radius-topright: 1px;
+  border-top-right-radius: 1px;
+  -webkit-border-bottom-right-radius: 1px;
+  -moz-border-radius-bottomright: 1px;
+  border-bottom-right-radius: 1px;
+  -webkit-border-bottom-left-radius: 1px;
+  -moz-border-radius-bottomleft: 1px;
+  border-bottom-left-radius: 1px;
+  text-indent: 0;
+  display: block;
+  color: #ffffff;
+  height: 50px;
+  /*line-height:50px;*/
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+}
+
+.register-btn {
+  float: right;
+  margin-right: 35px;
+  font-size: 0.9em;
+
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.fblogin {
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 5px;
+  background-color: #3b5898;
+}
+.fblogin:hover {
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 5px;
+  background-color: #5177f9;
+}
+.fblogin:active {
+  position: relative;
+  top: 1px;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.login-form {
+  width: 500px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.radioSize {
+  height: 20px !important;
+  margin-left: 10px !important;
+  width: 20px !important;
+}
+
+.btn-fix {
+  margin-top: 20% !important;
+}
+
+.text-strong {
+  font-size: 20px !important;
+  font-weight: bold;
+}
+
+.bts-a:hover {
+  color: #79b42b;
+  text-decoration: none;
+  background: white;
+}
