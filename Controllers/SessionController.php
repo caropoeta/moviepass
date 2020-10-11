@@ -2,11 +2,13 @@
 
 namespace Controllers;
 
-use DAO\UserDAOjson as UserDAO;
+use DAO\UserDAO as UserDAO;
 use Models\UserModel as UserModel;
 
 class SessionController
 {
+    //private function Edit() {} editar datos de usuario
+
     public function __construct()
     {
         SessionController::ValidateSession();

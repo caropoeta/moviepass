@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use DAO\UserDAOjson as UserDAO;
+use DAO\UserDAO as UserDAO;
 use Models\UserModel as UserModel;
 
 class UsersController

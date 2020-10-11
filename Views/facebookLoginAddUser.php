@@ -1,8 +1,4 @@
-<?php if (
-    isset($fbemail, $fbname) &&
-    $fbemail != null &&
-    $fbname != null
-) { ?>
+<?php if (isset($fbemail, $fbname) && $fbemail != null && $fbname != null) { ?>
     <script>
         document.addEventListener('DOMContentLoaded', function(event) {
             document.getElementById('username').value = '<?php echo $fbname; ?>';
