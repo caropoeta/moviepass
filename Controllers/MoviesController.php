@@ -6,9 +6,9 @@ class MoviesController
 {
     public function Index()
     {
-
+        HomeController::MainPage();
     }
-
+    
     public function List()
     {
 
@@ -21,6 +21,6 @@ class MoviesController
 
     public function Add(int $id)
     {
-
+        var_dump($id);
     }
 }
