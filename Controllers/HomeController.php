@@ -2,9 +2,7 @@
 
 namespace Controllers;
 
-use DAO\RolesDAOjson;
 use Models\UserModel as UserModel;
-use Models\UserRole;
 
 class HomeController
 {

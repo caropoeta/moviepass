@@ -1,5 +1,44 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600");
+@import 
+@font-face {
+  font-family: "sansita-Swashed";
+  src:url(/vistas/Views/fonts/SansitaSwashed.ttf);
+}
+@font-face {
+  font-family: "ArchitectsDaughter";
+  src:url(/vistas/Views/fonts/ArchitectsDaughter.ttf); 
+}
+.fuente{
+  font-family: ArchitectsDaughter;
+  font-size: 100px;
+  align-content: center;
+  color: #6C757D;
 
+}
+.fuente3{
+  font-family: ArchitectsDaughter;
+  font-size: 75px;
+  align-content: center;
+  color: #6C757D;
+}
+.fuente4{
+  font-family: ArchitectsDaughter;
+  font-size: 50px;
+  align-content: center;
+  color: #6C757D;
+}
+.fuente5{
+    font-family: ArchitectsDaughter;
+  font-size: 35px;
+  align-content: center;
+  color: #6C757D;
+
+}
+.fuente2{
+  font-family: sansita-Swashed, sans-serif ;
+  font-size: 100px;
+  align-content: center;
+}
 html {
   height: 100%;
 }
@@ -7,11 +46,18 @@ html {
 .Ctext {
   font-family: Monserrat;
   font-size: 50px;
-}
 
+}
+.cbody{
+  
+}
+nav{
+  border:  black 1px solid;
+}
 body {
   height: 100%;
   background-image: url("../img/bg.png");
+  background-color: darkslateblue;
 }
 .social {
   transition: background 100ms ease-in-out 0s;
@@ -42,7 +88,37 @@ body {
   text-decoration: none;
   text-align: center;
 }
+.socialnav{
+  .social {
+  transition: background 100ms ease-in-out 0s;
+  -webkit-transition: background 100ms ease-in-out 0s;
+  -moz-transition: background 100ms ease-in-out 0s;
+  -o-transition: background 100ms ease-in-out 0s;
+  -ms-transition: background 100ms ease-in-out 0s;
 
+  margin-top: 12px;
+  -webkit-border-top-left-radius: 1px;
+  -moz-border-radius-topleft: 1px;
+  border-top-left-radius: 1px;
+  -webkit-border-top-right-radius: 1px;
+  -moz-border-radius-topright: 1px;
+  border-top-right-radius: 1px;
+  -webkit-border-bottom-right-radius: 1px;
+  -moz-border-radius-bottomright: 1px;
+  border-bottom-right-radius: 1px;
+  -webkit-border-bottom-left-radius: 1px;
+  -moz-border-radius-bottomleft: 1px;
+  border-bottom-left-radius: 1px;
+  text-indent: 0;
+  display: block;
+  color: #ffffff;
+  height: 50px;
+  /*line-height:50px;*/
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+}
+}
 .register-btn {
   float: right;
   margin-right: 35px;
@@ -75,6 +151,22 @@ body {
   position: relative;
   top: 1px;
 }
+.fbloginNav {
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 5px;
+  background-color: #3b5898;
+}
+.fbloginNav:hover {
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 5px;
+  background-color: #5177f9;
+}
+.fbloginNav:active {
+  position: relative;
+  top: 1px;
+}
 
 .height-100 {
   height: 100%;
@@ -104,4 +196,84 @@ body {
   color: #79b42b;
   text-decoration: none;
   background: white;
+}
+
+
+.footer_top h2 {
+  color: #6C757D;
+  font-family: "ArchitectsDaughter",sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  margin-top: 40px;
+}
+.footer_top p {
+  color: #6C757D;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: "ArchitectsDaughter",sans-serif;
+}
+.footer_top > .container{
+  border-top: 1px solid #ffffff;
+  padding-bottom: 65px;
+}
+.footer-contact {
+  float: right;
+}
+.footer-contact p {
+  font-size: 15px;
+}
+.col-md-4.center {
+  text-align: center;
+}
+
+.col-md-4.center p {
+  margin-left: -60px;
+}
+
+footer {
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;  
+}
+
+.footer_top .footer-contact p i {
+  font-size: 25px;
+}
+.footer_bottom {
+  background: rgba(9,8,8,0.80) none repeat scroll 0 0;
+  padding: 35px 0 14px;
+  position: relative;
+}
+.footer_overlay {
+  background: rgba(9,8,8,0.40);
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+
+div.user_add_div {
+  padding-right: 10px;
+  padding-left: 10px;
+  max-width: fit-content;
+  max-height: fit-content;
+  border-radius: 5px;
+  background-color: white;
+  margin: auto;
+}
+
+div.user_list_div {
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 10%;
+  width: 95%;
+  border-radius: 5px;
+  background-color: white;
+  margin: auto;
+}
+
+div.user_list_div > div.container {
+  overflow-y:auto;
 }

@@ -16,5 +16,14 @@
         "email": "astudillograciela@hotmail.com",
         "dni": 1231233213,
         "role": "Client"
+    },
+    {
+        "username": "admin",
+        "id": 3,
+        "password": "admin",
+        "birthday": "2020-10-06",
+        "email": "qqqr@qqq",
+        "dni": 0,
+        "role": "Client"
     }
 ]

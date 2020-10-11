@@ -1,7 +1,7 @@
 <main class="d-flex align-items-center justify-content-center height-100">
      <div class="content">
           <header class="text-center">
-               <h2 class="Ctext">Movie Pass Log-in</h2>
+               <h2 class="fuente4">Movie Pass Log-in</h2>
           </header>
           <div class="login-form bg-dark-alpha p-5 bg-light">
                <form method="post">
@@ -16,7 +16,7 @@
                     </div>
 
                     <button formaction="<?php echo FRONT_ROOT ?>Session/Login" class="btn btn-primary btn-block btn-lg" type="submit">Log-In</button>
-                    <button formaction="<?php echo FRONT_ROOT ?>FacebookSession" class="fblogin social btn btn-primary btn-block btn-lg" type="submit">
+                    <button formaction="<?php echo FRONT_ROOT ?>FacebookSession/Index" class="fblogin social btn btn-primary btn-block btn-lg" type="submit">
                          <span>Login with Facebook</span>
                     </button>
                </form>
