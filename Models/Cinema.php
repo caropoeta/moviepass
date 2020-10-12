@@ -1,22 +1,16 @@
-	<?php
-	namespace Models;
+<?php
+namespace Models;
+
 	class Cinema{
 		private $name;
-		private $address; 
-		private $openingTime
-		private $closingTime
+		private $adress; 
+		private $openingTime;
+		private $closingTime;
 		private $ticketValue;
 		private $id;
 
-		public function __construct(String $name, String $adress, date $openingTime, date $closingTime, String $ticketValue, int $id = 0)
+		public function __construct()
 		{
-			$this->setName($name);
-			$this->setAddress($adress);
-			$this->setOpeningTime($openingTime);
-			$this->setClosingTime($closingTime);
-			$this->setTicketValue($ticketValue);
-			$this->setId($id);
-
 		}
 
 		public function setName($name){
@@ -27,12 +21,12 @@
 			return $this->name;
 		}
 
-		public function setAddress($address){
-			$this->address=$address;
+		public function setAdress($adress){
+			$this->adress=$adress;
 		}
 
-		public function getAddress(){
-			return $this->address;
+		public function getAdress(){
+			return $this->adress;
 		}
 		public function setOpeningTime($openingTime){
 			$this->openingTime=$openingTime;
@@ -62,7 +56,7 @@
 		}
 
 		public function getId(){
-			return $this->id;`
+			return $this->id;
 		}
 
 
