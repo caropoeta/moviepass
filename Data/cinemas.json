@@ -1,18 +1,29 @@
 [
     {
-        "name": "Rex",
-        "adress": "",
-        "openingTime": "",
-        "closingTime": "",
-        "ticketValue": "",
-        "id": "2"
+        "name": "Roxy",
+        "adress": "Santa Fe 1888",
+        "openingTime": "19",
+        "closingTime": "00",
+        "ticketValue": "300",
+        "id":"1"
     },
+
+    
+    {
+        "name": "Tronador",
+        "adress": "San Martin 2020",
+        "openingTime": "19",
+        "closingTime": "23",
+        "ticketValue": "350",
+        "id":"2"
+    },
+
     {
         "name": "Avenida",
         "adress": "Entre Rios 1040",
         "openingTime": "18",
         "closingTime": "22.30",
         "ticketValue": "280",
-        "id": "3"
+        "id":"3"
     }
 ]
