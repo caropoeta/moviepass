@@ -277,3 +277,11 @@ div.user_list_div {
 div.user_list_div > div.container {
   overflow-y:auto;
 }
+
+div.movie_container {
+  overflow-y:scroll;
+  overflow: hidden;
+  
+  height: 500px;
+  width: 95%;
+}

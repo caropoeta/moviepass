@@ -2,7 +2,11 @@
 
 namespace Controllers;
 
+use DAO\ApiDAO;
+use DAO\GenereDAO;
+use DAO\MovieDAO;
 use DAO\UserDAO as UserDAO;
+use Models\Movie;
 
 class ApiController
 {
@@ -11,11 +15,15 @@ class ApiController
         HomeController::MainPage();
     }
 
-    public function List()
+    public function List(int $id = 1)
     {
-        //$roles = UserDAO::getRoles();
-        //$users = UserDAO::getUsers(); conseguir peliculas 
-        $movies = UserDAO::getUsers();;
+        if ($id <= 0) {
+            $id = 1;
+        }
+
+        $currPage = $id;
+        $generes = ApiDAO::getApiGeneres();
+        $movies = ApiDAO::getApiMoviePage($id, $generes);
         require_once(VIEWS_PATH . 'apiMovies.php');
     }
 }
