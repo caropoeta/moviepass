@@ -1,15 +1,13 @@
 <?php
-echo '<hr>';
-echo 'Client';
-echo '<hr><br>';
-if ($_SESSION['current_user'])
-  var_dump($_SESSION['current_user']);
+include('navbarclient.php');
 ?>
 
-<body>
-  <div>
-    <form action="<?php echo FRONT_ROOT ?>Log/Logout" method="POST">
-      <button type="submit"> Logout </button>
-    </form>
-  </div>
+<body >
+	  <div class="container-fluid">
+	  	
+	  	<h5 class="text-center fuente">client options</h5>
+	  </div>
+
+
+
 </body>

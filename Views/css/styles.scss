@@ -1,0 +1,55 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+body {
+    background-image: url(../images/bg.jpg);
+    height: 100vh;
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.6rem;
+}
+
+form {
+    background-color: rgba(255,255,255,03);
+}
+.login {
+    form {
+        width: 30vw;
+        min-width: 300px;
+        padding: 30px;
+        
+
+    }
+}
+
+.dashboard {
+    width: 100vw;
+    height: 100vh;
+
+    .box {
+        overflow-y: auto;
+        padding: 80px;
+
+        &:first-child {
+            background-color: white;
+            
+        }
+
+    }
+
+    .tasks {
+
+        .card {
+
+            padding: 10px;
+
+        }
+
+    }
+}

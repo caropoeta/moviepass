@@ -8,11 +8,13 @@ class HomeController
 {
     public function Index($message = "")
     {
-        require_once(VIEWS_PATH . "main.php");
+        HomeController::MainPage();
     }
 
     public static function MainPage()
     {
+        SessionController::ValidateSession();
+
         if ($_SESSION['current_user'] instanceof UserModel)
             switch ($_SESSION['current_user']->getRole()) {
                 case 'Admin':
