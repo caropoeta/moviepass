@@ -18,8 +18,8 @@ class ApiController
         }
 
         $currPage = $id;
-        $generes = ApiDAO::getApiGeneres();
-        $movies = ApiDAO::getApiMoviePage($id, $generes);
+        $genres = ApiDAO::getApiGenres();
+        $movies = ApiDAO::getApiMoviePage($id, $genres);
         require_once(VIEWS_PATH . 'apiMovies.php');
     }
 }

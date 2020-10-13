@@ -3,11 +3,11 @@
 namespace DAO;
 
 use Models\Movie as Movie;
-use Models\Genere as Genere;
+use Models\Genre as Genre;
 
 class ApiDAO
 {
-  public static function getApiMoviePage($page, array $generes)
+  public static function getApiMoviePage($page, array $genres)
   {
     $response = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?page=" . $page . "&language=en-US&api_key=" . API_KEY);
     $jsonresponse = (array) json_decode($response,  true);
@@ -29,7 +29,7 @@ class ApiDAO
         $genresArray = [];
         $responseGenereArray = $v['genre_ids'];
         foreach ($responseGenereArray as $genre) {
-          array_push($genresArray, ApiDAO::getApiGenereById($genre, $generes));
+          array_push($genresArray, ApiDAO::getApiGenreById($genre, $genres));
         }
 
         $movie->setGenres($genresArray);
@@ -41,7 +41,7 @@ class ApiDAO
     }
   }
 
-  public static function getApiGeneres()
+  public static function getApiGenres()
   {
     $response = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=' . API_KEY . '&language=en-US');
     $jsonresponse = (array) json_decode($response, true);
@@ -50,22 +50,22 @@ class ApiDAO
       return [];
     } else {
       $jsonresponse = ($jsonresponse) ? $jsonresponse : array();
-      $generes = [];
+      $genres = [];
       foreach ($jsonresponse['genres'] as $v) {
-        $genre = new Genere();
+        $genre = new Genre();
         $genre->setId($v['id']);
         $genre->setDescription($v['name']);
-        array_push($generes, $genre);
+        array_push($genres, $genre);
       }
-      return $generes;
+      return $genres;
     }
   }
 
-  public static function getApiGenereById(int $id, array $generes)
+  public static function getApiGenreById(int $id, array $genres)
   {
     $toReturn = 'Genere';
-    foreach ($generes as $value) {
-      if ($value instanceof Genere) {
+    foreach ($genres as $value) {
+      if ($value instanceof Genre) {
         if ($value->getId() == $id) {
           $toReturn = $value->getDescription();
         }

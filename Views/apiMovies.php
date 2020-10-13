@@ -29,7 +29,6 @@
                                    <?php
 
                                    use Models\Movie as Movie;
-                                   use Models\UserModel as UserModel;
                                    
                                    foreach ($movies as $movie) {
                                         if ($movie instanceof Movie) { ?>
