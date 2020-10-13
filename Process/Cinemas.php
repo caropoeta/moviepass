@@ -47,5 +47,22 @@ if(isset($_POST['buttonModifyCinema'])){
     $cinemasController->Modify($cinema);
 }
 
+if(isset($_POST['buttonAddCinema'])){
+
+    $cinemasController = new CinemaController();
+    $cinema = new Cinema();
+    $cinema->setId($_POST['id']);
+    $cinema->setName($_POST['name']);
+    $cinema->setAdress($_POST['adress']);
+    $cinema->setOpeningTime($_POST['openingTime']);
+    $cinema->setClosingTime($_POST['closingTime']);
+    $cinema->setTicketValue($_POST['ticketValue']);
+
+    $cinemasController->AddCinema($cinema);
+
+
+
+
+}
 
 ?>

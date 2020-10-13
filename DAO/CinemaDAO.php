@@ -22,9 +22,9 @@ class CinemaDAO{
     }
 
 
-    public function Add($cinema){
+    public function Add($cinemaToAdd){
         $this->RetrieveData();
-        array_push($this->$cinema);
+        array_push($this->cinemaList,$cinemaToAdd);
         $this->SaveData();
     }
 
@@ -37,7 +37,7 @@ private function RetrieveData()
         $jsonContent = file_get_contents($this->fileName);
         $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
         foreach($arrayToDecode as $oneCinema){
-            $cinema = new Cinema();
+            $cinema = new Cinema($oneCinema["name"],);
             $cinema->setName($oneCinema["name"]);
             $cinema->setAdress($oneCinema["adress"]);
             $cinema->setOpeningTime($oneCinema["openingTime"]);
@@ -81,7 +81,7 @@ public function SaveData()
     $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
 
     if (file_exists($this->fileName))
-        file_put_contents("../data/cinemas.json", $fileContent);
+        file_put_contents("../Data/cinemas.json", $fileContent);
 }
 
 

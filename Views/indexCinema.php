@@ -61,4 +61,24 @@ require "../Config/Config.php";
 </form>
 
 
+<form action="../Process/Cinemas.php" method="POST">
+
+    <div class="form-group">
+  
+        <label for="">Enter movie to add</label>
+        <input type="text" name="id">
+        <input type="text" name="name">
+        <input type="text" name="adress">
+        <input type="text" name="openingTime">
+        <input type="text" name="closingTime">
+        <input type="text" name="ticketValue">
+
+        <button type="submit" class="button-primary" name="buttonAddCinema">Add Cinema</button>
+    </div>
+
+
+</form>
+
+
+
 
