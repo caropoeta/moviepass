@@ -3,10 +3,6 @@
 namespace Controllers;
 
 use DAO\ApiDAO;
-use DAO\GenereDAO;
-use DAO\MovieDAO;
-use DAO\UserDAO as UserDAO;
-use Models\Movie;
 
 class ApiController
 {

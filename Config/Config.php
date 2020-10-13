@@ -10,11 +10,6 @@ define("IMG_PATH", VIEWS_PATH . "img/");
 
 define('DATA_PATH', 'Data/');
 
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'moviepass_user');
-define('DB_PASSWORD', 'moviepass@localhost');
-define('DB_NAME', 'moviepass');
-
 define('APP_ID', '383668786136123');
 define('APP_SECRET', '07cde429233190afc3f433c626dbfc0e');
 

@@ -1,15 +1,22 @@
-<main class="d-flex align-items-center justify-content-center height-100" style="height: 30%;">
+<section>
+<?php include('navbaradmin.php'); ?>
+</section>
+
+
+
      <section id="listado" class="mb-5">
           <div class="container-fluid">
-               <h2 class="fuente4">Movie List From Api</h2>
+               <h2 class="fuente4  text-center">Movie List From Api</h2>
                <div class="col-auto">
                     <form method="POST">
-                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="page" name="id" value="<?php echo $currPage - 1 ?>">Back Page</button>
-                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="page" name="id" value="<?php echo $currPage + 1 ?>">Next Page</button>
+                         <div class="align-items-center">
+                         <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="page" name="id" value="<?php echo $currPage - 1 ?>">Back Page</button>
+                         <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="page" name="id" value="<?php echo $currPage + 1 ?>">Next Page</button>
+                    </div>
                     </form>
                </div>
-               <div class=col-auto">
-                    <div class="movie_container">
+               <div class=col-auto>
+                    <div class="">
                          <table class="table bg-light">
                               <thead class="bg-dark text-white">
                                    <th>Title</th>
@@ -23,7 +30,7 @@
 
                                    use Models\Movie as Movie;
                                    use Models\UserModel as UserModel;
-
+                                   
                                    foreach ($movies as $movie) {
                                         if ($movie instanceof Movie) { ?>
                                              <tr>
@@ -38,9 +45,9 @@
                                                   <td>
                                                        <div class="col-auto">
                                                             <form method="POST">
-                                                                 <!--
+                                                            
                                                             <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit" name="id" value="<?php echo $movie->getId(); ?>">Add</button>
-                                                       -->
+                                                       
                                                             </form>
                                                        </div>
                                                   </td>
@@ -55,4 +62,3 @@
                </div>
           </div>
      </section>
-</main>

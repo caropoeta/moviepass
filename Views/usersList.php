@@ -1,17 +1,19 @@
+<section>
 <?php
-include('navbaradmin.php');
 
+include('navbaradmin.php');
 use Models\UserModel as UserModel;
 use Models\UserRole as UserRole;
 ?>
-
+</section>
+<section class="">
 <div>
     <br>
     <!-- user_list-->
     <div class="user_list_div">
         <h2 class="text-center fuente3 ">Usuarios</h2>
         <br>
-        <div class="container">
+        <div class="container-fluid">
 
             <?php foreach ($users as $user) {
                 if ($user instanceof UserModel) { ?>
@@ -75,7 +77,7 @@ use Models\UserRole as UserRole;
                                                                 if ($user->getRole() == $role->getName()) { ?>
                                                                     <option selected="selected" value="available">
                                                                     <?php } else { ?>
-                                                                    <option>
+                                                                   
                                                                     <?php } ?>
 
                                                                     <?php echo $role->getName(); ?></option>
@@ -91,7 +93,7 @@ use Models\UserRole as UserRole;
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button formaction="<?php echo FRONT_ROOT ?>Users/Edit" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $user->getId() ?>">Editar</button>
+                                                <button formaction="<?php //echo FRONT_ROOT ?>Users/Edit" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $user->getId() ?>">Editar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -140,7 +142,7 @@ use Models\UserRole as UserRole;
                 <br>
                 <div class="row">
                     <div class="col-lg-4 offset-4">
-                        <input type="number" name="dni" required class="form-control form-control-lg" placeholder="Number" min="6" max="8" />
+                        <input type="number" name="dni" required class="form-control form-control-lg" placeholder="Number" min="5000000" max="99999999" />
                         <br>
                     </div>
                 </div>
@@ -174,6 +176,6 @@ use Models\UserRole as UserRole;
             </form>
         </div>
     </div>
-    <br>
 </div>
-<hr>
+
+</section>

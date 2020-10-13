@@ -1,20 +1,11 @@
 [
     {
-        "username": "root",
-        "id": 1,
-        "password": "good@dreams",
-        "birthday": "2020-10-14",
-        "email": "qqqq@qqq",
-        "dni": 12312312,
-        "role": "Client"
-    },
-    {
         "username": "Graciela Astudillo",
         "id": 2,
         "password": "good@dreams",
         "birthday": "2020-10-14",
         "email": "astudillograciela@hotmail.com",
-        "dni": 1231233213,
+        "dni": 0,
         "role": "Client"
     },
     {
@@ -23,7 +14,7 @@
         "password": "admin",
         "birthday": "2020-10-06",
         "email": "qqqr@qqq",
-        "dni": 0,
-        "role": "Client"
+        "dni": 1,
+        "role": "Admin"
     }
 ]
