@@ -142,7 +142,7 @@ class UserDAOjson
         foreach ($result as $value) {
             if ($value instanceof UserModel) {
                 if ($value->getName() == $username) {
-                    if (password_verify($password, $value->getPassword())) {
+                    if ($password == $value->getPassword()) {
                         return $value;
                     }
                 }

@@ -8,14 +8,14 @@
         "id":"1"
     },
 
-    
+
     {
         "name": "Tronador",
         "adress": "San Martin 2020",
         "openingTime": "19",
         "closingTime": "23",
         "ticketValue": "350",
-        "id":"2"
+         "id":"2"
     },
 
     {
@@ -24,6 +24,6 @@
         "openingTime": "18",
         "closingTime": "22.30",
         "ticketValue": "280",
-        "id":"3"
+        "id": "3"
     }
 ]

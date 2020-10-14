@@ -1,22 +1,22 @@
 <?php
+
 namespace DAO;
 
-use DAO\CinemaDAO as CinemaDAO;
 use Models\Cinema as Cinema;
 
-class CinemaDAO{
-
-
+class CinemaDAO
+{
     private $cinemaList = array();
     private $fileName;
 
     public function __construct()
     {
-        $this->fileName = dirname(__DIR__)."/Data/cinemas.json";
+        $this->fileName =  ROOT . DATA_PATH . "cinemas.json";
     }
 
+    public function GetAll()
+    {
 
-    public function GetAll(){
         $this->RetrieveData();
         return $this->cinemaList;
     }
@@ -28,69 +28,64 @@ class CinemaDAO{
         $this->SaveData();
     }
 
-private function RetrieveData()
+    private function RetrieveData()
     {
-     $this->cinemaList = array();
+        $this->cinemaList = array();
 
-     if(file_exists($this->fileName))
-     {
-        $jsonContent = file_get_contents($this->fileName);
-        $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-        foreach($arrayToDecode as $oneCinema){
-            $cinema = new Cinema($oneCinema["name"],);
-            $cinema->setName($oneCinema["name"]);
-            $cinema->setAdress($oneCinema["adress"]);
-            $cinema->setOpeningTime($oneCinema["openingTime"]);
-            $cinema->setClosingTime($oneCinema["closingTime"]);
-            $cinema->setTicketValue($oneCinema["ticketValue"]);
-            $cinema->setId($oneCinema["id"]);
+        if (file_exists($this->fileName)) {
+            $jsonContent = file_get_contents($this->fileName);
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+            foreach ($arrayToDecode as $oneCinema) {
+                $cinema = new Cinema();
+                $cinema->setName($oneCinema["name"]);
+                $cinema->setAdress($oneCinema["adress"]);
+                $cinema->setOpeningTime($oneCinema["openingTime"]);
+                $cinema->setClosingTime($oneCinema["closingTime"]);
+                $cinema->setTicketValue($oneCinema["ticketValue"]);
+                $cinema->setId($oneCinema["id"]);
 
-            array_push($this->cinemaList, $cinema);
+                array_push($this->cinemaList, $cinema);
+            }
         }
     }
-}
 
-public function Remove($cinemaRemove)
-{
-    $cinemaList = $this->RetrieveData();
-
-    $this->cinemaList = array_filter($this->cinemaList, function($cinema) use($cinemaRemove){
-        return $cinema->getName() != $cinemaRemove;
-    });
-
-    $this->SaveData($cinemaList);
-
-}
-
-public function SaveData()
-{
-    $arrayToEncode = array();
-
-    foreach($this->cinemaList as $cinema)
+    public function Remove($cinemaRemove)
     {
-        $valuesArray = array();
-        $valuesArray["name"] = $cinema->getName();
-        $valuesArray["adress"] = $cinema->getAdress();
-        $valuesArray["openingTime"]=$cinema->getOpeningTime();
-        $valuesArray["closingTime"]=$cinema->getClosingTime();
-        $valuesArray["ticketValue"] = $cinema->getTicketValue();
-        $valuesArray["id"]=$cinema->getId();
-        array_push($arrayToEncode, $valuesArray);
+        $cinemaList = $this->RetrieveData();
+
+        $this->cinemaList = array_filter($this->cinemaList, function ($cinema) use ($cinemaRemove) {
+            return $cinema->getName() != $cinemaRemove;
+        });
+
+        $this->SaveData($cinemaList);
     }
 
-    $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+    public function SaveData()
+    {
+        $arrayToEncode = array();
 
-    if (file_exists($this->fileName))
-        file_put_contents("../Data/cinemas.json", $fileContent);
+        foreach ($this->cinemaList as $cinema) {
+            $valuesArray = array();
+            $valuesArray["name"] = $cinema->getName();
+            $valuesArray["adress"] = $cinema->getAdress();
+            $valuesArray["openingTime"] = $cinema->getOpeningTime();
+            $valuesArray["closingTime"] = $cinema->getClosingTime();
+            $valuesArray["ticketValue"] = $cinema->getTicketValue();
+            $valuesArray["id"] = $cinema->getId();
+            array_push($arrayToEncode, $valuesArray);
+        }
+
+        $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+
+        if (file_exists($this->fileName))
+            file_put_contents($this->fileName, $fileContent);
+    }
+
+
+    public function AddAll($cinemas)
+    {
+        $this->RetrieveData();
+        $this->cinemaList = array_replace($this->cinemaList, $cinemas);
+        $this->saveData();
+    }
 }
-
-
-public function AddAll($cinemas){
-    $this->RetrieveData();
-    $this->cinemaList = array_replace($this->cinemaList,$cinemas);
-    $this->saveData();
-
-}
-}
-
-

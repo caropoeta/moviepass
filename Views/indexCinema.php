@@ -1,84 +1,63 @@
-
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require "../Config/Autoload.php";
-require "../Config/Config.php";
-
-
+include('navbaradmin.php');
 ?>
-<form action="../Process/Cinemas.php" method="POST">
-
+<main class="d-flex  justify-content-center ">
+ <div class="content">
+    <header class="text-center">
+ <h2 class="fuente4 text-center">Show Cinemas</h2>
+</header>
+<div class="login-form bg-dark-alpha p-5 bg-light">
+<section>
+    <br>
     <div class="form-group">
-        <label for="">CINEMAS</label>
-        <button type="submit" class="button-primary" name="buttonShowCinemas">Show Cinemas</button>
+<form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinemas" method="POST">
+    <div class="form-group align-items-center">
+        <h2 class="fuente5 text-center">CINEMAS</h2>
+        <br>
+        <button type="submit" class="btn btn-primary offset-4"  >Show Cinemas</button>
     </div>
-
 </form>
-
-<form action="../Process/Cinemas.php" method="POST">
-
+</div>
+<br>
+<br>
+<form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinema" method="POST">
     <div class="form-group">
-        <label for="">Search Cinema</label>
-        <input type="text" name="wantedCinema">
-        <button type="submit" class="button-primary" name="buttonShowCinema">Show Cinema</button>
-    </div>
-
+       
+        <input type="text" name="wantedCinema" placeholder="Search Cinema" required class="form-control">
+        <br>
+        <button type="submit" class="btn btn-primary offset-4">Search Cinema</button>
+  </div>
 </form>
 
-<form action="../Process/Cinemas.php" method="POST">
-
+<form action="<?php echo FRONT_ROOT ?>Cinema/DeleteCinema" method="POST">
     <div class="form-group">
-        <label for="">Enter movie name to be deleted</label>
-        <input type="text" name="deleteCinema">
-        <button type="submit" class="button-primary" name="buttonDeleteCinema">Clear Cinema</button>
+        <br>
+        <input type="text" name="deleteCinema" class="form-control" placeholder="Enter Movie name to be deleted">
+        <br>
+        <button type="submit" class="btn btn-primary offset-4 " required >Delete Cinema</button>
     </div>
-
-
 </form>
 
-</form>
-
-<form action="../Process/Cinemas.php" method="POST">
-
+<form action="<?php echo FRONT_ROOT ?>Cinema/ModifyCinema" method="POST">
     <div class="form-group">
-  
-        <label for="">Enter Id to be modify</label>
-        <input type="text" name="id">
-        <label for="">Enter movie name to be modify</label>
-        <input type="text" name="name">
-        <input type="text" name="adress">
-        <input type="text" name="openingTime">
-        <input type="text" name="closingTime">
-        <input type="text" name="ticketValue">
-
-        <button type="submit" class="button-primary" name="buttonModifyCinema">Modify Cinema</button>
+        <br>
+        <input type="text" name="id" placeholder="Enter Id to be modify" required class="form-control">
+        <br>
+        <input type="text" name="name" class="form-control" required placeholder="Enter movie name to be modify">
+        <br>
+        <input type="text" name="adress" placeholder="Enter Cinema Adress" required class="form-control">
+        <br>
+        <input type="text" name="openingTime" placeholder="Enter Opening Time" required class="form-control">
+        <br>
+        <input type="text" name="closingTime"placeholder="Enter Closing Time" required class="form-control">
+        <br>
+        <input type="text" name="ticketValue" placeholder="Enter Ticket Value" required class="form-control">
+           <br>
+        <button type="submit" class="btn btn-primary offset-4  ">Modify Cinema</button>
     </div>
-
-
 </form>
-
-
-<form action="../Process/Cinemas.php" method="POST">
-
-    <div class="form-group">
-  
-        <label for="">Enter movie to add</label>
-        <input type="text" name="id">
-        <input type="text" name="name">
-        <input type="text" name="adress">
-        <input type="text" name="openingTime">
-        <input type="text" name="closingTime">
-        <input type="text" name="ticketValue">
-
-        <button type="submit" class="button-primary" name="buttonAddCinema">Add Cinema</button>
-    </div>
-
-
-</form>
-
-
-
+</section>
+</div>
+</div>
+</main>
 

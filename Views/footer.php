@@ -1,10 +1,11 @@
+ 
  <footer>
         <div class="footer_top">
             <div class="container">
                 <div class="row">
              
                         <div class="col-md-4">
-                            <div class="footer-contact">
+                            <div class="">
                                 <h2>CONTACT US</h2>
                                 <a><p><i class="fa fa-envelope" aria-hidden="true"></i>email</p></a>
                                 <a><p><i class="fa fa-envelope" aria-hidden="true"></i>chrisleoluca@gmail.com</p></a>

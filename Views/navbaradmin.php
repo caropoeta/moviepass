@@ -22,9 +22,14 @@
       </li>
 
       <li class="nav-item">
-
         <div class="p-2">
           <button formaction="<?php echo FRONT_ROOT ?>Api/List" class="btn btn-secondary" type="submit">ApiList</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-secondary" type="submit">Cinema</button>
         </div>
         </form>
       </li>
