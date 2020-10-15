@@ -50,30 +50,53 @@ class CinemaController
     public function DeleteCinema($cinema)
     {
         $cinemaDAO= new CinemaDAO;
-        $cinemaDAO->Remove($cinema);
-        
+        $removed=$cinemaDAO->Remove($cinema);
+
+        if($removed){
+            echo "The cinema: " . $cinema ." was deleted ";
+        }else{
+            echo "The cinema: " . $cinema . " Don't found";
+        }
         require_once(VIEWS_PATH . 'indexCinema.php');
     }
 
-    public function ModifyCinema($id, $name, $adress, $openingTime, $closingTime, $ticketValue)
+    public function ModifyCinema($name)
     {
-
+        require_once(VIEWS_PATH . 'navbaradmin.php');
         $cinemaDAO= new CinemaDAO();
         $cinemaList=$cinemaDAO->GetAll();
+        $cinemaFound= new Cinema();
 
         foreach ($cinemaList as $oneCinema) {
-            if($id==$oneCinema->getId()){
-                $oneCinema->setName($name);
-                $oneCinema->setAdress($adress);
-                $oneCinema->setOpeningTime($openingTime);
-                $oneCinema->setClosingTime($closingTime);
-                $oneCinema->setTicketValue($ticketValue);
-            }
-        }
 
-        $cinemaDAO->AddAll($cinemaList);
-        require_once(VIEWS_PATH . 'indexCinema.php');
+           if($name==$oneCinema->getName()){
 
-    }
+               $cinemaFound=$oneCinema;
+           }
+       }
+       require_once(VIEWS_PATH . 'cinema.php');
+   }
+   public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue)
+   {
+
+    $cinema=new Cinema();
+    $cinema->setId($id);
+    $cinema->setName($name);
+    $cinema->setAdress($adress);
+    $cinema->setOpeningTime($openingTime);
+    $cinema->setClosingTime($closingTime);
+    $cinema->setTicketValue($ticketValue);
+
+    $cinemaDAO= new CinemaDAO;
+    $cinemaDAO->Update($cinema);
+
+
+    require_once(VIEWS_PATH . 'indexCinema.php');
 }
+
+}
+
+
+
+
 ?>

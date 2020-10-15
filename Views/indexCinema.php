@@ -4,7 +4,7 @@ include('navbaradmin.php');
 <main class="d-flex  justify-content-center ">
  <div class="content">
     <header class="text-center">
- <h2 class="fuente4 text-center">Show Cinemas</h2>
+ 
 </header>
 <div class="login-form bg-dark-alpha p-5 bg-light">
 <section>
@@ -41,21 +41,13 @@ include('navbaradmin.php');
 <form action="<?php echo FRONT_ROOT ?>Cinema/ModifyCinema" method="POST">
     <div class="form-group">
         <br>
-        <input type="text" name="id" placeholder="Enter Id to be modify" required class="form-control">
+        <input type="text" name="name" placeholder="Enter Name to be modify" required class="form-control">
         <br>
-        <input type="text" name="name" class="form-control" required placeholder="Enter movie name to be modify">
-        <br>
-        <input type="text" name="adress" placeholder="Enter Cinema Adress" required class="form-control">
-        <br>
-        <input type="text" name="openingTime" placeholder="Enter Opening Time" required class="form-control">
-        <br>
-        <input type="text" name="closingTime"placeholder="Enter Closing Time" required class="form-control">
-        <br>
-        <input type="text" name="ticketValue" placeholder="Enter Ticket Value" required class="form-control">
-           <br>
+        
         <button type="submit" class="btn btn-primary offset-4  ">Modify Cinema</button>
     </div>
 </form>
+
 </section>
 </div>
 </div>

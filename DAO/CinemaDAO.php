@@ -51,12 +51,37 @@ class CinemaDAO
 
     public function Remove($cinemaRemove)
     {
+        $this->RetrieveData();
+        $cinemaListResult= array();
+        $removed=false;
+        foreach ($this->cinemaList as $cinema) {
+            if(strcmp($cinema->getName(),$cinemaRemove)!==0){
+                array_push($cinemaListResult,$cinema);
+            }else{
+
+                $removed=true;
+            }
+        }
+    
+        $this->cinemaList=$cinemaListResult;
+        $this->SaveData();
+       
+        return $removed;
+    }
+    public function Update(Cinema $cinemaToUpdate)
+    {
+
         $cinemaList = $this->RetrieveData();
 
-        $this->cinemaList = array_filter($this->cinemaList, function ($cinema) use ($cinemaRemove) {
-            return $cinema->getName() != $cinemaRemove;
-        });
-
+        foreach ($this->cinemaList as $cinema) {
+            if($cinemaToUpdate->getId()==$cinema->getId()){
+                $cinema->setName($cinemaToUpdate->getName());
+                $cinema->setAdress($cinemaToUpdate->getAdress());
+                $cinema->setOpeningTime($cinemaToUpdate->getOpeningTime());
+                $cinema->setClosingTime($cinemaToUpdate->getClosingTime());
+                $cinema->setTicketValue($cinemaToUpdate->getTicketValue());
+            }
+        }
         $this->SaveData($cinemaList);
     }
 

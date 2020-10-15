@@ -7,33 +7,33 @@ include('navbaradmin.php');
 <br>
 <table class="table">
 	<thead>
-	<tr>
-		<th>Name</th>
-		<th>Adress</th>
-		<th>Opening Time</th>
-		<th>Closing Time</th>
-		<th>Ticket Value</th>
-		<th>Id</th>
-	</tr>
+   <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Adress</th>
+    <th>Opening Time</th>
+    <th>Closing Time</th>
+    <th>Ticket Value</th>
+  </tr>
 </thead>
 <tbody class="table-hover">
 
-<?php
-foreach ($cinemaList as $cinema) {
-?>
-<tr>
-   <td><?php echo $cinema->getName()?></td>
-   <td><?php echo $cinema->getAdress()?><td>
-   <td><?php echo $cinema->getOpeningTime()?></td>
-   <td><?php echo $cinema->getClosingTime()?></td>
-   <td><?php echo $cinema->getTicketValue()?></td>
-   <td><?php echo $cinema->getId()?></td>
-       
-                  </tr>
-                <?php
-              }
-            ?>                          
-          </tbody>
-        </table>
-
+  <?php
+  foreach ($cinemaList as $cinema) {
+    ?>
+    <tr>
+     <td><?php echo $cinema->getId()?></td>
+     <td><?php echo $cinema->getName()?></td>
+     <td><?php echo $cinema->getAdress()?></td>
+     <td><?php echo $cinema->getOpeningTime(). 'hs<br>';?></td>
+     <td><?php echo $cinema->getClosingTime(). 'hs<br>';?></td>
+     <td><?php echo "$" . $cinema->getTicketValue();?></td>
      
+
+   </tr>
+   <?php
+ }
+ ?>                          
+</tbody>
+</table>
+
