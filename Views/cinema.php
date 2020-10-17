@@ -13,7 +13,7 @@
                     <br>
                     <input type="text" name="id"  value="<?php echo $cinemaFound->getId() ?>"  required class="form-control"readonly="readonly">
                     <br>
-                    <input type="text" name="name" value="<?php echo $cinemaFound->getName() ?>" required class="form-control" >
+                    <input type="text" name="name" value="<?php echo $cinemaFound->getName() ?>" required class="form-control">
                     <br>
                     <input type="text" name="adress" value="<?php echo $cinemaFound->getAdress() ?>" required class="form-control">
                     <br>
@@ -23,7 +23,9 @@
                     <br>
                     <input type="text" name="ticketValue" value="<?php echo $cinemaFound->getTicketValue() ?>" required class="form-control">
                     <br>
-                    <button type="submit" class="btn btn-primary offset-4  ">Modify Cinema</button>
+                    <input type="text" name="capacity" value="<?php echo $cinemaFound->getCapacity() ?>" required class="form-control">
+                     <br>
+                      <button type="submit" class="btn btn-primary offset-4">Modify Cinema</button>  
                 </div>
             </form>
         </div>
