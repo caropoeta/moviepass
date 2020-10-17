@@ -7,7 +7,4 @@ include('navbarclient.php');
 	  	
 	  	<h5 class="text-center fuente">client options</h5>
 	  </div>
-
-
-
 </body>
