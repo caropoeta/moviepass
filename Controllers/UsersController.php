@@ -2,7 +2,10 @@
 
 namespace Controllers;
 
-use DAO\UserDAO as UserDAO;
+use DAO\UserDAOjson as UserDAO;
+use Models\Exceptions\AddUserException;
+use Models\Exceptions\UpdateUserException;
+use Models\PopupAlert;
 use Models\UserModel as UserModel;
 
 class UsersController
@@ -24,10 +27,15 @@ class UsersController
 
     public function Add(String $username, String $password, String $email, int $dni, String $birthday, String $role)
     {
-        $time = strtotime($birthday);
-        $newformat = date('Y-m-d', $time);
-
-        UserDAO::addUser(new UserModel($username, $password, $role, $dni, $email, $newformat));
+        try {
+            $time = strtotime($birthday);
+            $newformat = date('Y-m-d', $time);
+    
+            UserDAO::addUser(new UserModel($username, $password, $role, $dni, $email, $newformat));    
+        } catch (AddUserException $aue) {
+            $alert = new PopupAlert($aue->getExceptionArray());
+            $alert->Show();
+        }
 
         $roles = UserDAO::getRoles();
         $users = UserDAO::getUsers();
@@ -48,20 +56,25 @@ class UsersController
 
     public function Edit(String $email, int $dni, String $birthday, String $role, int $id)
     {
-        if ($id != $_SESSION['current_user']->getId()) {
-            $user = UserDAO::getUserById($id);
+        try {
+            if ($id != $_SESSION['current_user']->getId()) {
+                $user = UserDAO::getUserById($id);
 
-            if ($user instanceof UserModel) {
-                $time = strtotime($birthday);
-                $newformat = date('Y-m-d', $time);
+                if ($user instanceof UserModel) {
+                    $time = strtotime($birthday);
+                    $newformat = date('Y-m-d', $time);
 
-                $user->setEmail($email);
-                $user->setDni($dni);
-                $user->setBirthday($newformat);
-                $user->setRole($role);
+                    $user->setEmail($email);
+                    $user->setDni($dni);
+                    $user->setBirthday($newformat);
+                    $user->setRole($role);
 
-                UserDAO::updateUser($user);
+                    UserDAO::updateUser($user);
+                }
             }
+        } catch (UpdateUserException $uue) {
+            $alert = new PopupAlert($uue->getExceptionArray());
+            $alert->Show();
         }
 
         $roles = UserDAO::getRoles();

@@ -1,3 +1,4 @@
+
 <main class="d-flex  justify-content-center ">
      <div class="content">
           
@@ -28,7 +29,12 @@
                     <input type="date" name="birthday" class="form-control form-control-lg" placeholder="BirthDay" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
                </div>
                <button class="btn btn-primary btn-block btn-lg" type="submit">Send Registration Form</button>
+               <br>
+
           </form>
+          <form method="post">
+           <button  formaction="<?php echo FRONT_ROOT ?>home/MainPage" class="btn btn-primary btn-block btn-lg" type="submit">Return to Index</button>
+           </form>
      </div>
 </div>
 </main>
