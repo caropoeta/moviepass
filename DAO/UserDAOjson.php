@@ -2,6 +2,8 @@
 
 namespace DAO;
 
+use Models\Exceptions\AddUserException;
+use Models\Exceptions\ValidateUserCredentialsException;
 use Models\UserModel as UserModel;
 use Models\UserRole as UserRole;
 
@@ -65,7 +67,7 @@ class UserDAOjson
         foreach ($result as $value) {
             if ($value instanceof UserModel) {
                 if ($value->getId() > $lastId) {
-                   $lastId = $value->getId();
+                    $lastId = $value->getId();
                 }
             }
         }
@@ -135,8 +137,21 @@ class UserDAOjson
 
     public static function validateUserCredentials(String $username, String $password)
     {
-        if (!UserDAOjson::isThisUsernameValid($username) || !UserDAOjson::isThisPasswordValid($password))
-            return false;
+        $exceptionArray = [];
+
+        if (!UserDAOjson::isThisUsernameValid($username))
+            array_push($exceptionArray, 'This user name is wrong');
+
+        if (!UserDAOjson::isThisPasswordValid($password))
+            array_push($exceptionArray, 'This password is wrong');
+
+        if (!empty($exceptionArray))
+            throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
+
+        if (!UserDaoJson::existsUsername($username)) {
+            array_push($exceptionArray, 'This user name does not exist');
+            throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
+        }
 
         $result = UserDAOjson::Load();
         foreach ($result as $value) {
@@ -149,7 +164,8 @@ class UserDAOjson
             }
         }
 
-        return false;
+        array_push($exceptionArray, 'The password was incorrect');
+        throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
     }
 
     public static function getUsers()
@@ -224,31 +240,38 @@ class UserDAOjson
 
     public static function isThisUserDataValid(UserModel $user)
     {
+        $array = [];
         if (!UserDAOjson::isThisPasswordValid($user->getPassword()))
-            return 'bad password';
+            array_push($array, 'Wrong password');
 
         if (!UserDAOjson::isThisUsernameValid($user->getName()))
-            return 'bad user name';
+            array_push($array, 'Wrong user name');
 
         if (!UserDAOjson::isThisDateValid($user->getBirthday()))
-            return 'bad date';
+            array_push($array, 'Wrong date');
 
-        return false;
+        return !empty($array) ? $array : false;
     }
 
     public static function addUser(UserModel $user)
     {
-        if (UserDAOjson::isThisUserDataValid($user))
-            return UserDAOjson::isThisUserDataValid($user);
+        $exceptionArray = [];
 
-        else if (UserDAOjson::existsEmail($user->getEmail()))
-            return 'the email is already registered';
+        $isThisUserDataValid = UserDAOjson::isThisUserDataValid($user);
+        if ($isThisUserDataValid)
+            array_merge($exceptionArray, $isThisUserDataValid);
 
-        else if (UserDAOjson::existsDni($user->getDni()))
-            return 'the dni is already registered';
+        if (UserDAOjson::existsEmail($user->getEmail()))
+            array_push($exceptionArray, 'This email is already registered');
 
-        else if (UserDAOjson::existsUsername($user->getName()))
-            return 'the user name is already registered';
+        if (UserDAOjson::existsDni($user->getDni()))
+            array_push($exceptionArray, 'This dni is already registered');
+
+        if (UserDAOjson::existsUsername($user->getName()))
+            array_push($exceptionArray, 'This user name is already registered');
+
+        if (!empty($exceptionArray))
+            throw new AddUserException("Error Processing Request", $exceptionArray, 1);
 
         else {
             $result = UserDAOjson::Load();
@@ -262,7 +285,29 @@ class UserDAOjson
 
     public static function updateUser(UserModel $userData)
     {
-        $conection = DBConection::getDBConnection();
+        $currUser = UserDAOjson::getUserById($userData->getId());
+
+        $exceptionArray = [];
+
+        $isThisUserDataValid = UserDAOjson::isThisUserDataValid($userData);
+        if ($isThisUserDataValid)
+            array_merge($exceptionArray, $isThisUserDataValid);
+
+        if ($currUser->getEmail() != $userData->getEmail())
+            if (UserDAOjson::existsEmail($userData->getEmail()))
+                array_push($exceptionArray, 'This email is already registered');
+
+        if ($currUser->getEmail() != $userData->getDni())
+            if (UserDAOjson::existsDni($userData->getDni()))
+                array_push($exceptionArray, 'This dni is already registered');
+
+        if ($currUser->getEmail() != $userData->getName())
+            if (UserDAOjson::existsUsername($userData->getName()))
+                array_push($exceptionArray, 'This user name is already registered');
+
+        if (!empty($exceptionArray))
+            throw new AddUserException("Error Processing Request", $exceptionArray, 1);
+
         $result = UserDAOjson::Load();
         for ($i = 0; $i < count($result); $i++) {
             $value = $result[$i];

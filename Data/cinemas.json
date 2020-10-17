@@ -1,14 +1,5 @@
 [
     {
-        "name": "Roxy",
-        "adress": "Santa Fe 1888",
-        "openingTime": "19",
-        "closingTime": "00",
-        "ticketValue": "150",
-        "capacity": "350",
-        "id": "1"
-    },
-    {
         "name": "Tronador",
         "adress": "San Martin 2024",
         "openingTime": "19",
@@ -25,5 +16,23 @@
         "ticketValue": "280",
         "capacity": "200",
         "id": "3"
+    },
+    {
+        "name": "Victoria",
+        "adress": "Belgrano1248",
+        "openingTime": "22.30",
+        "closingTime": "00.30",
+        "ticketValue": "330",
+        "capacity": "220",
+        "id": "4"
+    },
+    {
+        "name": "Victoria",
+        "adress": "Belgrano1248",
+        "openingTime": "22.30",
+        "closingTime": "00.30",
+        "ticketValue": "200",
+        "capacity": "2000",
+        "id": "5"
     }
 ]

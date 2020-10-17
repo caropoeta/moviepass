@@ -1,14 +1,6 @@
 [
     {
-        "username": "Graciela Astudillo",
-        "id": 2,
-        "password": "good@dreams",
-        "birthday": "2020-10-14",
-        "email": "astudillograciela@hotmail.com",
-        "dni": 0,
-        "role": "Client"
-    },
-    {
+
         "username": "admin",
         "id": 3,
         "password": "admin",
@@ -16,5 +8,14 @@
         "email": "qqqr@qqq",
         "dni": 1,
         "role": "Admin"
+    },
+    {
+        "username": "Graciela Astudillo",
+        "id": 4,
+        "password": "good@dreams",
+        "birthday": "2020-09-28",
+        "email": "astudillograciela@hotmail.com",
+        "dni": 90,
+        "role": "Client"
     }
 ]

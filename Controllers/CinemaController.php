@@ -17,24 +17,39 @@ class CinemaController
         require_once(VIEWS_PATH . 'indexCinema.php');
     }
 
-    public function AddCinema(Cinema $cinemaToAdd){
 
-        $cinemaDAO= new CinemaDAO();
+    public function AddCinema($id, $name, $adress, $openingTime, $closingTime, $ticketValue,$capacity)
+    {
+        $cinemaToAdd = new Cinema();
+        $cinemaToAdd->setId($id);
+        $cinemaToAdd->setName($name);
+        $cinemaToAdd->setAdress($adress);
+        $cinemaToAdd->setOpeningTime($openingTime);
+        $cinemaToAdd->setClosingTime($closingTime);
+        $cinemaToAdd->setTicketValue($ticketValue);
+        $cinemaToAdd->setCapacity($capacity);
+
+        $cinemaDAO = new CinemaDAO();
         $cinemaDAO->Add($cinemaToAdd);
+
+        $cinemaList = $cinemaDAO->GetAll();
         require_once(VIEWS_PATH . 'showCinemas.php');
 
     }
 
     public function ShowCinemas()
     {
+
         $cinemaDAO= new CinemaDAO();
         $cinemaList=$cinemaDAO->GetAll();
+
 
         require_once(VIEWS_PATH . 'showCinemas.php');
     }
 
     public function ShowCinema($cinemaSearched)
     {
+
         $cinemaDAO= new CinemaDAO();
         $cinemas=$cinemaDAO->GetAll();
 
@@ -44,11 +59,13 @@ class CinemaController
             }
         }
         
+
         require_once(VIEWS_PATH . 'showCinema.php');
     }
 
     public function DeleteCinema($cinema)
     {
+
         $cinemaDAO= new CinemaDAO;
         $removed=$cinemaDAO->Remove($cinema);
 
@@ -60,6 +77,7 @@ class CinemaController
         require_once(VIEWS_PATH . 'indexCinema.php');
     }
 
+
     public function ModifyCinema($modifyId)
     {
         require_once(VIEWS_PATH . 'navbaradmin.php');
@@ -69,15 +87,15 @@ class CinemaController
 
         foreach ($cinemaList as $oneCinema) {
 
-         if($modifyId==$oneCinema->getId()){
+           if($modifyId==$oneCinema->getId()){
 
-             $cinemaFound=$oneCinema;
-         }
-     }
-     require_once(VIEWS_PATH . 'cinema.php');
- }
- public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue,$capacity)
- {
+               $cinemaFound=$oneCinema;
+           }
+       }
+       require_once(VIEWS_PATH . 'cinema.php');
+   }
+   public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue,$capacity)
+   {
 
     if ($ticketValue>0){
         $cinema=new Cinema();
@@ -95,15 +113,10 @@ class CinemaController
         echo '<script language="javascript">';
         echo "alert('The ticket must be positive!!');";
         echo '</script>';
-
     }
 
     require_once(VIEWS_PATH . 'indexCinema.php');
 }
 
 }
-
-
-
-
 ?>

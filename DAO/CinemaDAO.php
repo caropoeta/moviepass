@@ -67,6 +67,7 @@ class CinemaDAO
         $this->cinemaList=$cinemaListResult;
         $this->SaveData();
 
+    
         return $removed;
     }
     public function Update(Cinema $cinemaToUpdate)
@@ -82,6 +83,7 @@ class CinemaDAO
                 $cinema->setClosingTime($cinemaToUpdate->getClosingTime());
                 $cinema->setTicketValue($cinemaToUpdate->getTicketValue());
                 $cinema->setCapacity($cinemaToUpdate->getCapacity());
+
             }
         }
         $this->SaveData($cinemaList);
@@ -116,4 +118,8 @@ class CinemaDAO
         $this->cinemaList = array_replace($this->cinemaList, $cinemas);
         $this->saveData();
     }
+
 }
+
+
+

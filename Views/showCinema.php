@@ -5,7 +5,6 @@ include('navbaradmin.php');
 	<div class="content">
 		<header class="text-center">
 			<h2 class="fuente4 text-center">Cinema: </h2>
-
 			<li class="nav-item">
 				<form method="POST">
 					<div class="p-2">
@@ -59,7 +58,6 @@ include('navbaradmin.php');
 		<?php
 	}
 	?>
-
 
 
 

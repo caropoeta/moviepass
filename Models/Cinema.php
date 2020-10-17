@@ -60,7 +60,6 @@ namespace Models;
 			return $this->capacity;
 		}
 
-
 		public function setId($id){
 			$this->id=$id;
 		}
@@ -68,7 +67,6 @@ namespace Models;
 		public function getId(){
 			return $this->id;
 		}
-
 
 	}
 	?>
