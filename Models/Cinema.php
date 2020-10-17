@@ -7,6 +7,7 @@ namespace Models;
 		private $openingTime;
 		private $closingTime;
 		private $ticketValue;
+		private $capacity;
 		private $id;
 
 		public function __construct()
@@ -50,6 +51,15 @@ namespace Models;
 		public function getTicketValue(){
 			return $this->ticketValue;
 		}
+
+		public function setCapacity($capacity){
+			$this->capacity=$capacity;
+		}
+
+		public function getCapacity(){
+			return $this->capacity;
+		}
+
 
 		public function setId($id){
 			$this->id=$id;

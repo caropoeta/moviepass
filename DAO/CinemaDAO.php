@@ -42,6 +42,7 @@ class CinemaDAO
                 $cinema->setOpeningTime($oneCinema["openingTime"]);
                 $cinema->setClosingTime($oneCinema["closingTime"]);
                 $cinema->setTicketValue($oneCinema["ticketValue"]);
+                $cinema->setCapacity($oneCinema["capacity"]);
                 $cinema->setId($oneCinema["id"]);
 
                 array_push($this->cinemaList, $cinema);
@@ -65,7 +66,7 @@ class CinemaDAO
     
         $this->cinemaList=$cinemaListResult;
         $this->SaveData();
-       
+
         return $removed;
     }
     public function Update(Cinema $cinemaToUpdate)
@@ -80,6 +81,7 @@ class CinemaDAO
                 $cinema->setOpeningTime($cinemaToUpdate->getOpeningTime());
                 $cinema->setClosingTime($cinemaToUpdate->getClosingTime());
                 $cinema->setTicketValue($cinemaToUpdate->getTicketValue());
+                $cinema->setCapacity($cinemaToUpdate->getCapacity());
             }
         }
         $this->SaveData($cinemaList);
@@ -96,6 +98,7 @@ class CinemaDAO
             $valuesArray["openingTime"] = $cinema->getOpeningTime();
             $valuesArray["closingTime"] = $cinema->getClosingTime();
             $valuesArray["ticketValue"] = $cinema->getTicketValue();
+            $valuesArray["capacity"]=$cinema->getCapacity();
             $valuesArray["id"] = $cinema->getId();
             array_push($arrayToEncode, $valuesArray);
         }
