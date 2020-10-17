@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Avenida 4",
+        "adress": "Entre Rios 1040",
+        "openingTime": "18",
+        "closingTime": "22.30",
+        "ticketValue": "150",
+        "id": "3"
+    },
+    {
+        "name": "Avenida",
+        "adress": "Mdp",
+        "openingTime": "12:00",
+        "closingTime": "1:00",
+        "ticketValue": "-150",
+        "id": "4"
+    }
+]

@@ -2,12 +2,23 @@
 
 namespace Controllers;
 
-use DAO\UserDAO as UserDAO;
+use DAO\UserDAOjson as UserDAO;
+use Models\PopupAlert;
 use Models\UserModel as UserModel;
+use Models\Exceptions\AddUserException;
+use Models\Exceptions\UpdateUserException;
+use Models\Exceptions\ValidateUserCredentialsException;
 
 class SessionController
 {
-    //private function Edit() {} editar datos de usuario
+    private function Edit() {
+        try {
+            //code...
+        } catch (UpdateUserException $uue) {
+            $alert = new PopupAlert($uue->getExceptionArray());
+            $alert->Show();
+        }
+    }
 
     public function __construct()
     {
@@ -51,10 +62,15 @@ class SessionController
 
     public function Login(String $username, String $password)
     {
-        if (!SessionController::ValidateSession()) {
-            $logUser = UserDAO::validateUserCredentials($username, $password);
-            if ($logUser instanceof UserModel)
-                SessionController::SetSession($logUser);
+        try {
+            if (!SessionController::ValidateSession()) {
+                $logUser = UserDAO::validateUserCredentials($username, $password);
+                if ($logUser instanceof UserModel)
+                    SessionController::SetSession($logUser);
+            }
+        } catch (ValidateUserCredentialsException $vuce) {
+            $alert = new PopupAlert($vuce->getExceptionArray());
+            $alert->Show();
         }
 
         HomeController::MainPage();
@@ -70,16 +86,22 @@ class SessionController
 
     public function Register(String $username, String $password, int $dni, String $email, String $birthday)
     {
-        if (!SessionController::ValidateSession()) {
-            $time = strtotime($birthday);
-            $newformat = date('Y-m-d', $time);
+        try {
+            if (!SessionController::ValidateSession()) {
+                $time = strtotime($birthday);
+                $newformat = date('Y-m-d', $time);
 
-            $newUser = new UserModel($username, $password, 'Client', $dni, $email, $newformat);
-            $result = UserDAO::addUser($newUser);
+                $newUser = new UserModel($username, $password, 'Client', $dni, $email, $newformat);
+                $result = UserDAO::addUser($newUser);
 
-            if ($result instanceof UserModel)
-                SessionController::SetSession(UserDAO::getUserByEmail($email));
+                if ($result instanceof UserModel)
+                    SessionController::SetSession(UserDAO::getUserByEmail($email));
+            }
+        } catch (AddUserException $adu) {
+            $alert = new PopupAlert($adu->getExceptionArray());
+            $alert->Show();
         }
+
         HomeController::MainPage();
     }
 }

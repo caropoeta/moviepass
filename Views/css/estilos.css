@@ -230,13 +230,7 @@ body {
   margin-left: -60px;
 }
 
-footer {
-  background-color: white;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;  
-}
+
 
 .footer_top .footer-contact p i {
   font-size: 25px;
@@ -276,4 +270,12 @@ div.user_list_div {
 
 div.user_list_div > div.container {
   overflow-y:auto;
+}
+
+div.movie_container {
+  overflow-y:scroll;
+  overflow: hidden;
+  
+  height: 500px;
+  width: 95%;
 }

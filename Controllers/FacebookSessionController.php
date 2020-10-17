@@ -3,7 +3,9 @@
 namespace Controllers;
 
 use \Models\UserModel as UserModel;
-use \DAO\UserDAO as UserDAO;
+use \DAO\UserDAOjson as UserDAO;
+use Models\Exceptions\AddUserException;
+use Models\PopupAlert;
 
 class FacebookSessionController
 {
@@ -59,17 +61,23 @@ class FacebookSessionController
 
     public static function Register(String $username, String $password, int $dni, String $birthday, String $email)
     {
-        if (!SessionController::ValidateSession()) {
-            $time = strtotime($birthday);
-            $newformat = date('Y-m-d', $time);
+        try {
+            if (!SessionController::ValidateSession()) {
+                $time = strtotime($birthday);
+                $newformat = date('Y-m-d', $time);
 
-            $newUser = new UserModel($username, $password, 'Client', $dni, $email, $newformat);
-            $result = UserDAO::addUser($newUser);
+                $newUser = new UserModel($username, $password, 'Client', $dni, $email, $newformat);
+                $result = UserDAO::addUser($newUser);
 
-            if ($result instanceof UserModel) {
-                SessionController::SetSession(UserDAO::getUserByEmail($email));
+                if ($result instanceof UserModel) {
+                    SessionController::SetSession(UserDAO::getUserByEmail($email));
+                }
             }
+        } catch (AddUserException $adu) {
+            $alert = new PopupAlert($adu->getExceptionArray());
+            $alert->Show();
         }
+
         HomeController::MainPage();
     }
 
@@ -121,21 +129,6 @@ class FacebookSessionController
             }
             exit;
         }
-
-        /*
-        if (!$accessToken->isLongLived()) {
-            // Exchanges a short-lived access token for a long-lived one
-            try {
-                $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-                throw new \Facebook\Exceptions\FacebookSDKException();
-            } catch (\Facebook\Exceptions\FacebookSDKException $e) {
-                echo "<p>Error getting long-lived access token: " . $e->getMessage() . "</p>\n\n";
-                exit;
-            }
-        }
-        */
-
-        //$fb->setDefaultAccessToken($accessToken);
 
         # These will fall back to the default access token
         $res    =   $this->fb->get("/me?fields=id, first_name, last_name, email", $accessToken->getValue());
