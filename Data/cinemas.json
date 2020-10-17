@@ -1,14 +1,13 @@
 [
-     {
+    {
         "name": "Roxy",
         "adress": "Santa Fe 1888",
         "openingTime": "19",
         "closingTime": "00",
-        "ticketValue": "300",
+        "ticketValue": "150",
         "capacity": "350",
-        "id":"1"
+        "id": "1"
     },
-
     {
         "name": "Tronador",
         "adress": "San Martin 2024",

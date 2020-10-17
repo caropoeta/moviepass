@@ -79,18 +79,24 @@ class CinemaController
  public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue,$capacity)
  {
 
-    $cinema=new Cinema();
-    $cinema->setId($id);
-    $cinema->setName($name);
-    $cinema->setAdress($adress);
-    $cinema->setOpeningTime($openingTime);
-    $cinema->setClosingTime($closingTime);
-    $cinema->setTicketValue($ticketValue);
-    $cinema->setCapacity($capacity);
+    if ($ticketValue>0){
+        $cinema=new Cinema();
+        $cinema->setId($id);
+        $cinema->setName($name);
+        $cinema->setAdress($adress);
+        $cinema->setOpeningTime($openingTime);
+        $cinema->setClosingTime($closingTime);
+        $cinema->setTicketValue($ticketValue);
+        $cinema->setCapacity($capacity);
 
-    $cinemaDAO= new CinemaDAO;
-    $cinemaDAO->Update($cinema);
+        $cinemaDAO= new CinemaDAO;
+        $cinemaDAO->Update($cinema);
+    }else{
+        echo '<script language="javascript">';
+        echo "alert('The ticket must be positive!!');";
+        echo '</script>';
 
+    }
 
     require_once(VIEWS_PATH . 'indexCinema.php');
 }
