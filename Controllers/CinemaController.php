@@ -60,7 +60,7 @@ class CinemaController
         require_once(VIEWS_PATH . 'indexCinema.php');
     }
 
-    public function ModifyCinema($name)
+    public function ModifyCinema($modifyId)
     {
         require_once(VIEWS_PATH . 'navbaradmin.php');
         $cinemaDAO= new CinemaDAO();
@@ -69,15 +69,15 @@ class CinemaController
 
         foreach ($cinemaList as $oneCinema) {
 
-           if($name==$oneCinema->getName()){
+         if($modifyId==$oneCinema->getId()){
 
-               $cinemaFound=$oneCinema;
-           }
-       }
-       require_once(VIEWS_PATH . 'cinema.php');
-   }
-   public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue)
-   {
+             $cinemaFound=$oneCinema;
+         }
+     }
+     require_once(VIEWS_PATH . 'cinema.php');
+ }
+ public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue,$capacity)
+ {
 
     $cinema=new Cinema();
     $cinema->setId($id);
@@ -86,6 +86,7 @@ class CinemaController
     $cinema->setOpeningTime($openingTime);
     $cinema->setClosingTime($closingTime);
     $cinema->setTicketValue($ticketValue);
+    $cinema->setCapacity($capacity);
 
     $cinemaDAO= new CinemaDAO;
     $cinemaDAO->Update($cinema);
