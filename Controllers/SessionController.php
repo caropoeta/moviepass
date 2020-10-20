@@ -3,7 +3,9 @@
 namespace Controllers;
 
 use DAO\UserDAOjson as UserDAO;
+
 use Models\PopupAlert;
+
 use Models\UserModel as UserModel;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
