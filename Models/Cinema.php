@@ -9,6 +9,7 @@ namespace Models;
 		private $ticketValue;
 		private $capacity;
 		private $id;
+		private $delete;
 
 		public function __construct()
 		{
@@ -66,6 +67,14 @@ namespace Models;
 
 		public function getId(){
 			return $this->id;
+		}
+
+		public function setDelete($delete){
+			$this->delete=$delete;
+		}
+
+		public function getDelete(){
+			return $this->delete;
 		}
 
 	}

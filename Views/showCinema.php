@@ -5,13 +5,11 @@ include('navbaradmin.php');
 	<div class="content">
 		<header class="text-center">
 			<h2 class="fuente4 text-center">Cinema: </h2>
-			<li class="nav-item">
-				<form method="POST">
-					<div class="p-2">
-						<button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-secondary" type="submit" name="action" value="register"> Back </button>
-					</div>
 
-				</li>
+			<form method="POST">
+				<div class="p-2">
+					<button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-secondary" type="submit" name="action" value="register"> Back </button>
+				</div>
 				<?php
 
 				if (empty($cinemaFound)) {
@@ -22,14 +20,10 @@ include('navbaradmin.php');
 
 
 				</header>
-
 				<div class="login-form bg-dark-alpha p-5 bg-light">
-
-
 					<section>
 						<br>                         
 						<div class="form-group">
-
 							<div class="form-group">
 								<br>
 								<input type="text" name="id"  value="<?php echo $cinemaFound->getId() ?>"  required class="form-control"readonly="readonly">
@@ -46,10 +40,7 @@ include('navbaradmin.php');
 								<br>
 								<input type="text" name="capacity" value="<?php echo $cinemaFound->getCapacity() ?>" required class="form-control">
 								<br>
-
 							</div>
-
-
 						</div>
 					</section>
 				</div>

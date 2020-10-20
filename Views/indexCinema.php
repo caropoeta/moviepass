@@ -2,7 +2,7 @@
 include('navbaradmin.php');
 ?>
 <main class="d-flex  justify-content-center ">
-   <div class="content">
+ <div class="content">
     <header class="text-center">
     </header>
     <div class="login-form bg-dark-alpha p-5 bg-light">
@@ -28,16 +28,6 @@ include('navbaradmin.php');
                 </div>
             </form>
 
-            <form action="<?php echo FRONT_ROOT ?>Cinema/DeleteCinema" method="POST">
-                <div class="form-group">
-                    <br>
-                    <input type="text" name="deleteCinema" class="form-control" placeholder="Enter Movie name to be deleted">
-                    <br>
-                    <button type="submit" class="btn btn-primary offset-4 " required >Delete Cinema</button>
-                </div>
-            </form>
-            <br>
-            <br>
             <h2 class="fuente5 text-center"> Add cinemas</h2>
             <form action="<?php echo FRONT_ROOT ?>Cinema/AddCinema" method="POST">
                 <div class="form-group">

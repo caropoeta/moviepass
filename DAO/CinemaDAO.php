@@ -35,6 +35,7 @@ class CinemaDAO
         if (file_exists($this->fileName)) {
             $jsonContent = file_get_contents($this->fileName);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
             foreach ($arrayToDecode as $oneCinema) {
                 $cinema = new Cinema();
                 $cinema->setName($oneCinema["name"]);
@@ -44,14 +45,29 @@ class CinemaDAO
                 $cinema->setTicketValue($oneCinema["ticketValue"]);
                 $cinema->setCapacity($oneCinema["capacity"]);
                 $cinema->setId($oneCinema["id"]);
+                $cinema->setDelete($oneCinema["delete"]);
 
                 array_push($this->cinemaList, $cinema);
             }
         }
     }
 
-    public function Remove($cinemaRemove)
-    {
+    public function Remove($cinemaId)
+    {//Borrado logico
+       $this->RetrieveData();
+       $removed=false;
+
+       foreach ($this->cinemaList as $cinema) {
+        if($cinema->getId()==$cinemaId){
+            $cinema->setDelete(true);
+            $removed=true;
+        }
+    }
+    $this->SaveData();
+    return $removed;
+}
+        //Borrado Fisico
+        /*
         $this->RetrieveData();
         $cinemaListResult= array();
         $removed=false;
@@ -69,7 +85,9 @@ class CinemaDAO
 
     
         return $removed;
+        
     }
+    */
     public function Update(Cinema $cinemaToUpdate)
     {
 
@@ -83,6 +101,7 @@ class CinemaDAO
                 $cinema->setClosingTime($cinemaToUpdate->getClosingTime());
                 $cinema->setTicketValue($cinemaToUpdate->getTicketValue());
                 $cinema->setCapacity($cinemaToUpdate->getCapacity());
+
 
             }
         }
@@ -102,6 +121,7 @@ class CinemaDAO
             $valuesArray["ticketValue"] = $cinema->getTicketValue();
             $valuesArray["capacity"]=$cinema->getCapacity();
             $valuesArray["id"] = $cinema->getId();
+            $valuesArray["delete"]=$cinema->getDelete();
             array_push($arrayToEncode, $valuesArray);
         }
 

@@ -4,6 +4,7 @@ namespace Controllers;
 
 use DAO\CinemaDAO as CinemaDAO;
 use Models\Cinema as Cinema;
+use Models\PopupAlert;
 
 class CinemaController
 {
@@ -58,25 +59,34 @@ class CinemaController
                 $cinemaFound=$cinema;
             }
         }
-        
-
         require_once(VIEWS_PATH . 'showCinema.php');
     }
-
-    public function DeleteCinema($cinema)
+    //Borrado logico
+    public function DeleteCinema($deleteId)
     {
-
+        $cinemaDAO= new CinemaDAO;
+        $delete=$cinemaDAO->Remove($deleteId);
+        if($delete==true)
+        {
+            $popupAlert=new PopupAlert(["Message:","Cinema removed"]);
+            $popupAlert->Show();
+        }
+        require_once(VIEWS_PATH . 'indexCinema.php');
+    }
+    //Borrado fisico
+        /*
         $cinemaDAO= new CinemaDAO;
         $removed=$cinemaDAO->Remove($cinema);
-
+  
         if($removed){
+
             echo "The cinema: " . $cinema ." was deleted ";
         }else{
             echo "The cinema: " . $cinema . " Don't found";
         }
         require_once(VIEWS_PATH . 'indexCinema.php');
     }
-
+        */
 
     public function ModifyCinema($modifyId)
     {
@@ -114,7 +124,6 @@ class CinemaController
         echo "alert('The ticket must be positive!!');";
         echo '</script>';
     }
-
     require_once(VIEWS_PATH . 'indexCinema.php');
 }
 

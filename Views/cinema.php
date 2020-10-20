@@ -1,5 +1,5 @@
 <main class="d-flex  justify-content-center ">
-   <div class="content">
+ <div class="content">
     <header class="text-center">
         <h2 class="fuente4 text-center">Cinema to modify</h2>
     </header>
@@ -28,9 +28,15 @@
                         <button type="submit" class="btn btn-primary offset-4">Modify Cinema</button>  
                     </div>
                 </form>
-            </div>
-        </section>
-    </div>
+
+                <form method="POST">
+                  <div class="fuente4 text-center">
+                      <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-secondary" type="submit">Back</button>
+                  </div>
+              </form>
+          </div>
+      </section>
+  </div>
 </div>
 </main>
 
