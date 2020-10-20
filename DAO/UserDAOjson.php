@@ -6,7 +6,6 @@ use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
 use Models\Exceptions\ValidateUserCredentialsException;
 use Models\UserModel as UserModel;
-use Models\UserRole as UserRole;
 
 class UserDAOjson
 {
