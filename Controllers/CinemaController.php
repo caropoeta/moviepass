@@ -61,7 +61,7 @@ class CinemaController
         }
         require_once(VIEWS_PATH . 'showCinema.php');
     }
-    //Borrado logico
+ 
     public function DeleteCinema($deleteId)
     {
         $cinemaDAO= new CinemaDAO;
@@ -73,21 +73,7 @@ class CinemaController
         }
         require_once(VIEWS_PATH . 'indexCinema.php');
     }
-    //Borrado fisico
-        /*
-        $cinemaDAO= new CinemaDAO;
-        $removed=$cinemaDAO->Remove($cinema);
-  
-        if($removed){
-
-            echo "The cinema: " . $cinema ." was deleted ";
-        }else{
-            echo "The cinema: " . $cinema . " Don't found";
-        }
-        require_once(VIEWS_PATH . 'indexCinema.php');
-    }
-        */
-
+    
     public function ModifyCinema($modifyId)
     {
         require_once(VIEWS_PATH . 'navbaradmin.php');

@@ -53,7 +53,7 @@ class CinemaDAO
     }
 
     public function Remove($cinemaId)
-    {//Borrado logico
+    {
        $this->RetrieveData();
        $removed=false;
 
@@ -66,28 +66,7 @@ class CinemaDAO
     $this->SaveData();
     return $removed;
 }
-        //Borrado Fisico
-        /*
-        $this->RetrieveData();
-        $cinemaListResult= array();
-        $removed=false;
-        foreach ($this->cinemaList as $cinema) {
-            if(strcmp($cinema->getName(),$cinemaRemove)!==0){
-                array_push($cinemaListResult,$cinema);
-            }else{
 
-                $removed=true;
-            }
-        }
-    
-        $this->cinemaList=$cinemaListResult;
-        $this->SaveData();
-
-    
-        return $removed;
-        
-    }
-    */
     public function Update(Cinema $cinemaToUpdate)
     {
 
