@@ -3,6 +3,7 @@
 namespace DAO;
 
 use Models\Exceptions\AddUserException;
+use Models\Exceptions\UpdateUserException;
 use Models\Exceptions\ValidateUserCredentialsException;
 use Models\UserModel as UserModel;
 use Models\UserRole as UserRole;
@@ -250,7 +251,7 @@ class UserDAOjson
         if (!UserDAOjson::isThisDateValid($user->getBirthday()))
             array_push($array, 'Wrong date');
 
-        return !empty($array) ? $array : false;
+        return !empty($array) ? $array : [];
     }
 
     public static function addUser(UserModel $user)
@@ -258,7 +259,7 @@ class UserDAOjson
         $exceptionArray = [];
 
         $isThisUserDataValid = UserDAOjson::isThisUserDataValid($user);
-        if ($isThisUserDataValid)
+        if (!empty($isThisUserDataValid))
             array_merge($exceptionArray, $isThisUserDataValid);
 
         if (UserDAOjson::existsEmail($user->getEmail()))
@@ -297,16 +298,16 @@ class UserDAOjson
             if (UserDAOjson::existsEmail($userData->getEmail()))
                 array_push($exceptionArray, 'This email is already registered');
 
-        if ($currUser->getEmail() != $userData->getDni())
+        if ($currUser->getDni() != $userData->getDni())
             if (UserDAOjson::existsDni($userData->getDni()))
                 array_push($exceptionArray, 'This dni is already registered');
 
-        if ($currUser->getEmail() != $userData->getName())
+        if ($currUser->getName() != $userData->getName())
             if (UserDAOjson::existsUsername($userData->getName()))
                 array_push($exceptionArray, 'This user name is already registered');
 
         if (!empty($exceptionArray))
-            throw new AddUserException("Error Processing Request", $exceptionArray, 1);
+            throw new UpdateUserException("Error Processing Request", $exceptionArray, 1);
 
         $result = UserDAOjson::Load();
         for ($i = 0; $i < count($result); $i++) {

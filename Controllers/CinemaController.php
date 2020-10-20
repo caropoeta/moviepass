@@ -5,12 +5,13 @@ namespace Controllers;
 use DAO\CinemaDAO as CinemaDAO;
 use Models\Cinema as Cinema;
 use Models\PopupAlert;
+use DAO\Session;
 
 class CinemaController
 {
     public function __construct()
     {
-        SessionController::ValidateSession();
+        Session::ValidateSession();
     }
 
     public function Index()

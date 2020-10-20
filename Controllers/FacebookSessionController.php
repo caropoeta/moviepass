@@ -7,6 +7,7 @@ use \DAO\UserDAOjson as UserDAO;
 
 use Models\Exceptions\AddUserException;
 use Models\PopupAlert;
+use DAO\Session;
 
 
 class FacebookSessionController
@@ -64,7 +65,7 @@ class FacebookSessionController
     public static function Register(String $username, String $password, int $dni, String $birthday, String $email)
     {
         try {
-            if (!SessionController::ValidateSession()) {
+            if (!Session::ValidateSession()) {
                 $time = strtotime($birthday);
                 $newformat = date('Y-m-d', $time);
 
@@ -72,7 +73,7 @@ class FacebookSessionController
                 $result = UserDAO::addUser($newUser);
 
                 if ($result instanceof UserModel) {
-                    SessionController::SetSession(UserDAO::getUserByEmail($email));
+                    Session::SetSession(UserDAO::getUserByEmail($email));
                 }
             }
         } catch (AddUserException $adu) {
@@ -85,7 +86,7 @@ class FacebookSessionController
 
     public function Index()
     {
-        if (SessionController::ValidateSession()) {
+        if (Session::ValidateSession()) {
             HomeController::MainPage();
             exit;
         }
@@ -100,7 +101,7 @@ class FacebookSessionController
 
     public function Login()
     {
-        if (SessionController::ValidateSession()) {
+        if (Session::ValidateSession()) {
             HomeController::MainPage();
             exit;
         }
@@ -119,12 +120,12 @@ class FacebookSessionController
         }
 
         if (!isset($accessToken)) {
-            if ($_SESSION['helper']->getError()) {
+            if ($this->helper->getError()) {
                 header('HTTP/1.0 401 Unauthorized');
-                echo "Error: " . $_SESSION['helper']->getError() . "\n";
-                echo "Error Code: " . $_SESSION['helper']->getErrorCode() . "\n";
-                echo "Error Reason: " . $_SESSION['helper']->getErrorReason() . "\n";
-                echo "Error Description: " . $_SESSION['helper']->getErrorDescription() . "\n";
+                echo "Error: " . $this->helper->getError() . "\n";
+                echo "Error Code: " . $this->helper->getErrorCode() . "\n";
+                echo "Error Reason: " . $this->helper->getErrorReason() . "\n";
+                echo "Error Description: " . $this->helper->getErrorDescription() . "\n";
             } else {
                 header('HTTP/1.0 400 Bad Request');
                 echo 'Bad request';
@@ -145,7 +146,7 @@ class FacebookSessionController
 
         $usr = UserDAO::getUserByEmail($fbUser['email']);
         if ($usr instanceof UserModel) {
-            SessionController::SetSession($usr);
+            Session::SetSession($usr);
             HomeController::MainPage();
             exit;
         } else {

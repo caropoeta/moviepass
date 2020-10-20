@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use Models\UserModel as UserModel;
+use DAO\Session;
 
 class HomeController
 {
@@ -13,10 +13,8 @@ class HomeController
 
     public static function MainPage()
     {
-        SessionController::ValidateSession();
-
-        if ($_SESSION['current_user'] instanceof UserModel)
-            switch ($_SESSION['current_user']->getRole()) {
+        if (Session::ValidateSession())
+            switch (Session::GetUserRole()) {
                 case 'Admin':
                     require_once(VIEWS_PATH . 'adminMenu.php');
                     return;
