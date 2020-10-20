@@ -4,9 +4,9 @@
         "username": "admin",
         "id": 3,
         "password": "admin",
-        "birthday": "2020-10-06",
-        "email": "qqqr@qqq",
-        "dni": 1,
+        "birthday": "2020-10-05",
+        "email": "qqq@qqq",
+        "dni": 60000000,
         "role": "Admin"
     },
     {

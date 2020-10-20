@@ -10,65 +10,87 @@ use Models\UserModel as UserModel;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
 use Models\Exceptions\ValidateUserCredentialsException;
+use DAO\Session;
 
 class SessionController
 {
-    private function Edit() {
-        try {
-            //code...
-        } catch (UpdateUserException $uue) {
-            $alert = new PopupAlert($uue->getExceptionArray());
-            $alert->Show();
-        }
-    }
-
     public function __construct()
     {
-        SessionController::ValidateSession();
+        Session::ValidateSession();
     }
 
-    public static function ValidateSession()
+    public function Edit(String $username, String $password, String $email, int $dni, String $birthday)
     {
-        if (!isset($_SESSION['current_user']))
-            $_SESSION['current_user'] = null;
+        if (Session::ValidateSession()) {
+            try {
+                $currUSer = Session::GetCurrentUser();
+                if ($currUSer instanceof UserModel) {
+                    $currUSer->setName($username);
+                    $currUSer->setPassword($password);
+                    $currUSer->setEmail($email);
+                    $currUSer->setDni($dni);
+                    $currUSer->setBirthday($birthday);
 
-        return ($_SESSION['current_user'] instanceof UserModel) ? true : false;
-    }
+                    UserDAO::updateUser($currUSer);
+                }
+            } catch (UpdateUserException $uue) {
+                $alert = new PopupAlert($uue->getExceptionArray());
+                $alert->Show();
+            }
+        }
 
-    public static function SetSession($obj)
-    {
-        $_SESSION['current_user'] = $obj;
+        HomeController::MainPage();
     }
 
     public function Index(String $action = "")
     {
-        if (SessionController::ValidateSession()) {
-            HomeController::MainPage();
-            return;
-        }
-
         switch ($action) {
             case 'register':
-                require_once(VIEWS_PATH . 'register.php');
-                return;
+                if (Session::ValidateSession())
+                    HomeController::MainPage();
+                else
+                    require_once(VIEWS_PATH . 'register.php');
+
+                break;
 
             case 'login':
-                require_once(VIEWS_PATH . 'login.php');
-                return;
+                if (Session::ValidateSession())
+                    HomeController::MainPage();
+                else
+                    require_once(VIEWS_PATH . 'login.php');
+
+                break;
+
+            case 'edit':
+                if (!Session::ValidateSession())
+                    HomeController::MainPage();
+                else if (Session::ValidateSession()) {
+                    $currUSer = Session::GetCurrentUser();
+                    $name = $currUSer->getName();
+                    $password = $currUSer->getPassword();
+                    $email = $currUSer->getEmail();
+                    $dni = $currUSer->getDni();
+                    $birthday = $currUSer->getBirthday();
+                    $currUSer = null;
+
+                    require_once(VIEWS_PATH . 'editUser.php');
+                }
+
+                break;
 
             default:
                 HomeController::MainPage();
-                return;
+                break;
         }
     }
 
     public function Login(String $username, String $password)
     {
         try {
-            if (!SessionController::ValidateSession()) {
+            if (!Session::ValidateSession()) {
                 $logUser = UserDAO::validateUserCredentials($username, $password);
                 if ($logUser instanceof UserModel)
-                    SessionController::SetSession($logUser);
+                    Session::SetSession($logUser);
             }
         } catch (ValidateUserCredentialsException $vuce) {
             $alert = new PopupAlert($vuce->getExceptionArray());
@@ -80,8 +102,8 @@ class SessionController
 
     public function Logout()
     {
-        if (SessionController::ValidateSession())
-            SessionController::SetSession(null);
+        if (Session::ValidateSession())
+            Session::SetSession(null);
 
         HomeController::MainPage();
     }
@@ -89,7 +111,7 @@ class SessionController
     public function Register(String $username, String $password, int $dni, String $email, String $birthday)
     {
         try {
-            if (!SessionController::ValidateSession()) {
+            if (!Session::ValidateSession()) {
                 $time = strtotime($birthday);
                 $newformat = date('Y-m-d', $time);
 
@@ -97,7 +119,7 @@ class SessionController
                 $result = UserDAO::addUser($newUser);
 
                 if ($result instanceof UserModel)
-                    SessionController::SetSession(UserDAO::getUserByEmail($email));
+                    Session::SetSession(UserDAO::getUserByEmail($email));
             }
         } catch (AddUserException $adu) {
             $alert = new PopupAlert($adu->getExceptionArray());

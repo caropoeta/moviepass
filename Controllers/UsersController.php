@@ -7,6 +7,7 @@ use DAO\UserDAOjson as UserDAO;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
 use Models\PopupAlert;
+use DAO\Session;
 
 use Models\UserModel as UserModel;
 
@@ -14,14 +15,11 @@ class UsersController
 {
     public function __construct()
     {
-        if (
-            !$_SESSION['current_user'] ||
-            !($_SESSION['current_user'] instanceof UserModel)
-        ) {
+        if (!Session::ValidateSession()) {
             HomeController::MainPage();
             exit();
         }
-        if ($_SESSION['current_user']->getRole() != 'Admin') {
+        if (!Session::IsUserThisRole('Admin')) {
             HomeController::MainPage();
             exit();
         }
@@ -32,8 +30,8 @@ class UsersController
         try {
             $time = strtotime($birthday);
             $newformat = date('Y-m-d', $time);
-    
-            UserDAO::addUser(new UserModel($username, $password, $role, $dni, $email, $newformat));    
+
+            UserDAO::addUser(new UserModel($username, $password, $role, $dni, $email, $newformat));
         } catch (AddUserException $aue) {
             $alert = new PopupAlert($aue->getExceptionArray());
             $alert->Show();
@@ -59,7 +57,7 @@ class UsersController
     public function Edit(String $email, int $dni, String $birthday, String $role, int $id)
     {
         try {
-            if ($id != $_SESSION['current_user']->getId()) {
+            if (Session::ValidateSession() && $id != Session::GetUserId()) {
                 $user = UserDAO::getUserById($id);
 
                 if ($user instanceof UserModel) {
@@ -86,7 +84,7 @@ class UsersController
 
     public function Delete(int $id)
     {
-        if ($id != $_SESSION['current_user']->getId())
+        if (Session::ValidateSession() && $id != Session::GetUserId())
             UserDAO::deleteUser($id);
 
         $roles = UserDAO::getRoles();
