@@ -19,21 +19,29 @@ class CinemaController
     }
 
 
-    public function AddCinema($id, $name, $adress, $openingTime, $closingTime, $ticketValue,$capacity)
+    public function AddCinema($name, $adress, $openingTime, $closingTime, $ticketValue,$capacity)
     {
+        $cinemaDAO = new CinemaDAO();
+        $cinemaList = $cinemaDAO->GetAll();
+        $idMax=1;
+        foreach ($cinemaList as $oneCinema) {
+            if($oneCinema->getId()>$idMax){
+                $idMax=$oneCinema->getId();
+            }
+        }
+        $newId=$idMax+1;
         $cinemaToAdd = new Cinema();
-        $cinemaToAdd->setId($id);
+        $cinemaToAdd->setId($newId);
         $cinemaToAdd->setName($name);
         $cinemaToAdd->setAdress($adress);
         $cinemaToAdd->setOpeningTime($openingTime);
         $cinemaToAdd->setClosingTime($closingTime);
         $cinemaToAdd->setTicketValue($ticketValue);
         $cinemaToAdd->setCapacity($capacity);
+        $cinemaToAdd->setDelete(false);
 
-        $cinemaDAO = new CinemaDAO();
-        $cinemaDAO->Add($cinemaToAdd);
-
-        $cinemaList = $cinemaDAO->GetAll();
+         $cinemaDAO->Add($cinemaToAdd);
+         $cinemaList = $cinemaDAO->GetAll();
         require_once(VIEWS_PATH . 'showCinemas.php');
 
     }
