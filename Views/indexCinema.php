@@ -32,8 +32,6 @@ include('navbaradmin.php');
             <form action="<?php echo FRONT_ROOT ?>Cinema/AddCinema" method="POST">
                 <div class="form-group">
                     <br>
-                    <input type="text" name="id" placeholder="Enter Id to be added" required class="form-control">
-                    <br>
                     <input type="text" name="name" class="form-control" required placeholder="Enter cinema name">
                     <br>
                     <input type="text" name="adress" placeholder="Enter Cinema Adress" required class="form-control">
