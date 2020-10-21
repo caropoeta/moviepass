@@ -31,76 +31,84 @@ class CinemaController
             }
         }
         $newId=$idMax+1;
-        $cinemaToAdd = new Cinema();
-        $cinemaToAdd->setId($newId);
-        $cinemaToAdd->setName($name);
-        $cinemaToAdd->setAdress($adress);
-        $cinemaToAdd->setOpeningTime($openingTime);
-        $cinemaToAdd->setClosingTime($closingTime);
-        $cinemaToAdd->setTicketValue($ticketValue);
-        $cinemaToAdd->setCapacity($capacity);
-        $cinemaToAdd->setDelete(false);
 
-         $cinemaDAO->Add($cinemaToAdd);
-         $cinemaList = $cinemaDAO->GetAll();
-        require_once(VIEWS_PATH . 'showCinemas.php');
+        if($ticketValue>0){
+            $cinemaToAdd = new Cinema();
+            $cinemaToAdd->setId($newId);
+            $cinemaToAdd->setName($name);
+            $cinemaToAdd->setAdress($adress);
+            $cinemaToAdd->setOpeningTime($openingTime);
+            $cinemaToAdd->setClosingTime($closingTime);
+            $cinemaToAdd->setTicketValue($ticketValue);
+            $cinemaToAdd->setCapacity($capacity);
+            $cinemaToAdd->setDelete(false);
 
-    }
-
-    public function ShowCinemas()
-    {
-
-        $cinemaDAO= new CinemaDAO();
-        $cinemaList=$cinemaDAO->GetAll();
+            $cinemaDAO->Add($cinemaToAdd);
+            $cinemaList = $cinemaDAO->GetAll();
+        }else{
+           $popupAlert=new PopupAlert(["Error:","the ticket value must be positive "]);
+           $popupAlert->Show();
 
 
-        require_once(VIEWS_PATH . 'showCinemas.php');
-    }
-
-    public function ShowCinema($cinemaSearched)
-    {
-
-        $cinemaDAO= new CinemaDAO();
-        $cinemas=$cinemaDAO->GetAll();
-
-        foreach ($cinemas as $cinema) {
-            if(strcmp($cinema->getName(),$cinemaSearched)==0){
-                $cinemaFound=$cinema;
-            }
-        }
-        require_once(VIEWS_PATH . 'showCinema.php');
-    }
- 
-    public function DeleteCinema($deleteId)
-    {
-        $cinemaDAO= new CinemaDAO;
-        $delete=$cinemaDAO->Remove($deleteId);
-        if($delete==true)
-        {
-            $popupAlert=new PopupAlert(["Message:","Cinema removed"]);
-            $popupAlert->Show();
-        }
-        require_once(VIEWS_PATH . 'indexCinema.php');
-    }
-    
-    public function ModifyCinema($modifyId)
-    {
-        require_once(VIEWS_PATH . 'navbaradmin.php');
-        $cinemaDAO= new CinemaDAO();
-        $cinemaList=$cinemaDAO->GetAll();
-        $cinemaFound= new Cinema();
-
-        foreach ($cinemaList as $oneCinema) {
-
-           if($modifyId==$oneCinema->getId()){
-
-               $cinemaFound=$oneCinema;
-           }
        }
-       require_once(VIEWS_PATH . 'cinema.php');
+       require_once(VIEWS_PATH . 'showCinemas.php');
+
    }
-   public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue,$capacity)
-   {
+
+public function ShowCinemas()
+{
+
+    $cinemaDAO= new CinemaDAO();
+    $cinemaList=$cinemaDAO->GetAll();
+
+
+    require_once(VIEWS_PATH . 'showCinemas.php');
+}
+
+public function ShowCinema($cinemaSearched)
+{
+
+    $cinemaDAO= new CinemaDAO();
+    $cinemas=$cinemaDAO->GetAll();
+
+    foreach ($cinemas as $cinema) {
+        if(strcmp($cinema->getName(),$cinemaSearched)==0){
+            $cinemaFound=$cinema;
+        }
+    }
+    require_once(VIEWS_PATH . 'showCinema.php');
+}
+
+public function DeleteCinema($deleteId)
+{
+    $cinemaDAO= new CinemaDAO;
+    $delete=$cinemaDAO->Remove($deleteId);
+    if($delete==true)
+    {
+        $popupAlert=new PopupAlert(["Message:","Cinema removed"]);
+        $popupAlert->Show();
+    }
+    require_once(VIEWS_PATH . 'indexCinema.php');
+}
+
+public function ModifyCinema($modifyId)
+{
+    require_once(VIEWS_PATH . 'navbaradmin.php');
+    $cinemaDAO= new CinemaDAO();
+    $cinemaList=$cinemaDAO->GetAll();
+    $cinemaFound= new Cinema();
+
+    foreach ($cinemaList as $oneCinema) {
+
+       if($modifyId==$oneCinema->getId()){
+
+           $cinemaFound=$oneCinema;
+       }
+   }
+   require_once(VIEWS_PATH . 'cinema.php');
+}
+public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue,$capacity)
+{
 
     if ($ticketValue>0){
         $cinema=new Cinema();
