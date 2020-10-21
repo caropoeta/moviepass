@@ -28,7 +28,7 @@ include('navbaradmin.php');
                 </div>
             </form>
 
-            <h2 class="fuente5 text-center"> Add cinemas</h2>
+            <h2 class="fuente5 text-center"> Add cinema</h2>
             <form action="<?php echo FRONT_ROOT ?>Cinema/AddCinema" method="POST">
                 <div class="form-group">
                     <br>
