@@ -28,17 +28,17 @@ include('navbaradmin.php');
 								<br>
 								<input type="text" name="id"  value="<?php echo $cinemaFound->getId() ?>"  required class="form-control"readonly="readonly">
 								<br>
-								<input type="text" name="name" value="<?php echo $cinemaFound->getName() ?>" required class="form-control" >
+								<input type="text" name="name" value="<?php echo $cinemaFound->getName() ?>" required class="form-control"readonly="readonly" >
 								<br>
-								<input type="text" name="adress" value="<?php echo $cinemaFound->getAdress() ?>" required class="form-control">
+								<input type="text" name="adress" value="<?php echo $cinemaFound->getAdress() ?>" required class="form-control"readonly="readonly">
 								<br>
-								<input type="text" name="openingTime" value="<?php echo $cinemaFound->getOpeningTime() ?>"  required class="form-control">
+								<input type="text" name="openingTime" value="<?php echo $cinemaFound->getOpeningTime() ?>"  required class="form-control"readonly="readonly">
 								<br>
-								<input type="text" name="closingTime" value="<?php echo $cinemaFound->getClosingTime()?>" required class="form-control">
+								<input type="text" name="closingTime" value="<?php echo $cinemaFound->getClosingTime()?>" required class="form-control"readonly="readonly">
 								<br>
-								<input type="text" name="ticketValue" value="<?php echo $cinemaFound->getTicketValue() ?>" required class="form-control">
+								<input type="text" name="ticketValue" value="<?php echo $cinemaFound->getTicketValue() ?>" required class="form-control"readonly="readonly">
 								<br>
-								<input type="text" name="capacity" value="<?php echo $cinemaFound->getCapacity() ?>" required class="form-control">
+								<input type="text" name="capacity" value="<?php echo $cinemaFound->getCapacity() ?>" required class="form-control"readonly="readonly">
 								<br>
 							</div>
 						</div>
