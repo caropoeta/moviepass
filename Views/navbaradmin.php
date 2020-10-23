@@ -17,7 +17,7 @@
       <li class="nav-item">
 
         <div class="p-2">
-          <button formaction="<?php echo FRONT_ROOT ?>Users/List" class="btn btn-secondary" type="submit" name="action" value="login">UsersList</button>
+          <button formaction="<?php echo FRONT_ROOT ?>Users/List" class="btn btn-secondary" type="submit">UsersList</button>
         </div>
       </li>
 

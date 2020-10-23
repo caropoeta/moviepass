@@ -47,10 +47,11 @@ class UsersController
         $this->List();
     }
 
-    public function List()
+    public function List(String $name = "", String $email = "", String $dni = "", String $role = "")
     {
+        var_dump($role);
         $roles = RolesDAO::getRoles();
-        $users = UserDAO::getUsers();
+        $users = UserDAO::getUsers($name, $email, $dni, $role);
         require_once(VIEWS_PATH . 'usersList.php');
     }
 

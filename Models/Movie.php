@@ -9,10 +9,6 @@ class Movie {
     private $movieId;
     private $genres;
 
-    public function __construct($genres=array()){
-
-    }
-
     public function setTitle($title){
         $this->title = $title ;
     }
