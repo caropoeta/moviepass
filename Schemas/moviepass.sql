@@ -22,9 +22,9 @@ CREATE TABLE genresXMovies(
     idGenreXMovie INT AUTO_INCREMENT NOT NULL,
     idMovie INT,
     idGenre INT,
-    CONSTRAINT pk_idGenreXMovies PRIMARY KEY genresXMovie (idGenreByMovie),
+    CONSTRAINT pk_idGenreXMovies PRIMARY KEY genresXMovie (idGenreXMovie),
 	CONSTRAINT fk_idMovie FOREIGN KEY genresXMovie(idMovie) REFERENCES movies(idMovie),
-	CONSTRAINT fk_idMovie FOREIGN KEY genresXMovie(idGenre) REFERENCES genres(idGenre)
+	CONSTRAINT fk_idGenre FOREIGN KEY genresXMovie(idGenre) REFERENCES genres(idGenre)
 );
 
 CREATE TABLE users (
@@ -66,4 +66,21 @@ CREATE TABLE cinemas(
     address VARCHAR(255),
     CONSTRAINT pk_idCinema PRIMARY KEY cinemas(idCinema)
 );
+
+CREATE TABLE tickets(
+	idTicket int auto_increment,
+    qr varchar(255),
+    idMovieFunction int,
+    constraint pk_idTicket primary key(idTicket),
+    constraint fk_idMovieFunctionTicket foreign key(idMovieFunction) references movieFunctions(idMovieFunction)
+);
+
+CREATE TABLE movieFunctions(
+	idMovieFunction INT AUTO_INCREMENT,
+	startFunction DATETIME,
+    idRoom INT,
+	idMovie INT,
+	CONSTRAINT pk_idMovieFunction PRIMARY KEY movieFunctions(idMovieFunction),
+	CONSTRAINT fk_idRoomFunction FOREIGN KEY movieFunctions(idRoom) REFERENCES rooms(idRoom),
+	CONSTRAINT fk_idMovieFunction FOREIGN KEY movieFunctions(idMovie) REFERENCES movies(idMovie));
     
