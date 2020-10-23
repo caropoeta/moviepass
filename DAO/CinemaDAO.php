@@ -35,6 +35,7 @@ class CinemaDAO
         if (file_exists($this->fileName)) {
             $jsonContent = file_get_contents($this->fileName);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
             foreach ($arrayToDecode as $oneCinema) {
                 $cinema = new Cinema();
                 $cinema->setName($oneCinema["name"]);
@@ -42,32 +43,30 @@ class CinemaDAO
                 $cinema->setOpeningTime($oneCinema["openingTime"]);
                 $cinema->setClosingTime($oneCinema["closingTime"]);
                 $cinema->setTicketValue($oneCinema["ticketValue"]);
+                $cinema->setCapacity($oneCinema["capacity"]);
                 $cinema->setId($oneCinema["id"]);
+                $cinema->setDelete($oneCinema["delete"]);
 
                 array_push($this->cinemaList, $cinema);
             }
         }
     }
 
-    public function Remove($cinemaRemove)
+    public function Remove($cinemaId)
     {
-        $this->RetrieveData();
-        $cinemaListResult= array();
-        $removed=false;
-        foreach ($this->cinemaList as $cinema) {
-            if(strcmp($cinema->getName(),$cinemaRemove)!==0){
-                array_push($cinemaListResult,$cinema);
-            }else{
+       $this->RetrieveData();
+       $removed=false;
 
-                $removed=true;
-            }
+       foreach ($this->cinemaList as $cinema) {
+        if($cinema->getId()==$cinemaId){
+            $cinema->setDelete(true);
+            $removed=true;
         }
-    
-        $this->cinemaList=$cinemaListResult;
-        $this->SaveData();
-       
-        return $removed;
     }
+    $this->SaveData();
+    return $removed;
+}
+
     public function Update(Cinema $cinemaToUpdate)
     {
 
@@ -80,6 +79,9 @@ class CinemaDAO
                 $cinema->setOpeningTime($cinemaToUpdate->getOpeningTime());
                 $cinema->setClosingTime($cinemaToUpdate->getClosingTime());
                 $cinema->setTicketValue($cinemaToUpdate->getTicketValue());
+                $cinema->setCapacity($cinemaToUpdate->getCapacity());
+
+
             }
         }
         $this->SaveData($cinemaList);
@@ -96,7 +98,9 @@ class CinemaDAO
             $valuesArray["openingTime"] = $cinema->getOpeningTime();
             $valuesArray["closingTime"] = $cinema->getClosingTime();
             $valuesArray["ticketValue"] = $cinema->getTicketValue();
+            $valuesArray["capacity"]=$cinema->getCapacity();
             $valuesArray["id"] = $cinema->getId();
+            $valuesArray["delete"]=$cinema->getDelete();
             array_push($arrayToEncode, $valuesArray);
         }
 
@@ -113,4 +117,8 @@ class CinemaDAO
         $this->cinemaList = array_replace($this->cinemaList, $cinemas);
         $this->saveData();
     }
+
 }
+
+
+

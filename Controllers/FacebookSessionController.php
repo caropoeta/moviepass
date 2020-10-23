@@ -8,6 +8,7 @@ use Models\Exceptions\AddUserException;
 use Models\PopupAlert;
 use DAO\Session;
 
+
 class FacebookSessionController
 {
     private $fb;

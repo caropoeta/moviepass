@@ -1,6 +1,5 @@
 <section>
     <?php
-
     include('navbaradmin.php');
 
     use Models\UserModel as UserModel;
@@ -73,6 +72,7 @@
                                                             <h3 class="text-center fuente5 offset-6">Rol</h3>
                                                         </div>
                                                         <select class="custom-select col-md-4 offset-4" name="role">
+
 
                                                             <?php
                                                             foreach ($roles as $role) {
@@ -182,5 +182,4 @@
             </div>
         </div>
     </div>
-
 </section>
