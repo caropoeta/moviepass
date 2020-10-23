@@ -32,9 +32,18 @@ class CinemaController
             }
         }
         $newId=$idMax+1;
+        $errorMessage="";
+        $hasError=false;
+        if($ticketValue<=0){
+            $hasError=true;
+            $errorMessage= $errorMessage . "The ticket value must be positive" . '\n';
 
-        if($ticketValue>0 && $capacity>0){
-
+        } 
+        if($capacity<=0){
+            $hasError=true;
+            $errorMessage= $errorMessage . "The capacity value must be positive" . '\n';
+        }
+        if($hasError == false){
             $cinemaToAdd = new Cinema();
             $cinemaToAdd->setId($newId);
             $cinemaToAdd->setName($name);
@@ -47,8 +56,9 @@ class CinemaController
 
             $cinemaDAO->Add($cinemaToAdd);
             $cinemaList = $cinemaDAO->GetAll();
-        }else {
-            $popupAlert=new PopupAlert(["Error:","Must enter a positive value, enter again"]);
+        }
+        else {
+            $popupAlert=new PopupAlert(["Error:", $errorMessage]);
             $popupAlert->Show();
         }
         require_once(VIEWS_PATH . 'showCinemas.php');
