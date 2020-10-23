@@ -2,10 +2,8 @@
 
 namespace Controllers;
 
-use DAO\UserDAOjson as UserDAO;
-
+use DAO\UsersDAO as UserDAO;
 use Models\PopupAlert;
-
 use Models\UserModel as UserModel;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
@@ -25,20 +23,27 @@ class SessionController
             try {
                 $currUSer = Session::GetCurrentUser();
                 if ($currUSer instanceof UserModel) {
-                    $currUSer->setName($username);
-                    $currUSer->setPassword($password);
-                    $currUSer->setEmail($email);
-                    $currUSer->setDni($dni);
-                    $currUSer->setBirthday($birthday);
+                    $nwuser = new UserModel(
+                        $username,
+                        $password,
+                        $currUSer->getRole(),
+                        $dni,
+                        $email,
+                        $birthday,
+                        $currUSer->getId()
+                    );
 
-                    UserDAO::updateUser($currUSer);
+                    $response = UserDAO::updateUser($nwuser);
+
+                    if ($response instanceof UserModel)
+                        Session::SetSession($response);
                 }
             } catch (UpdateUserException $uue) {
                 $alert = new PopupAlert($uue->getExceptionArray());
                 $alert->Show();
             }
         }
-
+        
         HomeController::MainPage();
     }
 
