@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use \Models\UserModel as UserModel;
-use \DAO\UserDAOjson as UserDAO;
+use \DAO\UsersDAO as UserDAO;
 use Models\Exceptions\AddUserException;
 use Models\PopupAlert;
 use DAO\Session;
