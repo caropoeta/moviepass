@@ -19,12 +19,10 @@ CREATE TABLE genres(
 );
 
 CREATE TABLE genresXMovies(
-    idGenreXMovie INT AUTO_INCREMENT NOT NULL,
     idMovie INT,
     idGenre INT,
-    CONSTRAINT pk_idGenreXMovies PRIMARY KEY genresXMovies (idGenreXMovie),
-	CONSTRAINT fk_idMovie FOREIGN KEY genresXMovie(idMovie) REFERENCES movies(idMovie),
-	CONSTRAINT fk_idGenre FOREIGN KEY genresXMovie(idGenre) REFERENCES genres(idGenre)
+	CONSTRAINT fk_idMovie FOREIGN KEY genresXMovie(idMovie) REFERENCES movies(id),
+	CONSTRAINT fk_idGenre FOREIGN KEY genresXMovie(idGenre) REFERENCES genres(id)
 );
 
 CREATE TABLE IF NOT EXISTS roles (

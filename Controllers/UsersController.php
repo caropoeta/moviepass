@@ -48,10 +48,10 @@ class UsersController
     }
 
     public function List(String $name = "", String $email = "", String $dni = "", String $role = "")
-    {
-        var_dump($role);
-        $roles = RolesDAO::getRoles();
+    {   
+        $role = ($role = RolesDAO::getRoleByName($role)) ? $role->getId() : '';
         $users = UserDAO::getUsers($name, $email, $dni, $role);
+        $roles = RolesDAO::getRoles();
         require_once(VIEWS_PATH . 'usersList.php');
     }
 

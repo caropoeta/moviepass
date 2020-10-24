@@ -101,8 +101,6 @@ class UsersDAO
         AND CAST(user_role as varchar(50)) like :role
         ;";
 
-        $role = ($role = RolesDAO::getRoleByName($role)) ? $role->getId() : '';
-
         $params = [];
         if ($name == "")
             $params['name']     = '%';
