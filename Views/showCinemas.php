@@ -47,6 +47,13 @@ include('navbaradmin.php');
             </button>
 
             <ul class="navbar-nav ml-auto">
+
+              <li class="nav-item">
+              <form method="POST">
+               <div class="p-2">
+                <button formaction="<?php echo FRONT_ROOT ?>Room/List" class="btn btn-secondary" type="submit" name="room" value="<?php echo $cinema->getidCinema(); ?>">Rooms</button>        
+              </div>
+            </li>
              <li class="nav-item">
               <form method="POST">
                <div class="p-2">
