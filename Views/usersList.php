@@ -14,7 +14,35 @@
             <h2 class="text-center fuente3 ">Usuarios</h2>
             <br>
             <div class="container-fluid">
+                <br>
+                <form action="<?php echo FRONT_ROOT ?>Users/List" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Enter user name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="Enter user email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="dni" placeholder="Enter user dni">
+                    </div>
+                    <div class="form-group">
+                        <select class=" col-md-4 offset-4" name="role">
+                            <option default>Anything</option>
+                            <?php
+                            foreach ($roles as $role) {
+                                if ($role instanceof UserRole) {
+                            ?>
+                                    <option><?php echo $role->getName(); ?></option>
+                            <?php }
+                            } ?>
+                        </select>
+                    </div>
 
+                    <div class="form-group">
+                        <button class="btn btn-primary mb-2" type="submit">Search</button>
+                    </div>
+                </form>
+                <hr>
                 <?php foreach ($users as $user) {
                     if ($user instanceof UserModel) { ?>
                         <div class="form-row">
@@ -98,7 +126,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button formaction="<?php echo FRONT_ROOT?>Users/Edit" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $user->getId() ?>">Editar</button>
+                                                    <button formaction="<?php echo FRONT_ROOT ?>Users/Edit" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $user->getId() ?>">Editar</button>
                                                 </div>
                                             </form>
                                         </div>

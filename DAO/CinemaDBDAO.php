@@ -19,7 +19,10 @@ class CinemaDBDAO
 
 
 public function ReadAll(){
-  $sql = "SELECT * FROM cinemas ";
+
+  $sql = "SELECT * FROM cinemas 
+  where deleteCinema=0";
+
   try
   {
     $this->connection = Connection::getInstance();
@@ -29,7 +32,9 @@ public function ReadAll(){
     else 
      return false; 
  }
- catch(Exception $e)
+
+ catch(PDOException $e)
+
  {
   echo $e;
 }
@@ -41,11 +46,12 @@ protected function Mapear($value)
   $cinemaList = array();
   foreach($value as $v){
     $cinema = new Cinema();
-    $cinema->setnameCinema($v['cinemaName']);
+
+    $cinema->setnameCinema($v['nameCinema']);
     $cinema->setAddress($v['address']);
     $cinema->setOpeningTime($v['openingTime']);
     $cinema->setClosingTime($v['closingTime']);
-    $cinema->setTicketValue($v['ticket_value']);
+    $cinema->setTicketValue($v['ticketValue']);
     $cinema->setCapacity($v['capacity']);
     $cinema->setidCinema($v['idCinema']);
 
@@ -58,7 +64,7 @@ protected function Mapear($value)
 }
 
 public function Add(Cinema $cinema){
-        // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada 
+      // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada 
 
   $sql = "INSERT INTO cinemas (nameCinema,address,openingTime,closingTime,ticketValue,capacity,deleteCinema)VALUES (:nameCinema, :address,:openingTime,:closingTime,:ticketValue,:capacity,:deleteCinema );";
 
@@ -73,38 +79,45 @@ public function Add(Cinema $cinema){
   try
   {
     $this->connection = Connection::getInstance();
-  
+
+    
     $this->connection->ExecuteNonQuery($sql, $parameters);
 
   }
-  catch(Exception $e)
+  catch(PDOException $e)
   {
     echo $e;
   }
 }
 
 public function Remove($idCinema){
-  $sql = "delete FROM cinemas WHERE idCinema= :idCinema";
+
+  $sql = "update cinemas
+  set deleteCinema= 1
+  WHERE idCinema= :idCinema";
+
   $parameters['idCinema'] = $idCinema;
 
   try{
     $this->connection = Connection::getInstance();
     return $this->connection->ExecuteNonQuery($sql, $parameters);
   }
-  catch(Exception $e){
+
+  catch(PDOException $e){
+
     echo $e;
   }
 }
 public function Update(Cinema $cinemaToUpdate){
 
   $sql="UPDATE cinemas 
-  SET nameCinema= :nameCinema
-  address= :address
-  openingTime=:openingTime
-  closingTime=:closingTime
-  ticketValue=:ticketValue 
+  SET nameCinema= :nameCinema,
+  address= :address,
+  openingTime=:openingTime,
+  closingTime=:closingTime,
+  ticketValue=:ticketValue ,
   capacity=:capacity
- 
+
   WHERE idCinema = :idCinema ";
   $parameters=[];  
   $parameters['idCinema']=$cinemaToUpdate->getidCinema();
@@ -114,14 +127,15 @@ public function Update(Cinema $cinemaToUpdate){
   $parameters['closingTime']=$cinemaToUpdate->getclosingTime();
   $parameters['ticketValue'] = $cinemaToUpdate->getticketValue();
   $parameters['capacity']=$cinemaToUpdate->getcapacity();
- 
 
 
   try{
     $this->connection = Connection::getInstance();
     return $this->connection->ExecuteNonQuery($sql, $parameters);
   }
-  catch(Exception $e){
+
+  catch(PDOException $e){
+
     echo $e;
   }
 }
@@ -151,7 +165,9 @@ public function Read ($idCinema)
    }else
    return false;
  }
- catch(Exception $e)
+
+ catch(PDOException $e)
+
  {
   echo $e;
 }

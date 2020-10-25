@@ -1,5 +1,5 @@
 <main class="d-flex  justify-content-center ">
- <div class="content">
+   <div class="content">
     <header class="text-center">
         <h2 class="fuente4 text-center">Cinema to modify</h2>
     </header>
