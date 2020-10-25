@@ -2,21 +2,24 @@ create database if not exists moviepass;
 
 use moviepass;
 
-CREATE TABLE movies(
-    idMovie INT ,
-    title VARCHAR(255) NOT NULL,
-    releaseDate DATE,
-    points SMALLINT,
-    movieDescription VARCHAR(1023),
-    poster VARCHAR(255),
-    CONSTRAINT pk_idMovie PRIMARY KEY movies(idMovie)
-);
+CREATE TABLE movies (
+  id int(11) NOT NULL,
+  title varchar(255) NOT NULL,
+  release_date date DEFAULT NULL,
+  vote_average smallint(6) DEFAULT NULL,
+  overview longtext DEFAULT NULL,
+  poster_path varchar(255) DEFAULT NULL,
+  deleted tinyint(1) NOT NULL DEFAULT 0
 
-CREATE TABLE genres(
-    idGenre INT AUTO_INCREMENT NOT NULL,
-    genreDescription VARCHAR(255),
-	CONSTRAINT pk_idGenre PRIMARY KEY genres(idGenre)
-);
+  CONSTRAINT pk_idMovie PRIMARY KEY movies(id)
+)
+
+CREATE TABLE genres (
+  id int not null,
+  name varchar(255) not null
+
+  CONSTRAINT pk_idGenres PRIMARY KEY genres(id)
+)
 
 CREATE TABLE genresXMovies(
     idMovie INT,
