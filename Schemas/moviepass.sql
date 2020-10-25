@@ -24,8 +24,10 @@ CREATE TABLE genres (
 CREATE TABLE genresXMovies(
     idMovie INT,
     idGenre INT,
+
 	CONSTRAINT fk_idMovie FOREIGN KEY genresXMovie(idMovie) REFERENCES movies(id),
 	CONSTRAINT fk_idGenre FOREIGN KEY genresXMovie(idGenre) REFERENCES genres(id)
+
 );
 
 CREATE TABLE IF NOT EXISTS roles (
@@ -62,23 +64,44 @@ VALUES ('admin','$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 
 CREATE TABLE cinemas(
     idCinema INT AUTO_INCREMENT NOT NULL,
     cinemaName VARCHAR(255) NOT NULL,
-    adress VARCHAR(255),
+    address VARCHAR(255),
     openingTime TIME,
     closingTime TIME,
     ticket_value FLOAT,
     capacity INT,
     cinemaDelete INT, 
-    address VARCHAR(255),
     CONSTRAINT pk_idCinema PRIMARY KEY cinemas(idCinema)
 );
+
+
 
 CREATE TABLE rooms(
 	idRoom int auto_increment,
     roomName varchar(255) unique,
 	capacity int,
+    price float,
     idCinema int,
     constraint pk_idRoom primary key room(idRoom),
     constraint fk_idcinema foreign key rooms(idCinema) references cinemas(idCinema)
 );
-    
+
+CREATE TABLE movieFunctions(
+	idMovieFunction INT AUTO_INCREMENT,
+	startFunction DATETIME,
+    idRoom INT,
+	idMovie INT,
+	CONSTRAINT pk_idMovieFunction PRIMARY KEY movieFunctions(idMovieFunction),
+	CONSTRAINT fk_idRoomFunction FOREIGN KEY movieFunctions(idRoom) REFERENCES rooms(idRoom),
+	CONSTRAINT fk_idMovieFunction FOREIGN KEY movieFunctions(idMovie) REFERENCES movies(idMovie));
+
+CREATE TABLE tickets(
+	idTicket int auto_increment,
+    qr varchar(255),
+    idMovieFunction int,
+    constraint pk_idTicket primary key(idTicket),
+    constraint fk_idMovieFunctionTicket foreign key(idMovieFunction) references movieFunctions(idMovieFunction)
+);
+
+
+
     

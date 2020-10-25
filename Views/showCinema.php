@@ -16,6 +16,7 @@ include('navbaradmin.php');
 				
 				if (empty($cinemaFound)) {
 					
+
 					$popupAlert=new PopupAlert(["Message:","Cinema dont found"]);
 					$popupAlert->Show();
 				} else {
@@ -30,6 +31,7 @@ include('navbaradmin.php');
 						<div class="form-group">
 							<div class="form-group">
 								<br>
+
 								<input type="text" name="id"  value="<?php echo $cinemaFound->getidCinema() ?>" required class="form-control"readonly="readonly">
 								<br>
 								<input type="text" name="name" value="<?php echo $cinemaFound->getnameCinema() ?>" required class="form-control"readonly="readonly" >
@@ -43,6 +45,7 @@ include('navbaradmin.php');
 								<input type="text" name="ticketValue" value="<?php echo $cinemaFound->getTicketValue() ?>" required class="form-control"readonly="readonly">
 								<br>
 								<input type="text" name="capacity" value="<?php echo $cinemaFound->getcapacity() ?>" required class="form-control"readonly="readonly">
+
 								<br>
 							</div>
 						</div>

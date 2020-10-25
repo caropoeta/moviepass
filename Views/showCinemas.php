@@ -58,9 +58,11 @@ include('navbaradmin.php');
               <form method="POST">
                <div class="p-2">
                 <button formaction="<?php echo FRONT_ROOT ?>Cinema/ModifyCinema" class="btn btn-secondary" type="submit" name="modifyId" value="<?php echo $cinema->getidCinema(); ?>">Modify</button>        
+
               </div>
             </li>
-
+          </form>
+        </ul>
             <li class="nav-item">
              <div class="p-2">
               <button formaction="<?php echo FRONT_ROOT ?>Cinema/DeleteCinema" class="btn btn-secondary" type="submit" name="deleteId" value="<?php echo $cinema->getidCinema(); ?>">Delete</button>        
@@ -72,7 +74,9 @@ include('navbaradmin.php');
     </th>
   </tr>
 
-  <?php
+
+    <?php
+  }
 }
 }
 

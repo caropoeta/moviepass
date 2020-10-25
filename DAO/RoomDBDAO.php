@@ -1,0 +1,156 @@
+<?php
+
+namespace DAO;
+
+use Models\Room as Room;
+use DAO\CinemaDBDAO as CinemaDBDAO;
+use \Exception as Exception;
+
+
+class RoomDBDAO
+{
+    private $cinemaDBDAO;
+
+    public function __construct() {
+        $this->cinemaDBDAO = new CinemaDBDAO();
+    }
+
+    public function readAllByCinema($cinemaId){
+        $sql = "SELECT * FROM rooms WHERE idCinema = :idCinema";
+        $parameter['idCinema'] = $cinemaId;
+
+        try
+        {
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($sql,$parameter);
+            if (!empty($resultSet))
+                return $this->mapear($resultSet);
+             else 
+                 return false; 
+        }
+        catch(Exception $e)
+        {
+            echo $e;
+        }
+    }
+
+    protected function mapear($value) 
+    {
+        $roomList = array();
+        foreach($value as $v){
+            $room = new Room();
+            $room->setName($v['roomName']);
+            $room->setCapacity($v['capacity']);
+            $room->setPrice($v['price']);
+            $room->setId($v['idRoom']);
+            $room->setCinema($this->cinemaDBDAO->read($v['idCinema']));
+            array_push($roomList,$room);
+        }
+        if(count($roomList)>0)
+            return $roomList;
+        else
+            return false;
+     }
+  
+
+    public function Add($room){
+
+        $sql = "INSERT INTO rooms (roomName,capacity,price,idCinema) VALUES (:roomName,:capacity,price,:idCinema)";
+
+        $parameters['roomName'] = $room->getName();
+        $parameters['capacity'] = $room->getCapacity();
+        $parameters['price']= $room->getprice();
+        $parameters['idCinema'] = $room->getCinema()->getidCinema();
+
+        try
+        {
+                $this->connection = Connection::getInstance();
+                $result = $this->connection->ExecuteNonQuery($sql, $parameters);
+                if($result)
+                    return $result;
+                else
+                 return false;
+                
+         }
+        catch(Exception $e)
+        {
+            echo $e;
+        }
+    }
+
+    public function Update($room){
+
+        $sql = "UPDATE rooms SET roomName = :roomName , price = :price , capacity = :capacity  WHERE idRoom = :idRoom";
+        
+        $parameters['roomName'] = $room->getName();
+        $parameters['capacity'] = $room->getCapacity();
+        $parameters['price']=$room->getPrice();
+        $parameters['idRoom'] = $room->getId();
+        $parameters['idCinema']=$room->getCinema();
+  
+        try{
+          $this->connection = Connection::getInstance();
+          return $this->connection->ExecuteNonQuery($sql, $parameters);
+        }
+        catch(Exception $e){
+          echo $e;
+        }
+      }
+
+        public function Remove($id){
+            $sql = "DELETE FROM $this->tablename WHERE idRoom = :idRoom";
+            $parameters['idRoom'] = $id;
+            
+            try{
+                $this->connection = Connection::getInstance();
+                return $this->connection->ExecuteNonQuery($sql, $parameters);
+            }
+            catch(Exception $e){
+                echo $e;
+            }
+        }
+        public function read ($id)
+        {
+            $sql = "SELECT * FROM rooms where idRoom = :idRoom";
+            $parameters['idRoom'] = $id;
+            try
+            {
+                $this->connection = Connection::getInstance();
+                $resultSet = $this->connection->execute($sql, $parameters);
+                if(!empty($resultSet))
+                {
+                     $response = $this->mapear($resultSet);
+                     return $response[0];  
+                 }else
+                    return false;
+            }
+            catch(Exception $e)
+            {
+                echo $e;
+            }
+        }
+    
+        public function existsByName ($room)
+        {
+            $sql = "SELECT * FROM rooms where roomName = :roomName and idCinema = :idCinema";
+            $parameters['roomName'] = $room->getName();
+            $parameters['idCinema'] = $room->getCinema()->getidCinema();
+            try
+            {
+                $this->connection = Connection::getInstance();
+                $resultSet = $this->connection->ExecuteNonQuery($sql, $parameters);
+                if(!empty($resultSet))
+                {
+                    return true;  
+                 }else
+                    return false;
+            }
+            catch(Exception $e)
+            {
+                echo $e;
+            }
+            
+        }
+
+  
+}
