@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use DAO\UserDAOjson as UserDAO;
-
+use DAO\RolesDAO as RolesDAO;
+use DAO\UsersDAO as UserDAO;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
 use Models\PopupAlert;
@@ -37,7 +37,7 @@ class UsersController
             $alert->Show();
         }
 
-        $roles = UserDAO::getRoles();
+        $roles = RolesDAO::getRoles();
         $users = UserDAO::getUsers();
         require_once(VIEWS_PATH . 'usersList.php');
     }
@@ -47,10 +47,11 @@ class UsersController
         $this->List();
     }
 
-    public function List()
-    {
-        $roles = UserDAO::getRoles();
-        $users = UserDAO::getUsers();
+    public function List(String $name = "", String $email = "", String $dni = "", String $role = "")
+    {   
+        $role = ($role = RolesDAO::getRoleByName($role)) ? $role->getId() : '';
+        $users = UserDAO::getUsers($name, $email, $dni, $role);
+        $roles = RolesDAO::getRoles();
         require_once(VIEWS_PATH . 'usersList.php');
     }
 
@@ -77,7 +78,7 @@ class UsersController
             $alert->Show();
         }
 
-        $roles = UserDAO::getRoles();
+        $roles = RolesDAO::getRoles();
         $users = UserDAO::getUsers();
         require_once(VIEWS_PATH . 'usersList.php');
     }
@@ -87,7 +88,7 @@ class UsersController
         if (Session::ValidateSession() && $id != Session::GetUserId())
             UserDAO::deleteUser($id);
 
-        $roles = UserDAO::getRoles();
+        $roles = RolesDAO::getRoles();
         $users = UserDAO::getUsers();
         require_once(VIEWS_PATH . 'usersList.php');
     }

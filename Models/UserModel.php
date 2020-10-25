@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use Exception;
+
 class UserModel
 {
     private $id;
@@ -21,6 +23,23 @@ class UserModel
         $this->setDni($dni);
         $this->setEmail($email);
         $this->setBirthday($birthday);
+    }
+
+    public static function fromArray(array $obj)
+    {
+        try {
+            return new UserModel(
+                (string)    $obj["user_name"],
+                (string)    $obj["user_password"],
+                (string)    $obj["role_name"],
+                (int)       $obj["user_dni"],
+                (string)    $obj["user_email"],
+                (string)    $obj["user_birthday"],
+                (int)       $obj["user_id"]
+            );
+        } catch (Exception $ex) {
+            return null;
+        }
     }
 
     public function setId(int $id_)

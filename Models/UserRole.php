@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use Exception;
+
 class UserRole
 {
     private $id;
@@ -11,6 +13,18 @@ class UserRole
     {
         $this->setId($id);
         $this->setName($name);
+    }
+
+    public static function fromArray(array $obj)
+    {
+        try {
+            return new UserRole(
+                (string)    $obj["role_name"],
+                (int)       $obj["role_id"]
+            );
+        } catch (Exception $ex) {
+            return null;
+        }
     }
 
     public function setId(int $id_)
