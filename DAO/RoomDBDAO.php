@@ -3,14 +3,20 @@
 namespace DAO;
 
 use Models\Room as Room;
+use DAO\CinemaDBDAO as CinemaDBDAO;
 use \Exception as Exception;
 
 
-class RoomDAO
+class RoomDBDAO
 {
+    private $cinemaDBDAO;
+
+    public function __construct() {
+        $this->cinemaDBDAO = new CinemaDBDAO();
+    }
 
     public function readAllByCinema($cinemaId){
-        $sql = "SELECT * FROM $this->tablename WHERE idCinema = :idCinema";
+        $sql = "SELECT * FROM rooms WHERE idCinema = :idCinema";
         $parameter['idCinema'] = $cinemaId;
 
         try
@@ -35,10 +41,9 @@ class RoomDAO
             $room = new Room();
             $room->setName($v['roomName']);
             $room->setCapacity($v['capacity']);
-            $room->setPrice($v['Price']);
+            $room->setPrice($v['price']);
             $room->setId($v['idRoom']);
-            $cinema = $this->cinemaDBDAO->read($v['idCinema']);
-            $room->setCinema($cinema);
+            $room->setCinema($this->cinemaDBDAO->read($v['idCinema']));
             array_push($roomList,$room);
         }
         if(count($roomList)>0)
@@ -50,12 +55,12 @@ class RoomDAO
 
     public function Add($room){
 
-        $sql = "INSERT INTO $this->tablename (roomName,capacity,price,idCinema) VALUES (:roomName,:capacity,price,:idCinema)";
+        $sql = "INSERT INTO rooms (roomName,capacity,price,idCinema) VALUES (:roomName,:capacity,price,:idCinema)";
 
         $parameters['roomName'] = $room->getName();
         $parameters['capacity'] = $room->getCapacity();
         $parameters['price']= $room->getprice();
-        $parameters['idCinema'] = $room->getCinema()->getId();
+        $parameters['idCinema'] = $room->getCinema()->getidCinema();
 
         try
         {
@@ -75,12 +80,13 @@ class RoomDAO
 
     public function Update($room){
 
-        $sql = "UPDATE $this->tablename SET roomName = :roomName , price = :price , capacity = :capacity  WHERE idRoom = :idRoom";
+        $sql = "UPDATE rooms SET roomName = :roomName , price = :price , capacity = :capacity  WHERE idRoom = :idRoom";
         
         $parameters['roomName'] = $room->getName();
         $parameters['capacity'] = $room->getCapacity();
         $parameters['price']=$room->getPrice();
         $parameters['idRoom'] = $room->getId();
+        $parameters['idCinema']=$room->getCinema();
   
         try{
           $this->connection = Connection::getInstance();
@@ -105,7 +111,7 @@ class RoomDAO
         }
         public function read ($id)
         {
-            $sql = "SELECT * FROM $this->tablename where idRoom = :idRoom";
+            $sql = "SELECT * FROM rooms where idRoom = :idRoom";
             $parameters['idRoom'] = $id;
             try
             {
@@ -126,9 +132,9 @@ class RoomDAO
     
         public function existsByName ($room)
         {
-            $sql = "SELECT * FROM $this->tablename where roomName = :roomName and idCinema = :idCinema";
+            $sql = "SELECT * FROM rooms where roomName = :roomName and idCinema = :idCinema";
             $parameters['roomName'] = $room->getName();
-            $parameters['idCinema'] = $room->getCinema()->getId();
+            $parameters['idCinema'] = $room->getCinema()->getidCinema();
             try
             {
                 $this->connection = Connection::getInstance();

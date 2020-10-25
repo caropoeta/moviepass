@@ -18,6 +18,7 @@ class Room
             return new Room(
                 (int)    $obj["idRoom"],
                 (int)    $obj["roomName"],
+                (float)  $obj["price"],
                 (string)  $obj["capacity"],
                 (String)  $obj["cinema"]
             );

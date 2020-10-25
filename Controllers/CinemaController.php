@@ -1,8 +1,7 @@
 <?php
-
 namespace Controllers;
 
-use DAO\CinemaDAO as CinemaDAO;
+use DAO\CinemaDBDAO as CinemaDBDAO;
 use Models\Cinema as Cinema;
 use Models\PopupAlert;
 use DAO\Session;
@@ -20,15 +19,17 @@ class CinemaController
     }
 
 
-    public function AddCinema($name, $adress, $openingTime, $closingTime, $ticketValue,$capacity)
+    public function AddCinema($nameCinema, $address, $openingTime, $closingTime, $ticketValue,$capacity)
     {
-        $cinemaDAO = new CinemaDAO();
-        $cinemaList = $cinemaDAO->GetAll();
-
+        $cinemaDBDAO = new CinemaDBDAO();
+        $cinemaList = $cinemaDBDAO->ReadAll();
         $idMax=1;
-        foreach ($cinemaList as $oneCinema) {
-            if($oneCinema->getId()>$idMax){
-                $idMax=$oneCinema->getId();
+        if($cinemaList!=false){
+            foreach ($cinemaList as $oneCinema) {
+
+                if($oneCinema->getidCinema()>$idMax){
+                    $idMax=$oneCinema->getidCinema();
+                }
             }
         }
         $newId=$idMax+1;
@@ -45,17 +46,17 @@ class CinemaController
         }
         if($hasError == false){
             $cinemaToAdd = new Cinema();
-            $cinemaToAdd->setId($newId);
-            $cinemaToAdd->setName($name);
-            $cinemaToAdd->setAdress($adress);
-            $cinemaToAdd->setOpeningTime($openingTime);
-            $cinemaToAdd->setClosingTime($closingTime);
-            $cinemaToAdd->setTicketValue($ticketValue);
-            $cinemaToAdd->setCapacity($capacity);
-            $cinemaToAdd->setDelete(false);
+            $cinemaToAdd->setidCinema($newId);
+            $cinemaToAdd->setnameCinema($nameCinema);
+            $cinemaToAdd->setaddress($address);
+            $cinemaToAdd->setopeningTime($openingTime);
+            $cinemaToAdd->setclosingTime($closingTime);
+            $cinemaToAdd->setticketValue($ticketValue);
+            $cinemaToAdd->setcapacity($capacity);
+            $cinemaToAdd->setdeleteCinema(false);
 
-            $cinemaDAO->Add($cinemaToAdd);
-            $cinemaList = $cinemaDAO->GetAll();
+            $cinemaDBDAO->Add($cinemaToAdd);
+            $cinemaList = $cinemaDBDAO->ReadAll();
         }
         else {
             $popupAlert=new PopupAlert(["Error:", $errorMessage]);
@@ -65,35 +66,38 @@ class CinemaController
 
     }
 
-
     public function ShowCinemas()
     {
+       $CinemaDBDAO= new CinemaDBDAO();
+       $cinemaList=$CinemaDBDAO->ReadAll();
 
-        $cinemaDAO= new CinemaDAO();
-        $cinemaList=$cinemaDAO->GetAll();
-
+       if($cinemaList==null){
+        $popupAlert=new PopupAlert(["Alert:","There is no cinema entered"]);
+        $popupAlert->Show();}
 
         require_once(VIEWS_PATH . 'showCinemas.php');
     }
 
     public function ShowCinema($cinemaSearched)
     {
-
-        $cinemaDAO= new CinemaDAO();
-        $cinemas=$cinemaDAO->GetAll();
-
-        foreach ($cinemas as $cinema) {
-            if(strcmp($cinema->getName(),$cinemaSearched)==0){
-                $cinemaFound=$cinema;
+        $CinemaDBDAO= new CinemaDBDAO();
+        $cinemas=$CinemaDBDAO->ReadAll();
+       
+        if (is_array($cinemas) || is_object($cinemas)){
+            foreach ($cinemas as $cinema) {
+                if(strcmp($cinema->getnameCinema(),$cinemaSearched)==0){
+                   
+                    $cinemaFound=$cinema;
+                }
             }
         }
-        require_once(VIEWS_PATH . 'showCinema.php');
+           require_once(VIEWS_PATH . 'showCinema.php');
     }
 
     public function DeleteCinema($deleteId)
     {
-        $cinemaDAO= new CinemaDAO;
-        $delete=$cinemaDAO->Remove($deleteId);
+        $CinemaDBDAO= new CinemaDBDAO;
+        $delete=$CinemaDBDAO->Remove($deleteId);
         if($delete==true)
         {
             $popupAlert=new PopupAlert(["Message:","Cinema removed"]);
@@ -105,39 +109,51 @@ class CinemaController
     public function ModifyCinema($modifyId)
     {
         require_once(VIEWS_PATH . 'navbaradmin.php');
-        $cinemaDAO= new CinemaDAO();
-        $cinemaList=$cinemaDAO->GetAll();
+        $CinemaDBDAO= new CinemaDBDAO();
+        $cinemaList=$CinemaDBDAO->ReadAll();
         $cinemaFound= new Cinema();
 
         foreach ($cinemaList as $oneCinema) {
 
-           if($modifyId==$oneCinema->getId()){
+         if($modifyId==$oneCinema->getidCinema()){
 
-               $cinemaFound=$oneCinema;
-           }
-       }
-       require_once(VIEWS_PATH . 'cinema.php');
-   }
-   public function UpdateCinema($id,$name,$adress,$openingTime,$closingTime,$ticketValue,$capacity)
-   {
+             $cinemaFound=$oneCinema;
+         }
+     }
 
-    if ($ticketValue>0 && $capacity>0){
+
+     require_once(VIEWS_PATH . 'cinema.php');
+ }
+ public function UpdateCinema($idCinema,$nameCinema,$address,$openingTime,$closingTime,$ticketValue,$capacity)
+ {
+     $errorMessage="";
+     $hasError=false;
+     if($ticketValue<=0){
+        $hasError=true;
+        $errorMessage= $errorMessage . "The ticket value must be positive" . '\n';
+
+    } 
+    if($capacity<=0){
+        $hasError=true;
+        $errorMessage= $errorMessage . "The capacity value must be positive" . '\n';
+    }
+    if($hasError == false){
 
         $cinema=new Cinema();
-        $cinema->setId($id);
-        $cinema->setName($name);
-        $cinema->setAdress($adress);
-        $cinema->setOpeningTime($openingTime);
-        $cinema->setClosingTime($closingTime);
-        $cinema->setTicketValue($ticketValue);
-        $cinema->setCapacity($capacity);
+        $cinema->setidCinema($idCinema);
+        $cinema->setnameCinema($nameCinema);
+        $cinema->setaddress($address);
+        $cinema->setopeningTime($openingTime);
+        $cinema->setclosingTime($closingTime);
+        $cinema->setticketValue($ticketValue);
+        $cinema->setcapacity($capacity);
 
-        $cinemaDAO= new CinemaDAO;
-        $cinemaDAO->Update($cinema);
-    }else {
-        $popupAlert=new PopupAlert(["Error:","Must enter a positive value, enter again"]);
-        $popupAlert->Show();
+
+        $CinemaDBDAO= new CinemaDBDAO;
+        $CinemaDBDAO->Update($cinema);
+        
     }
+
     require_once(VIEWS_PATH . 'indexCinema.php');
 }
 

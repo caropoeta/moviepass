@@ -2,33 +2,29 @@
 
 namespace Controllers;
 
+use DAO\CinemaDBDAO as CinemaDBDAO;
 use Models\Room as Room;
-use Models\Cinema as Cinema;
-use DAO\RoomDAO as RoomDAO;
+use DAO\RoomDBDAO as RoomDBDAO;
 use Models\PopupAlert;
 
 
     class RoomController
     {
-        private $roomDBDAO;
+        private $RoomDBDAO;
+        private $CinemaDBDAO;
 
         public function __construct()
         {
-            $this->roomDBDAO = new Room();
-            $this->cinemaDBDAO = new Cinema();
+            $this->RoomDBDAO = new RoomDBDAO();
+            $this->CinemaDBDAO = new CinemaDBDAO();
             //$this->movieFunctionDBDAO = new MovieFunction();
-        }
-
-        public function ShowAddView($cinemaId)
-        {   
-            require_once(VIEWS_PATH."roomAdd.php");
         }
 
 
         public function List($cinemaId,$message = ""){
-            $lista = false; //$this->roomDAO->readAllByCinema($cinemaId);   FUNNCION DE VICKI
+            $lista = $this->RoomDBDAO->readAllByCinema($cinemaId);
             if($lista==false){
-                $message = "No hay salas cargadas en este cine";
+                $message = "There aren't loaded rooms in this cinema";
             }
             //$cineId = $cinemaId;
             include_once(VIEWS_PATH."roomList.php");
@@ -40,13 +36,13 @@ use Models\PopupAlert;
             $room->setName($name);
             $room->setCapacity($capacity);
             $room->setPrice($price);
-            $cinema = $this->cinemaDAO->read($cinemaId);
+            $cinema = $this->CinemaDBDAO->read($cinemaId);
             $room->setCinema($cinema);
-            if(!$this->roomDAO->existsByName($room)){   
-                $result=$this->roomDAO->Add($room); 
-                $this->List($cinemaId,"Se añadió la sala correctamente");
+            if(!$this->RoomDBDAO->existsByName($room)){   
+                $result=$this->RoomDBDAO->Add($room); 
+                $this->List($cinemaId,"Room added successfully");
             }else{
-                $this->List($cinemaId,"El nombre de la sala ya existe en este cine");
+                $this->List($cinemaId,"Room's name already exists in this cinema");
             }               
         }
 
@@ -56,18 +52,18 @@ use Models\PopupAlert;
             $response = $this->movieFunctionDAO->functionsExistsInRoom($id);
             
             if($response !=false){
-                $this->List($cinemaId,"No se puede eliminar la sala porque tiene funciones cargadas");
+                $this->List($cinemaId,"The room cannot be deleted because it has loaded functions");
 
             }else{
-                $this->roomDAO->Remove($id);
+                $this->RoomDBDAO->Remove($id);
 
-                $this->List($cinemaId,"La sala fue eliminada con exito");
+                $this->List($cinemaId,"The room was successfully removed");
             }
             
         }
 
         public function ShowUpdateRoom($id){
-            $room = $this->roomDAO->read($id);
+            $room = $this->RoomDBDAO->read($id);
             include_once(VIEWS_PATH."roomUpdate.php");
         }
 
@@ -78,8 +74,9 @@ use Models\PopupAlert;
             $room->setCapacity($capacity);
             $room->setPrice($price);
             $room->setId($roomId);
-            $this->roomDAO->Update($room);
-            $this->List($cinemaId,"La sala se actualizó correctamente");
+            $room->setCinema($cinemaId);
+            $this->RoomDBDAO->Update($room);
+            $this->List($cinemaId,"The room was successfully updated");
         }
     } 
 ?>
