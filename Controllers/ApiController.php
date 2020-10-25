@@ -2,24 +2,52 @@
 
 namespace Controllers;
 
-use DAO\ApiDAO;
+use DAO\ApiGenreDAO;
+use DAO\ApiMovieDAO;
+use DAO\MovieXGenreDAO;
+use DAO\Session;
 
 class ApiController
 {
-    public function Index()
+    public function __construct()
+    {
+        if (!Session::ValidateSession()) {
+            HomeController::MainPage();
+            exit();
+        }
+        if (!Session::IsUserThisRole('Admin')) {
+            HomeController::MainPage();
+            exit();
+        }
+    }
+
+    public static function Index()
     {
         HomeController::MainPage();
     }
 
-    public function List(int $id = 1)
+    public static function List(String $name = "", $genreW = [], $genreWO = [], $year = '0000', int $page = 1)
     {
-        if ($id <= 0) {
-            $id = 1;
-        }
+        if ($page <= 0)
+            $page = 1;
 
-        $currPage = $id;
-        $genres = ApiDAO::getApiGenres();
-        $movies = ApiDAO::getApiMoviePage($id, $genres);
+        if (!is_array($genreW))
+            $genreW = [];
+
+        if (!is_array($genreWO))
+            $genreWO = [];
+
+        $currPage = $page;
+        $genres = ApiGenreDAO::getApiGenres();
+
+        if ($name == "" && $year == '0000' && empty($genreW) && empty($genreWO)) {
+            $movies = ApiMovieDAO::getApiMoviePage($page);
+        } else if ($name != "")
+            $movies = ApiMovieDAO::getApiMovieSearchByName($page, $name);
+
+        else
+            $movies = ApiMovieDAO::getApiMovieSearchByDateAndGenre($page, (int) $year, $genreW, $genreWO);
+
         require_once(VIEWS_PATH . 'apiMovies.php');
     }
 }

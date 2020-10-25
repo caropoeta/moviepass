@@ -87,7 +87,7 @@ class UsersDAO
         return false;
     }
 
-    public static function getUsers()
+    public static function getUsers(String $name = "", String $email = "", String $dni = "", String $role = "")
     {
         $conection = Connection::GetInstance();
         $query = "
@@ -95,8 +95,34 @@ class UsersDAO
         FROM users
         INNER JOIN roles
         ON roles.role_id=users.user_role
+        WHERE user_name like :name
+        AND user_email like :email
+        AND CAST(user_dni as varchar(50)) like :dni
+        AND CAST(user_role as varchar(50)) like :role
         ;";
-        $response = $conection->Execute($query);
+
+        $params = [];
+        if ($name == "")
+            $params['name']     = '%';
+        else
+            $params['name']     = '%' . $name . '%';
+
+        if ($email == "")
+            $params['email']    = '%';
+        else
+            $params['email']    = '%' . $email . '%';
+
+        if ($role == "")
+            $params['role']     = '%';
+        else
+            $params['role']     = '%' . $role . '%';
+
+        if ($dni == "")
+            $params['dni']      = '%';
+        else
+            $params['dni']      = '%' . $dni . '%';
+
+        $response = $conection->Execute($query, $params);
 
         $userArray = array_map(function (array $obj) {
             return UserModel::fromArray($obj);

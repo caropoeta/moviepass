@@ -9,8 +9,6 @@
      ?>
 </section>
 
-
-
 <section id="listado" class="mb-5">
      <div class="container-fluid">
           <h2 class="fuente4  text-center">Movie List From Api</h2>
@@ -62,12 +60,12 @@
                               <input type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
                          </div>
 
-                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>
+                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/List/" name="page" value="1" type="submit">Search</button>
                     </div>
                     <hr>
                     <div class="align-items-center">
-                         <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
-                         <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
+                         <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+                         <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
                     </div>
                </form>
           </div>
@@ -101,9 +99,9 @@
                                                        } ?></td>
                                                   <td>
                                                        <div class="col-auto">
-                                                            <?php if (!MovieDAO::checkMovieById($movie->getId())) { ?>
+                                                            <?php if (!MovieDAO::checkMovieDeletedById($movie->getId())) { ?>
                                                                  <input type="checkbox" class="form-check-input" id="mov<?php echo $movie->getId() ?>" name="mov[]" value="<?php echo $movie->getId() ?>">
-                                                                 <label class="form-check-label" for="mov<?php echo $movie->getId() ?>">Add</label><br>
+                                                                 <label class="form-check-label" for="mov<?php echo $movie->getId() ?>">Delete</label><br>
                                                             <?php } ?>
                                                        </div>
                                                   </td>
@@ -115,7 +113,7 @@
                               </tbody>
                          </table>
 
-                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
+                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
                     </form>
                </div>
           </div>
