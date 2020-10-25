@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use DAO\Session;
+use DAO\UsersDAO as UsersDAO;
 
 class HomeController
 {
