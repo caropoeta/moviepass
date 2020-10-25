@@ -6,6 +6,20 @@ use Models\Genre;
 
 class GenreDAO
 {
+    public static function getGenres()
+    {
+        $conection = Connection::GetInstance();
+        $query = "
+        select * from genres";
+        $response = $conection->Execute($query);
+
+        $roleArray = array_map(function (array $obj) {
+            return Genre::fromArray($obj);
+        }, $response);
+
+        return $roleArray;
+    }
+
     public static function getGenreById(int $id)
     {
         $conection = Connection::GetInstance();

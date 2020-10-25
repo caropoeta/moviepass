@@ -6,23 +6,18 @@ use Models\Movie;
 
 class MovieXGenreDAO
 {
-    public static function getMovies(String $title = "", int $year = 0, Array $genresW = [], Array $genresWO = [])
-    {
-        /*
+    public static function getMovies(int $page, String $title = "", int $year = 0, Array $genresW = [], Array $genresWO = [])
+    {   
         $conection = Connection::GetInstance();
-        $query = "
-        select * from movies where id = :id;";
+        $movXpage = 60;
+        $page *= $movXpage;
+        $page -= $movXpage;
 
-        
-        $params = [];
-        $params['id']               = $movie->getId();
-        $params['title']            = $movie->getTitle();
-        $params['releaseDate']      = $movie->getReleaseDate();
-        $params['points']           = $movie->getPoints();
-        $params['movieDescription'] = $movie->getDescription();
-        $params['poster']           = $movie->getPoster();
+        $query = "select * from movies;";
 
-        $response = $conection->Execute($query, $params);
+        $param= [];
+
+        $response = $conection->Execute($query, $param);
 
         $roleArray = array_map(function (array $obj) {
             $movie = Movie::fromArray($obj);
@@ -31,7 +26,6 @@ class MovieXGenreDAO
         }, $response);
 
         return $roleArray;
-        */
     }
 
     public static function checkMovieById(int $id, Array $currMovies) {

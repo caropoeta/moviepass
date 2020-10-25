@@ -7,6 +7,25 @@ use Models\Movie;
 
 class MovieDAO
 {
+    public static function deleteById(int $id)
+    {
+        $conection = Connection::GetInstance();
+        $query = "update movies set deleted = :deleted where id = :id;";
+        $conection->ExecuteNonQuery($query, array('id' => $id, 'deleted' => 1));
+    }
+
+    public static function checkMovieDeletedById(INT $id)
+    {
+        $conection = Connection::GetInstance();
+        $query = "select true from movies where id = :id and deleted = :deleted;";
+        $response = $conection->Execute($query, array('id' => $id, 'deleted' => 1));
+
+        if ($response != null)
+            return (sizeof($response) > 0) ? true : false;
+
+        return false;
+    }
+
     public static function checkMovieById(int $id)
     {
         $conection = Connection::GetInstance();

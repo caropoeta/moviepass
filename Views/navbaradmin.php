@@ -35,11 +35,16 @@
 
       <li class="nav-item">
         <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Movies/List" class="btn btn-secondary" type="submit">List Current Movies</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
           <button formaction="<?php echo FRONT_ROOT ?>Session/Index" class="btn btn-secondary" type="submit" name="action" value="edit"> Edit account information </button>
         </div>
         </form>
       </li>
     </ul>
-
   </div>
 </nav>

@@ -4,14 +4,23 @@ namespace Controllers;
 
 use DAO\ApiGenreDAO;
 use DAO\ApiMovieDAO;
-use DAO\GenreDAO;
-use DAO\MovieDAO;
 use DAO\MovieXGenreDAO;
-use Models\Genre;
-use Models\Movie;
+use DAO\Session;
 
 class ApiController
 {
+    public function __construct()
+    {
+        if (!Session::ValidateSession()) {
+            HomeController::MainPage();
+            exit();
+        }
+        if (!Session::IsUserThisRole('Admin')) {
+            HomeController::MainPage();
+            exit();
+        }
+    }
+
     public static function Index()
     {
         HomeController::MainPage();
@@ -29,12 +38,9 @@ class ApiController
             $genreWO = [];
 
         $currPage = $page;
-        $currMovies = MovieXGenreDAO::getMovies();
         $genres = ApiGenreDAO::getApiGenres();
 
-        $year = (int) 2020;
-
-        if ($name == "" && $year == 0 && empty($genreW) && empty($genreWO)) {
+        if ($name == "" && $year == '0000' && empty($genreW) && empty($genreWO)) {
             $movies = ApiMovieDAO::getApiMoviePage($page);
         } else if ($name != "")
             $movies = ApiMovieDAO::getApiMovieSearchByName($page, $name);

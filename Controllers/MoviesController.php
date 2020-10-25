@@ -2,36 +2,33 @@
 
 namespace Controllers;
 
-use DAO\ApiGenreDAO;
 use DAO\ApiMovieDAO;
+use DAO\GenreDAO;
 use DAO\MovieDAO;
 use DAO\MovieXGenreDAO;
+use DAO\Session;
 
 class MoviesController
 {
-    public function Index()
+    public function __construct()
+    {
+        if (!Session::ValidateSession()) {
+            HomeController::MainPage();
+            exit();
+        }
+        if (!Session::IsUserThisRole('Admin')) {
+            HomeController::MainPage();
+            exit();
+        }
+    }
+
+    public static function Index()
     {
         HomeController::MainPage();
     }
 
-    public function List()
+    public static function List(String $name = "", $genreW = [], $genreWO = [], $year = '0000', int $page = 1)
     {
-    }
-
-    public function Delete(int $id)
-    {
-    }
-
-    public function Add(int $id)
-    {
-        $name = "";
-        $genreW = [];
-        $genreWO = [];
-        $year = '0000';
-        $page = 1;
-
-        MovieDAO::addMovie(ApiMovieDAO::getApiMovieById($id));
-
         if ($page <= 0)
             $page = 1;
 
@@ -42,19 +39,35 @@ class MoviesController
             $genreWO = [];
 
         $currPage = $page;
-        $currMovies = MovieXGenreDAO::getMovies();
-        $genres = ApiGenreDAO::getApiGenres();
+        $genres = GenreDAO::getGenres();
+        $movies = MovieXGenreDAO::getMovies($page, $name, (int) $year, $genreW, $genreWO);
 
-        $year = (int) 2020;
+        require_once(VIEWS_PATH . 'internalMovies.php');
+    }
 
-        if ($name == "" && $year == 0 && empty($genreW) && empty($genreWO)) {
-            $movies = ApiMovieDAO::getApiMoviePage($page);
-        } else if ($name != "")
-            $movies = ApiMovieDAO::getApiMovieSearchByName($page, $name);
+    public static function Delete($ids)
+    {
+        if (!is_array($ids))
+            $ids = [];
 
-        else
-            $movies = ApiMovieDAO::getApiMovieSearchByDateAndGenre($page, (int) $year, $genreW, $genreWO);
+        foreach ($ids as $value) {
+            MovieDAO::deleteById($value);
+        }
 
-        require_once(VIEWS_PATH . 'apiMovies.php');
+        MoviesController::List();
+    }
+
+    public static function Add($ids)
+    {
+        if (!is_array($ids))
+            $ids = [];
+
+        foreach ($ids as $value) {
+            $movieToAdd = ApiMovieDAO::getApiMovieById((int) $value);
+            if ($movieToAdd != null)
+                MovieDAO::addMovie($movieToAdd);
+        }
+
+        ApiController::List();
     }
 }
