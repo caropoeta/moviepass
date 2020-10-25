@@ -6,17 +6,77 @@ use Models\Movie;
 
 class MovieXGenreDAO
 {
-    public static function getMovies(int $page, String $title = "", int $year = 0, Array $genresW = [], Array $genresWO = [])
-    {   
-        $conection = Connection::GetInstance();
+    public static function getMovies(int $page, String $title = "", int $year = 0, array $genresW = [], array $genresWO = [])
+    {
+        $query = "select * from movies";
+        $param = [];
+        $addToQuerry = [];
+
+        if (!empty($genresW)) {
+            $query = $query . " inner join ( 
+                select genresxmovies.idMovie
+                from genresxmovies";
+
+            $subSubQ = [];
+            foreach ($genresW as $value) {
+                $query = $query . " inner join (
+                    select idMovie
+                    from genresxmovies 
+                    where idGenre = :idGenre" . $value . "
+                ) as idgxm" . $value . "
+                on idgxm" . $value . ".idMovie = genresxmovies.idMovie ";
+
+                $param['idGenre' . $value] = (int) $value;
+            }
+
+            $query = $query . "
+            group by genresxmovies.idMovie
+            ) as srch
+            on movies.id = srch.idMovie ";
+        }
+
+        if ($title != "") {
+            array_push($addToQuerry, "movies.title like :title");
+            $param['title'] = '%' . $title . '%';
+        }
+
+        if ($year != 0) {
+            array_push($addToQuerry, "year(movies.release_date) = :year");
+            $param['year'] = $year;
+        }
+
+        if (!empty($genresWO)) {
+            $subQ = "
+            not exists (
+                select * from (
+                    select idMovie as id, idGenre 
+                    from genresxmovies 
+                    where";
+
+            $subSubQ = [];
+            foreach ($genresWO as $value) {
+                array_push($subSubQ, 'idGenre = :idGenre' . $value);
+                $param['idGenre' . $value] = (int) $value;
+            }
+
+            $subQ = $subQ . ' ' . implode(" or ", $subSubQ) .
+                ") as x where x.id = movies.id
+            )";
+
+            array_push($addToQuerry, $subQ);
+        }
+
+        if (!empty($addToQuerry))
+            $query = $query . " where 
+            " . implode(" and ", $addToQuerry);
+
         $movXpage = 60;
         $page *= $movXpage;
         $page -= $movXpage;
 
-        $query = "select * from movies;";
+        $query = $query . " limit " . $page . ", " . $movXpage . ";";
 
-        $param= [];
-
+        $conection = Connection::GetInstance();
         $response = $conection->Execute($query, $param);
 
         $roleArray = array_map(function (array $obj) {
@@ -28,13 +88,14 @@ class MovieXGenreDAO
         return $roleArray;
     }
 
-    public static function checkMovieById(int $id, Array $currMovies) {
+    public static function checkMovieById(int $id, array $currMovies)
+    {
         foreach ($currMovies as $value) {
-            if ($value instanceof Movie) 
-                if ($value->getId() == $id) 
+            if ($value instanceof Movie)
+                if ($value->getId() == $id)
                     return true;
         }
-        
+
         return false;
     }
 
