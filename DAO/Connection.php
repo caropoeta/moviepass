@@ -14,10 +14,12 @@ class Connection
 
     private function __construct()
     {
+
         try {
             $this->pdo = new PDO("mysql:host=" . DB_HOST . "; dbname=" . DB_NAME, DB_USER, DB_PASS);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (Exception $ex) {
+
             throw $ex;
         }
     }
@@ -32,6 +34,7 @@ class Connection
 
     public function Execute($query, $parameters = array(), $queryType = QueryType::Query)
     {
+
         try {
             $this->Prepare($query);
 
@@ -83,3 +86,4 @@ class Connection
         }
     }
 }
+
