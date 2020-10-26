@@ -1,7 +1,8 @@
 <?php
 namespace Models;
 
-class Function{
+class FunctionMovie{
+
 	private $idFunction;
 	private $time; 
 	private $asistencia;
@@ -40,8 +41,6 @@ class Function{
 	public function getDeleteFunction(){
 		return $this->deleteFunction;
 	}
-
-
-
-
+}
+?>
 

@@ -56,7 +56,7 @@ protected function Mapear($value)
     $cinema->setAddress($v['address']);
     $cinema->setOpeningTime($v['openingTime']);
     $cinema->setClosingTime($v['closingTime']);
-    $cinema->setTicketValue($v['ticketValue']);
+    $cinema->setTicketValue($v['ticket_value']);
     $cinema->setCapacity($v['capacity']);
     $cinema->setidCinema($v['idCinema']);
 
