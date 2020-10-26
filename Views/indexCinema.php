@@ -36,13 +36,13 @@ include('navbaradmin.php');
                     <br>
                     <input type="text" name="adress" placeholder="Enter Cinema Adress" required class="form-control">
                     <br>
-                    <input type="text" name="openingTime" placeholder="Enter Opening Time" required class="form-control">
+                    <input type="time" name="openingTime" placeholder="Enter Opening Time" required class="form-control">
                     <br>
-                    <input type="text" name="closingTime" placeholder="Enter Closing Time" required class="form-control">
+                    <input type="time" name="closingTime" placeholder="Enter Closing Time" required class="form-control">
                     <br>
-                    <input type="text" name="ticketValue" placeholder="Enter Ticket Value" required class="form-control">
+                    <input type="number" name="ticketValue" placeholder="Enter Ticket Value" required class="form-control">
                     <br>
-                    <input type="text" name="capacity" placeholder="Enter capacity Value" required class="form-control">
+                    <input type="number" name="capacity" placeholder="Enter capacity Value" required class="form-control">
                     <br>
                     <button type="submit" class="btn btn-primary offset-4  ">Add Cinema</button>
                 </div>
