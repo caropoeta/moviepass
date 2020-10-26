@@ -37,12 +37,38 @@ include('navbaradmin.php');
             </form>
           </td>
         </tr>
-      <?php
-      }
-      ?>
-    </tbody>
-  </table>
-</div>
+
+      </thead>
+      <tbody>
+        <?php
+        if ($lista != false) foreach ($lista as $room) {
+        ?>
+          <tr>
+            <td><?php echo $room->getName() ?></td>
+            <td><?php echo $room->getCapacity() ?></td>
+            <td><?php echo $room->getPrice() ?></td>
+            <td>
+              <form action=<?php echo 'roomUpdate.php' ?> method="POST">
+                <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+                <button type=submit>Update </button>
+              </form>
+            </td>
+            <td>
+              <form action=<?php echo FRONT_ROOT . 'Room/Remove' ?> method="POST">
+                <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+                <input type="hidden" name="price" value=<?php echo $room->getPrice() ?>>
+                <input type="hidden" name="cinemaId" value=<?php echo $room->getCinema()->getidCinema() ?>>
+                <button type=submit> Delete </button>
+              </form>
+            </td>
+          </tr>
+        <?php
+        }
+        ?>
+      </tbody>
+    </table>
+  </div>
+</form>
 
 <form method="POST" action=<?php echo FRONT_ROOT . "Room/Add"; ?>>
   <div align=center>
