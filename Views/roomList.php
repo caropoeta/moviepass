@@ -14,6 +14,7 @@ include('navbaradmin.php');
           <th>Name</th>
           <th>Capacity</th>
           <th>Price</th>
+          <th>Function</th>
           <th>Update</th>
           <th>Delete</th>
         </tr>
@@ -21,11 +22,18 @@ include('navbaradmin.php');
       <tbody>
         <?php
         if ($lista != false) foreach ($lista as $room) {
-        ?>
+          ?>
           <tr>
             <td><?php echo $room->getName() ?></td>
             <td><?php echo $room->getCapacity() ?></td>
             <td><?php echo $room->getPrice() ?></td>
+
+            <td>
+              <form action=<?php echo FRONT_ROOT . 'Room/AddFunction' ?> method="POST">
+                <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+                <button type=submit>Function </button>
+              </form>
+            </td>
             <td>
               <form action=<?php echo FRONT_ROOT . 'Room/ShowUpdateRoom' ?> method="POST">
                 <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
@@ -41,7 +49,7 @@ include('navbaradmin.php');
               </form>
             </td>
           </tr>
-        <?php
+          <?php
         }
         ?>
       </tbody>
@@ -64,5 +72,11 @@ include('navbaradmin.php');
         <br>
       </div>
     </div>
+  </div>
+</form>
+
+<form method="POST">
+  <div class="fuente4 text-center">
+    <button formaction="<?php echo FRONT_ROOT ?>Cinema/ShowCinemas" class="btn btn-secondary" type="submit">Back</button>
   </div>
 </form>
