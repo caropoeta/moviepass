@@ -114,6 +114,8 @@ class ApiMovieDAO
       } else {
         $jsonresponse = ($jsonresponse) ? $jsonresponse : [];
 
+        $jsonresponse["runtime"] = (String) date('H:i:s', mktime(0, $jsonresponse["runtime"]));
+
         $movie = Movie::fromArray($jsonresponse);
 
         $genrearr = [];

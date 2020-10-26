@@ -47,23 +47,22 @@ include('navbaradmin.php');
       </tbody>
     </table>
   </div>
-  </div>
+</form>
 
-  <form method="POST" action=<?php echo FRONT_ROOT . "Room/Add"; ?>>
-    <div align="center">
-      <h2>Add Room </h2>
-      <div class="form-register">
-        <div class="form-register-ul">
-          <input style="width:50%" type="text" name="name" placeholder="Room Name" required class="form-control">
-          <br>
-          <input style="width:50%" type="number" name="capacity" placeholder="Capacity" required class="form-control" min="50" max="1000">
-          <br>
-          <input style="width:50%" type="number" name="price" placeholder="Price" required class="form-control" min="50" max="1000">
-
-          <br>
-          <input style="width:50%" type="text" name="idCinema" value="<?php echo $room->getCinema()->getidCinema() ?>" placeholder="IdCinema" class="form-control" readonly="readonly">
-          <br>
-          <button type="submit">Add</button>
-          <br>
-  </form>
+<form method="POST" action=<?php echo FRONT_ROOT . "Room/Add"; ?>>
+  <div align=center>
+    <h2>Add Room </h2>
+    <div class="form-register">
+      <div class="form-register-ul">
+        <input style="width:50%" type="text" name="name" placeholder="Room Name" required class="form-control">
+        <br>
+        <input style="width:50%" type="number" name="capacity" placeholder="Capacity" required class="form-control" min="50" max="1000">
+        <br>
+        <input style="width:50%" type="number" name="price" placeholder="Price" required class="form-control" min="50" max="1000">
+        <br>
+        <button type="submit" name="id" value="<?php echo $cinemaId ?>" class="btn btn-primary">Add</button>
+        <br>
+      </div>
+    </div>
   </div>
+</form>

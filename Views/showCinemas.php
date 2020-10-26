@@ -78,7 +78,7 @@ include('navbaradmin.php');
     <?php
   }
 }
-}
+
 
 ?>              
 </tbody>

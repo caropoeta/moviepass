@@ -29,7 +29,7 @@ class MovieDAO
     public static function checkMovieById(int $id)
     {
         $conection = Connection::GetInstance();
-        $query = "select true from movies where id = :id;";
+        $query = "select true from movies where id = :id and deleted = 0;";
         $response = $conection->Execute($query, array('id' => $id));
 
         if ($response != null)
@@ -56,19 +56,25 @@ class MovieDAO
 
     public static function addMovie(Movie $movie)
     {
-        if (!MovieDAO::checkMovieById($movie->getId())) {
+        if (MovieDAO::checkMovieDeletedById($movie->getId())) {
+            $conection = Connection::GetInstance();
+            $query = "update movies set deleted = :deleted where id = :id;";
+            $conection->ExecuteNonQuery($query, array('id' => $movie->getId(), 'deleted' => 0));
+        }
+        else if (!MovieDAO::checkMovieById($movie->getId())) {
             $conection = Connection::GetInstance();
             $query = "
-            INSERT INTO `movies`(`id`, `title`, `release_date`, `vote_average`, `overview`, `poster_path`) 
-            VALUES (:id, :title, :releaseDate, :points, :movieDescription, :poster)";
+            INSERT INTO `movies`(`id`, `title`, `release_date`, `vote_average`, `overview`, `poster_path`, runtime) 
+            VALUES (:id, :title, :releaseDate, :points, :movieDescription, :poster, :runtime)";
 
             $params = [];
-            $params['id']               = $movie->getId();
-            $params['title']            = $movie->getTitle();
-            $params['releaseDate']      = $movie->getReleaseDate();
-            $params['points']           = $movie->getPoints();
-            $params['movieDescription'] = $movie->getDescription();
-            $params['poster']           = $movie->getPoster();
+            $params['id']                   = $movie->getId();
+            $params['title']                = $movie->getTitle();
+            $params['releaseDate']          = $movie->getReleaseDate();
+            $params['points']               = $movie->getPoints();
+            $params['movieDescription']     = $movie->getDescription();
+            $params['poster']               = $movie->getPoster();
+            $params['runtime']              = $movie->getRuntime();
 
             $conection->ExecuteNonQuery(
                 $query,

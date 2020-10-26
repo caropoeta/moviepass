@@ -13,16 +13,17 @@ class Movie
     private $poster;
     private $movieId;
     private $genres;
+    private $runtime;
 
-    public function __construct
-    (
+    public function __construct(
         String $title,
         $releaseDate,
         int $points,
         String $description,
         String $poster,
         int $movieId,
-        Array $genres
+        array $genres,
+        String $runtime
     ) {
         $this->setTitle($title);
         $this->setReleaseDate($releaseDate);
@@ -31,22 +32,31 @@ class Movie
         $this->setPoster($poster);
         $this->setId($movieId);
         $this->setGenres($genres);
+        $this->setRuntime($runtime);
     }
 
     public static function fromArray(array $obj)
     {
-        if(!isset($obj["release_date"]))
-            $obj["release_date"] = 0000-00-00;
+        if (!isset($obj["release_date"]))
+            $obj["release_date"] = '0000-00-00';
+
+        if (!isset($obj["runtime"]))
+            $obj["runtime"] = '00:00:00';
+
+        else if ($obj["runtime"] == "0")
+            $obj["runtime"] = '00:00:00';
 
         try {
             return new Movie(
-                (String)    $obj["title"],
-                            $obj["release_date"],
+                (string)    $obj["title"],
+                $obj["release_date"],
                 (int)       $obj["vote_average"],
                 (string)    $obj["overview"],
                 (string)    $obj["poster_path"],
                 (int)       $obj["id"],
-                []
+                [],
+                (String)    $obj['runtime']
+
             );
         } catch (Exception $ex) {
             throw $ex;
@@ -110,7 +120,7 @@ class Movie
         return $this->movieId;
     }
 
-    public function setRuntime($runtime)
+    public function setRuntime(String $runtime)
     {
         $this->runtime = $runtime;
     }

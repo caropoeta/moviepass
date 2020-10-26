@@ -65,6 +65,8 @@ class MovieXGenreDAO
 
             array_push($addToQuerry, $subQ);
         }
+        
+        array_push($addToQuerry, "deleted = 0");
 
         if (!empty($addToQuerry))
             $query = $query . " where 
