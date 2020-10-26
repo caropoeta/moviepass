@@ -29,7 +29,7 @@ include('navbaradmin.php');
             <td><?php echo $room->getCapacity() ?></td>
             <td><?php echo $room->getPrice() ?></td>
             <td>
-              <form action=<?php echo FRONT_ROOT . 'Room/ShowUpdateRoom' ?> method="POST">
+              <form action=<?php echo 'roomUpdate.php' ?> method="POST">
                 <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
                 <button type=submit>Update </button>
               </form>
