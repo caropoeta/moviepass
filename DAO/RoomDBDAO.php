@@ -5,7 +5,7 @@ namespace DAO;
 use Models\Room as Room;
 use DAO\CinemaDBDAO as CinemaDBDAO;
 use \Exception as Exception;
-
+use Models\Cinema;
 
 class RoomDBDAO
 {
@@ -32,6 +32,27 @@ class RoomDBDAO
         {
             echo $e;
         }
+    }
+
+    public static function getCinemaByRoomId(int $roomid)
+    {
+        $conection = Connection::GetInstance();
+        $query = "
+        select idCinema from rooms where idRoom = :idRoom;";
+        $response = $conection->Execute($query, array('idRoom' => $roomid));
+
+        $roleArray = array_map(function (array $obj) {
+            return $obj['idCinema'];
+        }, $response);
+
+        $cinema = new CinemaDBDAO();
+
+        $responseCin = [];
+        foreach ($roleArray as $value) {
+            array_push($responseCin, $cinema->Read($value));
+        }        
+
+        return ((isset($responseCin[0])) ? $responseCin[0] : null);
     }
 
     protected function mapear($value) 

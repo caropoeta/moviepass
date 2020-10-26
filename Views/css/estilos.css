@@ -15,6 +15,7 @@
   color: #6C757D;
 
 }
+
 .fuente3{
   font-family: ArchitectsDaughter;
   font-size: 75px;
@@ -27,6 +28,7 @@
   align-content: center;
   color: #6C757D;
 }
+
 .fuente5{
     font-family: ArchitectsDaughter;
   font-size: 35px;
@@ -34,6 +36,15 @@
   color: #6C757D;
 
 }
+.fuente5white {
+    font-family: ArchitectsDaughter;
+  font-size: 35px;
+  align-content: center;
+  color: white;
+
+}
+
+
 .fuente2{
   font-family: sansita-Swashed, sans-serif ;
   font-size: 100px;
@@ -52,7 +63,9 @@ html {
   
 }
 nav{
-  border:  black 1px solid;
+ 
+  background-image: url("../img/neon.jpg");
+  object-fit: all;
 }
 body {
   height: 100%;
@@ -111,9 +124,7 @@ body {
   border-bottom-left-radius: 1px;
   text-indent: 0;
   display: block;
-  color: #ffffff;
   height: 50px;
-  /*line-height:50px;*/
   width: 100%;
   text-decoration: none;
   text-align: center;
@@ -200,20 +211,21 @@ body {
 
 
 .footer_top h2 {
-  color: #6C757D;
+  color: black;
   font-family: "ArchitectsDaughter",sans-serif;
   font-size: 22px;
   font-weight: 400;
   margin-top: 40px;
+
 }
 .footer_top p {
-  color: #6C757D;
+  color: black;
   font-size: 13px;
   font-weight: 400;
   font-family: "ArchitectsDaughter",sans-serif;
 }
 .footer_top > .container{
-  border-top: 1px solid #ffffff;
+  
   padding-bottom: 65px;
 }
 .footer-contact {
@@ -230,7 +242,14 @@ body {
   margin-left: -60px;
 }
 
+footer {
+background-image: url("../img/fondo.webp");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 
+}
 
 .footer_top .footer-contact p i {
   font-size: 25px;
@@ -251,9 +270,9 @@ body {
 div.user_add_div {
   padding-right: 10px;
   padding-left: 10px;
-  max-width: fit-content;
+  max-width: 70%;
   max-height: fit-content;
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: white;
   margin: auto;
 }
@@ -261,11 +280,12 @@ div.user_add_div {
 div.user_list_div {
   padding-right: 10px;
   padding-left: 10px;
-  height: 30%;
-  width: 95%;
+  
   border-radius: 5px;
   background-color: white;
   margin: auto;
+  max-width: 70%;
+  max-height: 70%;
 }
 
 div.user_list_div > div.container {
@@ -278,4 +298,18 @@ div.movie_container {
   
   height: 500px;
   width: 95%;
+}
+
+.back{
+  background-image: url("../img/cinema.jpeg");
+}
+.backregister{
+  background-image: url("../img/background1.png")
+  height:300px;
+  width :150px;
+}
+.tback{
+  background-image: url("../img/reflector.jpg");
+  opacity: 1.0 no-repeat;
+
 }

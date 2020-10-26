@@ -22,7 +22,10 @@ class CinemaDBDAO
 public function ReadAll(){
 
   $sql = "SELECT * FROM cinemas 
+
   where Cinemadelete=0";
+
+
 
   try
   {
@@ -48,11 +51,12 @@ protected function Mapear($value)
   foreach($value as $v){
     $cinema = new Cinema();
 
+
     $cinema->setnameCinema($v['cinemaName']);
     $cinema->setAddress($v['address']);
     $cinema->setOpeningTime($v['openingTime']);
     $cinema->setClosingTime($v['closingTime']);
-    $cinema->setTicketValue($v['ticket_value']);
+    $cinema->setTicketValue($v['ticketValue']);
     $cinema->setCapacity($v['capacity']);
     $cinema->setidCinema($v['idCinema']);
 
@@ -95,6 +99,7 @@ public function Remove($idCinema){
 
   $sql = "update cinemas
   set cinemaDelete= 1
+
   WHERE idCinema= :idCinema";
 
   $parameters['idCinema'] = $idCinema;
@@ -112,11 +117,13 @@ public function Remove($idCinema){
 public function Update(Cinema $cinemaToUpdate){
 
   $sql="UPDATE cinemas 
+s
   SET cinemaName= :cineName,
   address= :address,
   openingTime=:openingTime,
   closingTime=:closingTime,
   ticket_value=:ticket_value ,
+
   capacity=:capacity
 
   WHERE idCinema = :idCinema ";
