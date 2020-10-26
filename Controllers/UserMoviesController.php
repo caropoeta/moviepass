@@ -2,8 +2,10 @@
 
 namespace Controllers;
 
+
 use DAO\GenreDAO;
 use DAO\MoviesXFunctionsDAO;
+
 use DAO\Session;
 
 class UserMoviesController
@@ -20,6 +22,7 @@ class UserMoviesController
     {
         HomeController::MainPage();
     }
+
 
     public function List(String $name = "", $genreW = [], $genreWO = [], $year = '0000', int $page = 1)
     {
@@ -38,4 +41,5 @@ class UserMoviesController
         
         require_once(VIEWS_PATH . 'billboardMovies.php');
     }
+
 }

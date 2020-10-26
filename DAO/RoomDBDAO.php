@@ -75,6 +75,7 @@ class RoomDBDAO
   
 
     public function Add($room){
+
         $sql = "INSERT INTO rooms (roomName,capacity,price,idCinema) VALUES (:roomName,:capacity,:price,:idCinema)";
 
         $parameters['roomName'] = $room->getName();

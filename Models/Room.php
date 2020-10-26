@@ -20,7 +20,7 @@ class Room
                 (int)    $obj["roomName"],
                 (float)  $obj["price"],
                 (string)  $obj["capacity"],
-                (String)  $obj["cinema"]
+                (int)  $obj["cinema"]
             );
         } catch (Exception $ex) {
             return NULL;

@@ -5,7 +5,9 @@ include('navbaradmin.php');
 ?>
 <h2 class="fuente text-center"> Rooms Admin</h2>
 <br>
-
+<div class="p-2 text-center">
+    <button formaction="<?php echo FRONT_ROOT ?>Cinema/showCinemas" class="btn btn-secondary" type="submit" name="action" > Back </button>
+  </div>
 <form method="POST">
   <div class="p-2 text-center">
     <table class="table">

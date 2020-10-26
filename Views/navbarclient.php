@@ -13,7 +13,9 @@
           <form method="POST">
             <button formaction="<?php echo FRONT_ROOT ?>Session/Logout" class="btn btn-secondary" type="submit"> Log-Out </button>
             <button formaction="<?php echo FRONT_ROOT ?>Session/Index" class="btn btn-secondary" type="submit" name="action" value="edit"> Edit account information </button>
+
             <button formaction="<?php echo FRONT_ROOT ?>UserMovies/List" class="btn btn-secondary" type="submit"> List Current Movies </button>
+
           </form>
         </div>
 
