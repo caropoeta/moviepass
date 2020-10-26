@@ -22,7 +22,10 @@ class CinemaDBDAO
 public function ReadAll(){
 
   $sql = "SELECT * FROM cinemas 
-  where deleteCinema=0";
+
+  where Cinemadelete=0";
+
+
 
   try
   {
@@ -48,11 +51,12 @@ protected function Mapear($value)
   foreach($value as $v){
     $cinema = new Cinema();
 
-    $cinema->setnameCinema($v['nameCinema']);
+
+    $cinema->setnameCinema($v['cinemaName']);
     $cinema->setAddress($v['address']);
     $cinema->setOpeningTime($v['openingTime']);
     $cinema->setClosingTime($v['closingTime']);
-    $cinema->setTicketValue($v['ticketValue']);
+    $cinema->setTicketValue($v['ticket_value']);
     $cinema->setCapacity($v['capacity']);
     $cinema->setidCinema($v['idCinema']);
 
@@ -67,15 +71,15 @@ protected function Mapear($value)
 public function Add(Cinema $cinema){
       // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada 
 
-  $sql = "INSERT INTO cinemas (nameCinema,address,openingTime,closingTime,ticketValue,capacity,deleteCinema)VALUES (:nameCinema, :address,:openingTime,:closingTime,:ticketValue,:capacity,:deleteCinema );";
+  $sql = "INSERT INTO cinemas (cinemaName,address,openingTime,closingTime,ticket_value,capacity,deleteCinema)VALUES (:cinemaName, :address,:openingTime,:closingTime,:ticket_value,:capacity,:deleteCinema );";
 
-  $parameters['nameCinema'] = $cinema->getnameCinema();
+  $parameters['cinemaName'] = $cinema->getnameCinema();
   $parameters['address']=$cinema->getaddress();
   $parameters['openingTime']=$cinema->getopeningTime();
   $parameters['closingTime']=$cinema->getclosingTime();
-  $parameters['ticketValue'] = $cinema->getticketValue();
+  $parameters['ticket_value'] = $cinema->getticketValue();
   $parameters['capacity'] = $cinema->getcapacity();
-  $parameters['deleteCinema']=(int)$cinema->getdeleteCinema();
+  $parameters['Cinemadelete']=0;
 
   try
   {
@@ -94,7 +98,8 @@ public function Add(Cinema $cinema){
 public function Remove($idCinema){
 
   $sql = "update cinemas
-  set deleteCinema= 1
+  set cinemaDelete= 1
+
   WHERE idCinema= :idCinema";
 
   $parameters['idCinema'] = $idCinema;
@@ -112,21 +117,23 @@ public function Remove($idCinema){
 public function Update(Cinema $cinemaToUpdate){
 
   $sql="UPDATE cinemas 
-  SET nameCinema= :nameCinema,
+s
+  SET cinemaName= :cineName,
   address= :address,
   openingTime=:openingTime,
   closingTime=:closingTime,
-  ticketValue=:ticketValue ,
+  ticket_value=:ticket_value ,
+
   capacity=:capacity
 
   WHERE idCinema = :idCinema ";
   $parameters=[];  
   $parameters['idCinema']=$cinemaToUpdate->getidCinema();
-  $parameters['nameCinema'] = $cinemaToUpdate->getnameCinema();
+  $parameters['cinemaName'] = $cinemaToUpdate->getnameCinema();
   $parameters['address']=$cinemaToUpdate->getaddress();
   $parameters['openingTime']=$cinemaToUpdate->getopeningTime();
   $parameters['closingTime']=$cinemaToUpdate->getclosingTime();
-  $parameters['ticketValue'] = $cinemaToUpdate->getticketValue();
+  $parameters['ticket_value'] = $cinemaToUpdate->getticketValue();
   $parameters['capacity']=$cinemaToUpdate->getcapacity();
 
 
@@ -161,6 +168,7 @@ public function Read ($idCinema)
      $cinema->setticketValue($result[0]->getticketValue()); 
      $cinema->setcapacity($result[0]->getcapacity());
      $cinema->setidCinema($result[0]->getidCinema());
+     $cinema->setdeleteCinema($result[0]=0);
      return $cinema;  
 
    }else

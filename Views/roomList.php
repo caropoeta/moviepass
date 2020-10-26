@@ -5,23 +5,13 @@ include('navbaradmin.php');
 ?>
 <h2 class="fuente text-center"> Rooms Admin</h2>
 <br>
-
 <div class="p-2 text-center">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Capacity</th>
-        <th>Price</th>
-        <th>Functions</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      if ($lista != false) foreach ($lista as $room) {
-      ?>
+    <button formaction="<?php echo FRONT_ROOT ?>Cinema/showCinemas" class="btn btn-secondary" type="submit" name="action" > Back </button>
+  </div>
+<form method="POST">
+  <div class="p-2 text-center">
+    <table class="table">
+      <thead>
         <tr>
           <td><?php echo $room->getName() ?></td>
           <td><?php echo $room->getCapacity() ?></td>
