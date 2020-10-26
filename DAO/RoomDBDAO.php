@@ -119,7 +119,7 @@ class RoomDBDAO
       }
 
         public function Remove($id){
-            $sql = "DELETE FROM $this->tablename WHERE idRoom = :idRoom";
+            $sql = "DELETE FROM rooms WHERE idRoom = :idRoom";
             $parameters['idRoom'] = $id;
             
             try{

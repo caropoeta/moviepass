@@ -48,7 +48,7 @@ use Models\PopupAlert;
         public function Remove($id,$cinemaId)
         {
             
-            $response = $this->movieFunctionDAO->functionsExistsInRoom($id);
+            $response = false; //$this->movieFunctionDAO->functionsExistsInRoom($id);
             
             if($response !=false){
                 $this->List($cinemaId,"The room cannot be deleted because it has loaded functions");
