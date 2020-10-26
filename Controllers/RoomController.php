@@ -21,12 +21,11 @@ use Models\PopupAlert;
         }
 
 
-        public function List($cinemaId,$message = ""){
+        public function List($cinemaId, $msg = ""){
             $lista = $this->RoomDBDAO->readAllByCinema($cinemaId);
             if($lista==false){
                 $message = "There aren't loaded rooms in this cinema";
             }
-            //$cineId = $cinemaId;
             include_once(VIEWS_PATH."roomList.php");
         }
 

@@ -2,29 +2,32 @@ create database if not exists moviepass;
 
 use moviepass;
 
-CREATE TABLE movies(
-    idMovie INT ,
-    title VARCHAR(255) NOT NULL,
-    releaseDate DATE,
-    points SMALLINT,
-    movieDescription VARCHAR(1023),
-    poster VARCHAR(255),
-    CONSTRAINT pk_idMovie PRIMARY KEY movies(idMovie)
-);
+CREATE TABLE movies (
+  id int(11) NOT NULL,
+  title varchar(255) NOT NULL,
+  release_date date DEFAULT NULL,
+  vote_average smallint(6) DEFAULT NULL,
+  overview longtext DEFAULT NULL,
+  poster_path varchar(255) DEFAULT NULL,
+  deleted tinyint(1) NOT NULL DEFAULT 0
 
-CREATE TABLE genres(
-    idGenre INT AUTO_INCREMENT NOT NULL,
-    genreDescription VARCHAR(255),
-	CONSTRAINT pk_idGenre PRIMARY KEY genres(idGenre)
-);
+  CONSTRAINT pk_idMovie PRIMARY KEY movies(id)
+)
+
+CREATE TABLE genres (
+  id int not null,
+  name varchar(255) not null
+
+  CONSTRAINT pk_idGenres PRIMARY KEY genres(id)
+)
 
 CREATE TABLE genresXMovies(
-    idGenreXMovie INT AUTO_INCREMENT NOT NULL,
     idMovie INT,
     idGenre INT,
-    CONSTRAINT pk_idGenreXMovies PRIMARY KEY genresXMovies (idGenreXMovie),
-	CONSTRAINT fk_idMovie FOREIGN KEY genresXMovie(idMovie) REFERENCES movies(idMovie),
-	CONSTRAINT fk_idGenre FOREIGN KEY genresXMovie(idGenre) REFERENCES genres(idGenre)
+
+	CONSTRAINT fk_idMovie FOREIGN KEY genresXMovie(idMovie) REFERENCES movies(id),
+	CONSTRAINT fk_idGenre FOREIGN KEY genresXMovie(idGenre) REFERENCES genres(id)
+
 );
 
 CREATE TABLE IF NOT EXISTS roles (
@@ -70,8 +73,7 @@ CREATE TABLE cinemas(
     CONSTRAINT pk_idCinema PRIMARY KEY cinemas(idCinema)
 );
 
-INSERT INTO `cinemas`(`idCinema`, `cinemaName`, `address`, `openingTime`, `closingTime`, `ticket_value`, `capacity`, `cinemaDelete`)
- VALUES (1,'Roxy','Santa Fe 2400', 1200,2300,500,200,0);
+
 
 CREATE TABLE rooms(
 	idRoom int auto_increment,
@@ -82,7 +84,6 @@ CREATE TABLE rooms(
     constraint pk_idRoom primary key room(idRoom),
     constraint fk_idcinema foreign key rooms(idCinema) references cinemas(idCinema)
 );
-   
 
 CREATE TABLE movieFunctions(
 	idMovieFunction INT AUTO_INCREMENT,
@@ -100,6 +101,7 @@ CREATE TABLE tickets(
     constraint pk_idTicket primary key(idTicket),
     constraint fk_idMovieFunctionTicket foreign key(idMovieFunction) references movieFunctions(idMovieFunction)
 );
+
 
 
     
