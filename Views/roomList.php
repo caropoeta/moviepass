@@ -13,12 +13,31 @@ include('navbaradmin.php');
     <table class="table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Capacity</th>
-          <th>Price</th>
-          <th>Update</th>
-          <th>Delete</th>
+          <td><?php echo $room->getName() ?></td>
+          <td><?php echo $room->getCapacity() ?></td>
+          <td><?php echo $room->getPrice() ?></td>
+          <td>
+            <form action=<?php echo FRONT_ROOT . 'Functions/List' ?> method="POST">
+              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+              <button type=submit>List Rooms </button>
+            </form>
+          </td>
+          <td>
+            <form action=<?php echo FRONT_ROOT . 'Room/ShowUpdateRoom' ?> method="POST">
+              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+              <button type=submit>Update </button>
+            </form>
+          </td>
+          <td>
+            <form action=<?php echo FRONT_ROOT . 'Room/Remove' ?> method="POST">
+              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+              <input type="hidden" name="price" value=<?php echo $room->getPrice() ?>>
+              <input type="hidden" name="cinemaId" value=<?php echo $room->getCinema()->getidCinema() ?>>
+              <button type=submit> Delete </button>
+            </form>
+          </td>
         </tr>
+
       </thead>
       <tbody>
         <?php
