@@ -2,31 +2,39 @@
 include('navbaradmin.php');
 ?>
 <main class="d-flex  justify-content-center ">
- <div class="content">
-    <header class="text-center">
-    </header>
-    <div class="login-form bg-dark-alpha p-5 bg-light">
-        <section>
-            <br>
-            <div class="form-group">
-                <form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinemas" method="POST">
-                    <div class="form-group align-items-center">
-                        <h2 class="fuente5 text-center">CINEMAS</h2>
+    <div class="content">
+        <header class="text-center">
+        </header>
+        <div class="login-form bg-dark-alpha p-5 bg-light">
+            <section>
+                <br>
+                <div class="form-group">
+                    <form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinemas" method="POST">
+                        <div class="form-group align-items-center">
+                            <h2 class="fuente5 text-center">CINEMAS</h2>
+                            <br>
+                            <button type="submit" class="btn btn-primary offset-4">Show Cinemas</button>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <br>
+                <form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinema" method="POST">
+                    <div class="form-group">
+
+                        <input type="text" name="wantedCinema" placeholder="Search Cinema" required class="form-control">
                         <br>
-                        <button type="submit" class="btn btn-primary offset-4"  >Show Cinemas</button>
+                        <button type="submit" class="btn btn-primary offset-4">Search Cinema</button>
                     </div>
                 </form>
-            </div>
-            <br>
-            <br>
-            <form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinema" method="POST">
-                <div class="form-group">
 
-                    <input type="text" name="wantedCinema" placeholder="Search Cinema" required class="form-control">
-                    <br>
-                    <button type="submit" class="btn btn-primary offset-4">Search Cinema</button>
+                <div class="col-auto">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary offset-4" data-toggle="modal" data-target="#add">
+                        Add cinema
+                    </button>
                 </div>
-            </form>
+
 
             <h2 class="fuente5 text-center"> Add cinema</h2>
             <form action="<?php echo FRONT_ROOT ?>Cinema/AddCinema" method="POST">
@@ -45,10 +53,9 @@ include('navbaradmin.php');
                     <input type="number" name="capacity" placeholder="Enter Capacity Value" required class="form-control">
                     <br>
                     <button type="submit" class="btn btn-primary offset-4  ">Add Cinema</button>
-                </div>
-            </form>
-        </section>
-    </div>
-</div>
-</main>
 
+                </div>
+            </section>
+        </div>
+    </div>
+</main>

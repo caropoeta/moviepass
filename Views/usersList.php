@@ -146,6 +146,7 @@
             </div>
         </div>
         <br>
+
         <!-- user_add_form-->
         <div class="user_add_div">
             <h2 class=" text-center fuente">Add User</h2>
@@ -166,29 +167,65 @@
                         </div>
                     </div>
 
-                    <br>
-                    <div class="row">
-                        <div class="col-lg-4 offset-4">
-                            <input type="email" name="email" required class="form-control form-control-lg" placeholder="Email" />
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-lg-4 offset-4">
-                            <input type="number" name="dni" required class="form-control form-control-lg" placeholder="Number" min="5000000" max="99999999" />
-                            <br>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 offset-4">
-                            <input type="date" name="birthday" class="form-control form-control-lg" required placeholder="Birthday" />
-                            <br>
-                            <br>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <h3 class=" text-center fuente5 offset-6">Rol</h3>
+        <div class="col-auto">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#add">
+                Add user
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade bd-example-modal-lg" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <form method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add user</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <br>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-4 offset-4">
+                                        <input type="text" name="username" required placeholder="Username" class="form-control form-control-lg" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 offset-4">
+                                    <input type="password" name="password" class="form-control form-control-lg" required placeholder="Password" />
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 offset-4">
+                                    <input type="email" name="email" required class="form-control form-control-lg" placeholder="Email" />
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 offset-4">
+                                    <input type="number" name="dni" required class="form-control form-control-lg" placeholder="Number" min="5000000" max="99999999" />
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 offset-4">
+                                    <input type="date" name="birthday" class="form-control form-control-lg" required placeholder="Birthday" />
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <h3 class=" text-center fuente5 offset-6">Rol</h3>
+
 
                     </div>
                     <div class="row">
@@ -208,7 +245,7 @@
                     </div>
                     <br>
                 </form>
+
             </div>
         </div>
-    </div>
 </section>

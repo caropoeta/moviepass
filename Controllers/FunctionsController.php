@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use DAO\MoviesXFunctionsDAO;
-use DAO\RoomDBDAO;
+use DAO\FunctionsDAO;
+use DAO\MovieXGenreDAO;
 use DAO\Session;
 
 class FunctionsController
@@ -20,24 +20,50 @@ class FunctionsController
         }
     }
 
-    public function Index()
+    public static function Index()
     {
         HomeController::MainPage();
     }
 
-    public function List($id)
+    public static function List(int $roomId)
     {
+        $functions = FunctionsDAO::getAllFromRoom($roomId);
+        require_once(VIEWS_PATH . 'functionList.php');
     }
 
-    public function Add($id)
+    public static function Delete(int $id, int $roomid)
     {
+        FunctionsDAO::delete($id);
+        FunctionsController::List($roomid);
     }
 
-    public function Delete($id)
+    public static function SelectMovieAdd(String $time, int $roomId, int $functionId, int $page = 1)
     {
+        if ($page <= 0)
+            $page = 1;
+
+        $movies = MovieXGenreDAO::getMovies($page);
+        require_once(VIEWS_PATH . 'movieSelectAddFunction.php');
     }
 
-    public function Modify($id)
+    public static function SelectMovieUpdate(String $time, int $roomId, int $functionId, int $page = 1)
     {
+        if ($page <= 0)
+            $page = 1;
+
+        $movies = MovieXGenreDAO::getMovies($page);
+        require_once(VIEWS_PATH . 'movieSelectUpdateFunction.php');
+    }
+
+    public static function Update(String $time, int $roomId, int $functionId, int $movieId)
+    {
+        //FunctionsDAO::update($id);
+        FunctionsController::List($roomId);
+    }
+
+    public static function Add(String $time, int $roomId, int $functionId, int $movieId)
+    {
+        //FunctionsDAO::add($id);
+        FunctionsController::List($roomId);
     }
 }
