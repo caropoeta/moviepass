@@ -6,52 +6,62 @@ include('navbaradmin.php');
 <h2 class="fuente text-center"> Rooms Admin</h2>
 <br>
 
-<div class="p-2 text-center">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Capacity</th>
-        <th>Price</th>
-        <th>Functions</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      if ($lista != false) foreach ($lista as $room) {
-      ?>
+<form method="POST">
+  <div class="p-2 text-center">
+    <table class="table">
+      <thead>
         <tr>
-          <td><?php echo $room->getName() ?></td>
-          <td><?php echo $room->getCapacity() ?></td>
-          <td><?php echo $room->getPrice() ?></td>
-          <td>
-            <form action=<?php echo FRONT_ROOT . 'Functions/List' ?> method="POST">
-              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
-              <button type=submit>List functions </button>
-            </form>
-          </td>
-          <td>
-            <form action=<?php echo FRONT_ROOT . 'Room/ShowUpdateRoom' ?> method="POST">
-              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
-              <button type=submit>Update </button>
-            </form>
-          </td>
-          <td>
-            <form action=<?php echo FRONT_ROOT . 'Room/Remove' ?> method="POST">
-              <input type="hidden" name="id" value=<?php echo $room->getId()?>>
-              <input type="hidden" name="cinemaId" value=<?php echo $room->getCinema()->getidCinema() ?>>
-              <button type=submit> Delete </button>
-            </form>
-          </td>
+          <th>Name</th>
+          <th>Capacity</th>
+          <th>Price</th>
+          <th>Function</th>
+          <th>Update</th>
+          <th>Delete</th>
         </tr>
-      <?php
-      }
-      ?>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <?php
+        if ($lista != false) foreach ($lista as $room) {
+          ?>
+          <tr>
+            <td><?php echo $room->getName() ?></td>
+            <td><?php echo $room->getCapacity() ?></td>
+            <td><?php echo $room->getPrice() ?></td>
+
+            <td>
+
+              <form method="POST">
+               <div class="p-2">
+                <button formaction="<?php echo FRONT_ROOT ?>FilmFunction/List" class="btn btn-secondary" type="submit" name="room" value=<?php echo $room->getId()?>>Function</button>        
+              </div>
+            </td>
+            <td>
+             <form method="POST">
+               <div class="p-2">
+                <button formaction="<?php echo FRONT_ROOT ?>Room/ShowUpdateRoom" class="btn btn-secondary" type="submit" name="room" value=<?php echo $room->getId()?>>Update</button>        
+              </div>
+            </form>
+          </td>
+          <td>
+            <form method="POST">
+             <div class="p-2">
+              <button formaction="<?php echo FRONT_ROOT ?>Room/Remove" class="btn btn-secondary" type="submit" name="room" value=>Delete</button>   
+              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+              <input type="hidden" name="price" value=<?php echo $room->getPrice() ?>>
+              <input type="hidden" name="cinemaId" value=<?php echo $room->getCinema()->getidCinema() ?>>
+
+            </div>
+          </form>
+        </td>
+      </td>
+    </tr>
+    <?php
+  }
+  ?>
+</tbody>
+</table>
 </div>
+</form>
 
 <form method="POST" action=<?php echo FRONT_ROOT . "Room/Add"; ?>>
   <div align=center>
@@ -68,5 +78,11 @@ include('navbaradmin.php');
         <br>
       </div>
     </div>
+  </div>
+</form>
+
+<form method="POST">
+  <div class="fuente4 text-center">
+    <button formaction="<?php echo FRONT_ROOT ?>Cinema/ShowCinemas" class="btn btn-secondary" type="submit">Back</button>
   </div>
 </form>

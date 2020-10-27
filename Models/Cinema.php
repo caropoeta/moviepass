@@ -15,65 +15,65 @@ class Cinema{
 	{
 	}
 
-	public function setnameCinema($nameCinema){
+	public function setNameCinema($nameCinema){
 		$this->nameCinema=$nameCinema;
 	}
 
-	public function getnameCinema(){
+	public function getNameCinema(){
 		return $this->nameCinema;
 	}
 
-	public function setaddress($address){
+	public function setAddress($address){
 		$this->address=$address;
 	}
 
-	public function getaddress(){
+	public function getAddress(){
 		return $this->address;
 	}
-	public function setopeningTime($openingTime){
+	public function setOpeningTime($openingTime){
 		$this->openingTime=$openingTime;
 	}
 
-	public function getopeningTime(){
+	public function getOpeningTime(){
 		return $this->openingTime;
 	}
-	public function setclosingTime($closingTime){
+	public function setClosingTime($closingTime){
 		$this->closingTime=$closingTime;
 	}
 
-	public function getclosingTime(){
+	public function getClosingTime(){
 		return $this->closingTime;
 	}
 
-	public function setticketValue($ticketValue){
+	public function setTicketValue($ticketValue){
 		$this->ticketValue=$ticketValue;
 	}
 
-	public function getticketValue(){
+	public function getTicketValue(){
 		return $this->ticketValue;
 	}
 
-	public function setcapacity($capacity){
+	public function setCapacity($capacity){
 		$this->capacity=$capacity;
 	}
 
-	public function getcapacity(){
+	public function getCapacity(){
 		return $this->capacity;
 	}
 
-	public function setidCinema($idCinema){
+	public function setIdCinema($idCinema){
 		$this->idCinema=$idCinema;
 	}
 
-	public function getidCinema(){
+	public function getIdCinema(){
 		return $this->idCinema;
 	}
 
-	public function setdeleteCinema($deleteCinema){
+	public function setDeleteCinema($deleteCinema){
 		$this->deleteCinema=$deleteCinema;
 	}
 
-	public function getdeleteCinema(){
+	public function getDeleteCinema(){
 		return $this->deleteCinema;
 	}
 
