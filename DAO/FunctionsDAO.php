@@ -8,11 +8,6 @@ use Models\Movie;
 
 class FunctionsDAO
 {
-    public static function add(Functions $obj)
-    {
-        # code...
-    }
-
     public static function delete(int $id)
     {
         $query = "update functions set deleted = 0 where id = :id";
@@ -23,14 +18,11 @@ class FunctionsDAO
         $response = $conection->ExecuteNonQuerry($query, $param);
     }
 
-    public static function update(Functions $obj)
-    {
-    }
-
     public static function getAllFromRoom(int $id)
     {
-        $query = "select * from functions where deleted = 0";
+        $query = "select * from functions where deleted = 0 and idRoom = :room";
         $param = [];
+        $param['room'] = $id;
 
         $conection = Connection::GetInstance();
         $response = $conection->Execute($query, $param);
@@ -38,19 +30,11 @@ class FunctionsDAO
         $roleArray = array_map(function (array $obj) {
             $funToReturn = new Functions();
             $funToReturn->setidFunction($obj['id']);
-            $funToReturn->setTime((String) $obj['time']);
+            $funToReturn->setTime((String) date('h:i:s', strtotime($obj['time'])));
+            $funToReturn->setfinishTime((String) date('h:i:s', strtotime($obj['finishTime'])));
             $funToReturn->setMovie(MovieDAO::getMovieById($obj['idMovie']));
             $funToReturn->setidRoom($obj['idRoom']);
             $funToReturn->setDeleteFunction($obj['deleted']);
-
-            $funToReturn->setfinishTime(
-                (String) date(
-                    'h:i:s',strtotime(
-                        "+" . $funToReturn->getMovie()->getRuntime(), 
-                        strtotime($obj['time'])
-                    )
-                )
-            );
 
             return $funToReturn;
         }, $response);

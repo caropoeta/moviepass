@@ -56,13 +56,13 @@ include('navbaradmin.php');
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <!-- aca va todo Update-->
-
-
+                                        <input type="time" name="Starting time" value="<?php echo $function->getTime() ?>" placeholder="Enter Closing Time" required class="form-control">
+                                        <br>
+                                        <input type="hidden" name="roomid" value="<?php echo $roomId ?>">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/Add" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $roomId ?>">Update</button>
+                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $roomId ?>">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -95,13 +95,13 @@ include('navbaradmin.php');
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- aca va todo Add-->
-
-
+                    <input type="time" name="Starting time" placeholder="Enter Closing Time" required class="form-control">
+                    <br>
+                    <input type="hidden" name="roomid" value="<?php echo $roomId ?>">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button formaction="<?php echo FRONT_ROOT ?>Functions/Add" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $roomId ?>">Add</button>
+                    <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $roomId ?>">Add</button>
                 </div>
             </form>
         </div>
