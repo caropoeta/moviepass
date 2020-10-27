@@ -48,13 +48,13 @@ protected function Mapear($value)
   foreach($value as $v){
     $cinema = new Cinema();
 
-    $cinema->setnameCinema($v['nameCinema']);
+    $cinema->setNameCinema($v['nameCinema']);
     $cinema->setAddress($v['address']);
     $cinema->setOpeningTime($v['openingTime']);
     $cinema->setClosingTime($v['closingTime']);
     $cinema->setTicketValue($v['ticketValue']);
     $cinema->setCapacity($v['capacity']);
-    $cinema->setidCinema($v['idCinema']);
+    $cinema->setIdCinema($v['idCinema']);
 
     array_push($cinemaList,$cinema);
   }
@@ -69,13 +69,13 @@ public function Add(Cinema $cinema){
 
   $sql = "INSERT INTO cinemas (nameCinema,address,openingTime,closingTime,ticketValue,capacity,deleteCinema)VALUES (:nameCinema, :address,:openingTime,:closingTime,:ticketValue,:capacity,:deleteCinema );";
 
-  $parameters['nameCinema'] = $cinema->getnameCinema();
-  $parameters['address']=$cinema->getaddress();
-  $parameters['openingTime']=$cinema->getopeningTime();
-  $parameters['closingTime']=$cinema->getclosingTime();
-  $parameters['ticketValue'] = $cinema->getticketValue();
-  $parameters['capacity'] = $cinema->getcapacity();
-  $parameters['deleteCinema']=(int)$cinema->getdeleteCinema();
+  $parameters['nameCinema'] = $cinema->getNameCinema();
+  $parameters['address']=$cinema->getAddress();
+  $parameters['openingTime']=$cinema->getOpeningTime();
+  $parameters['closingTime']=$cinema->getClosingTime();
+  $parameters['ticketValue'] = $cinema->getTicketValue();
+  $parameters['capacity'] = $cinema->getCapacity();
+  $parameters['deleteCinema']=(int)$cinema->getDeleteCinema();
 
   try
   {
@@ -121,13 +121,13 @@ public function Update(Cinema $cinemaToUpdate){
 
   WHERE idCinema = :idCinema ";
   $parameters=[];  
-  $parameters['idCinema']=$cinemaToUpdate->getidCinema();
-  $parameters['nameCinema'] = $cinemaToUpdate->getnameCinema();
-  $parameters['address']=$cinemaToUpdate->getaddress();
-  $parameters['openingTime']=$cinemaToUpdate->getopeningTime();
-  $parameters['closingTime']=$cinemaToUpdate->getclosingTime();
-  $parameters['ticketValue'] = $cinemaToUpdate->getticketValue();
-  $parameters['capacity']=$cinemaToUpdate->getcapacity();
+  $parameters['idCinema']=$cinemaToUpdate->getIdCinema();
+  $parameters['nameCinema'] = $cinemaToUpdate->getNameCinema();
+  $parameters['address']=$cinemaToUpdate->getAddress();
+  $parameters['openingTime']=$cinemaToUpdate->getOpeningTime();
+  $parameters['closingTime']=$cinemaToUpdate->getClosingTime();
+  $parameters['ticketValue'] = $cinemaToUpdate->getTicketValue();
+  $parameters['capacity']=$cinemaToUpdate->getCapacity();
 
 
   try{

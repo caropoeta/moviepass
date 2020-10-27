@@ -29,32 +29,38 @@ include('navbaradmin.php');
             <td><?php echo $room->getPrice() ?></td>
 
             <td>
-              <form action=<?php echo FRONT_ROOT . 'Room/AddFunction' ?> method="POST">
-                <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
-                <button type=submit>Function </button>
-              </form>
+
+              <form method="POST">
+               <div class="p-2">
+                <button formaction="<?php echo FRONT_ROOT ?>FilmFunction/List" class="btn btn-secondary" type="submit" name="room" value=<?php echo $room->getId()?>>Function</button>        
+              </div>
             </td>
             <td>
-              <form action=<?php echo FRONT_ROOT . 'Room/ShowUpdateRoom' ?> method="POST">
-                <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
-                <button type=submit>Update </button>
-              </form>
-            </td>
-            <td>
-              <form action=<?php echo FRONT_ROOT . 'Room/Remove' ?> method="POST">
-                <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
-                <input type="hidden" name="price" value=<?php echo $room->getPrice() ?>>
-                <input type="hidden" name="cinemaId" value=<?php echo $room->getCinema()->getidCinema() ?>>
-                <button type=submit> Delete </button>
-              </form>
-            </td>
-          </tr>
-          <?php
-        }
-        ?>
-      </tbody>
-    </table>
-  </div>
+             <form method="POST">
+               <div class="p-2">
+                <button formaction="<?php echo FRONT_ROOT ?>Room/ShowUpdateRoom" class="btn btn-secondary" type="submit" name="room" value=<?php echo $room->getId()?>>Update</button>        
+              </div>
+            </form>
+          </td>
+          <td>
+            <form method="POST">
+             <div class="p-2">
+              <button formaction="<?php echo FRONT_ROOT ?>Room/Remove" class="btn btn-secondary" type="submit" name="room" value=>Delete</button>   
+              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
+              <input type="hidden" name="price" value=<?php echo $room->getPrice() ?>>
+              <input type="hidden" name="cinemaId" value=<?php echo $room->getCinema()->getidCinema() ?>>
+
+            </div>
+          </form>
+        </td>
+      </td>
+    </tr>
+    <?php
+  }
+  ?>
+</tbody>
+</table>
+</div>
 </form>
 
 <form method="POST" action=<?php echo FRONT_ROOT . "Room/Add"; ?>>

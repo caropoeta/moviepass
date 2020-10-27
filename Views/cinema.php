@@ -11,11 +11,11 @@
                 <form action="<?php echo FRONT_ROOT ?>Cinema/UpdateCinema" method="POST">
                     <div class="form-group">
                         <br>
-                        <input type="text" name="id"  value="<?php echo $cinemaFound->getId() ?>"  required class="form-control"readonly="readonly">
+                        <input type="text" name="id"  value="<?php echo $cinemaFound->getIdCinema() ?>"  required class="form-control"readonly="readonly">
                         <br>
-                        <input type="text" name="name" value="<?php echo $cinemaFound->getName() ?>" required class="form-control">
+                        <input type="text" name="name" value="<?php echo $cinemaFound->getNameCinema() ?>" required class="form-control">
                         <br>
-                        <input type="text" name="adress" value="<?php echo $cinemaFound->getAdress() ?>" required class="form-control">
+                        <input type="text" name="address" value="<?php echo $cinemaFound->getAddress() ?>" required class="form-control">
                         <br>
                         <input type="text" name="openingTime" value="<?php echo $cinemaFound->getOpeningTime() ?>"  required class="form-control">
                         <br>
