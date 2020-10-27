@@ -32,7 +32,7 @@ include('navbaradmin.php');
             <form action="<?php echo FRONT_ROOT ?>Cinema/AddCinema" method="POST">
                 <div class="form-group">
                     <br>
-                    <input type="text" name="name" class="form-control" required placeholder="Enter cinema name">
+                    <input type="text" name="name" class="form-control" required placeholder="Enter Cinema Name">
                     <br>
                     <input type="text" name="adress" placeholder="Enter Cinema Adress" required class="form-control">
                     <br>
@@ -42,7 +42,7 @@ include('navbaradmin.php');
                     <br>
                     <input type="number" name="ticketValue" placeholder="Enter Ticket Value" required class="form-control">
                     <br>
-                    <input type="number" name="capacity" placeholder="Enter capacity Value" required class="form-control">
+                    <input type="number" name="capacity" placeholder="Enter Capacity Value" required class="form-control">
                     <br>
                     <button type="submit" class="btn btn-primary offset-4  ">Add Cinema</button>
                 </div>
