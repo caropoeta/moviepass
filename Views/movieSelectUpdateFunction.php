@@ -1,5 +1,6 @@
 <?php
 include('navbaradmin.php');
+
 use DAO\MovieDAO;
 use Models\Genre;
 use Models\Movie;
@@ -9,6 +10,7 @@ use Models\Movie;
     <form method="POST">
         <div class="align-items-center">
             <input type="hidden" name="time" value="<?php echo $time ?>">
+            <input type="hidden" name="day" value="<?php echo $date ?>">
             <input type="hidden" name="room" value="<?php echo $roomId ?>">
             <input type="hidden" name="function" value="<?php echo $functionId ?>">
             <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" type="submit" name="page" value="<?php echo $page - 1 ?>">Back Page</button>
@@ -20,6 +22,7 @@ use Models\Movie;
         <div class="">
             <form action="<?php echo FRONT_ROOT ?>Functions/Update" method="POST">
                 <input type="hidden" name="time" value="<?php echo $time ?>">
+                <input type="hidden" name="day" value="<?php echo $date ?>">
                 <input type="hidden" name="room" value="<?php echo $roomId ?>">
                 <input type="hidden" name="function" value="<?php echo $functionId ?>">
 

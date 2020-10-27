@@ -27,8 +27,8 @@ class CinemaController
         if($cinemaList!=false){
             foreach ($cinemaList as $oneCinema) {
 
-                if($oneCinema->getIdCinema()>$idMax){
-                    $idMax=$oneCinema->getIdCinema();
+                if($oneCinema->getidCinema()>$idMax){
+                    $idMax=$oneCinema->getidCinema();
                 }
             }
         }
@@ -46,14 +46,14 @@ class CinemaController
         }
         if($hasError == false){
             $cinemaToAdd = new Cinema();
-            $cinemaToAdd->setIdCinema($newId);
-            $cinemaToAdd->setNameCinema($nameCinema);
-            $cinemaToAdd->setAddress($address);
-            $cinemaToAdd->setOpeningTime($openingTime);
-            $cinemaToAdd->setClosingTime($closingTime);
-            $cinemaToAdd->setTicketValue($ticketValue);
-            $cinemaToAdd->setCapacity($capacity);
-            $cinemaToAdd->setDeleteCinema(false);
+            $cinemaToAdd->setidCinema($newId);
+            $cinemaToAdd->setnameCinema($nameCinema);
+            $cinemaToAdd->setaddress($address);
+            $cinemaToAdd->setopeningTime($openingTime);
+            $cinemaToAdd->setclosingTime($closingTime);
+            $cinemaToAdd->setticketValue($ticketValue);
+            $cinemaToAdd->setcapacity($capacity);
+            $cinemaToAdd->setdeleteCinema(false);
 
             $cinemaDBDAO->Add($cinemaToAdd);
             $cinemaList = $cinemaDBDAO->ReadAll();
@@ -62,7 +62,7 @@ class CinemaController
             $popupAlert=new PopupAlert(["Error:", $errorMessage]);
             $popupAlert->Show();
         }
-        require_once(VIEWS_PATH . '.php');
+        require_once(VIEWS_PATH . 'showCinemas.php');
 
     }
 
@@ -108,7 +108,6 @@ class CinemaController
 
     public function ModifyCinema($modifyId)
     {
-
         require_once(VIEWS_PATH . 'navbaradmin.php');
         $CinemaDBDAO= new CinemaDBDAO();
         $cinemaList=$CinemaDBDAO->ReadAll();
@@ -116,12 +115,13 @@ class CinemaController
 
         foreach ($cinemaList as $oneCinema) {
 
-         if($modifyId==$oneCinema->getIdCinema()){
+         if($modifyId==$oneCinema->getidCinema()){
 
              $cinemaFound=$oneCinema;
          }
      }
-    
+
+
      require_once(VIEWS_PATH . 'cinema.php');
  }
  public function UpdateCinema($idCinema,$nameCinema,$address,$openingTime,$closingTime,$ticketValue,$capacity)
@@ -140,14 +140,15 @@ class CinemaController
     if($hasError == false){
 
         $cinema=new Cinema();
+        $cinema->setidCinema($idCinema);
+        $cinema->setnameCinema($nameCinema);
+        $cinema->setaddress($address);
+        $cinema->setopeningTime($openingTime);
+        $cinema->setclosingTime($closingTime);
+        $cinema->setticketValue($ticketValue);
+        $cinema->setcapacity($capacity);
+       
 
-        $cinema->setIdCinema($idCinema);
-        $cinema->setNameCinema($nameCinema);
-        $cinema->setAddress($address);
-        $cinema->setOpeningTime($openingTime);
-        $cinema->setClosingTime($closingTime);
-        $cinema->setTicketValue($ticketValue);
-        $cinema->setCapacity($capacity);
 
         $CinemaDBDAO= new CinemaDBDAO;
         $CinemaDBDAO->Update($cinema);

@@ -3,11 +3,168 @@
 namespace DAO;
 
 use DateTime;
+use Models\Exceptions\ArrayException;
 use Models\Functions;
 use Models\Movie;
 
 class FunctionsDAO
 {
+    public static function checkIfMovieIsInDayInCinema(int $idMov, String $day)
+    {
+        $conection = Connection::GetInstance();
+        $query = "
+        select cinemas.idCinema, functions.idMovie, functions.day, functions.deleted
+        from functions
+        inner join rooms
+        on functions.idRoom = rooms.idRoom
+        inner join cinemas
+        on cinemas.idCinema = rooms.idCinema 
+        
+        where functions.day = :day
+        and functions.idMovie = :idMovie
+        and functions.deleted = 0
+        ;";
+
+        $response = $conection->Execute($query, array('idMovie' => $idMov, 'day' => $day));
+
+        if ($response != null)
+            return (sizeof($response) > 0) ? true : false;
+
+        return false;
+    }
+
+    public static function checkIfEndCollideWithFunctionInRoom(String $start, String $end, int $idRoom, String $date)
+    {
+        $conection = Connection::GetInstance();
+        $query = "
+        select functions.time, functions.finishTime, functions.idRoom
+        from functions
+        inner join rooms
+        on functions.idRoom = rooms.idRoom
+        inner join cinemas
+        on cinemas.idCinema = rooms.idCinema 
+        
+        where functions.idRoom = :idRoom
+        and functions.finishTime between :start and :end
+        and functions.deleted = 0
+        and functions.day = :day
+        ;";
+
+        $response = $conection->Execute(
+            $query,
+            array('start' => $start, 'end' => $end, 'idRoom' => $idRoom, 'day' => $date)
+        );
+
+        if ($response != null)
+            return (sizeof($response) > 0) ? true : false;
+
+        return false;
+    }
+
+    public static function checkIfStartCollideWithFunctionInRoom(String $start, String $end, int $idRoom, String $date)
+    {
+        $conection = Connection::GetInstance();
+        $query = "
+        select functions.time, functions.finishTime, functions.idRoom
+        from functions
+        inner join rooms
+        on functions.idRoom = rooms.idRoom
+        inner join cinemas
+        on cinemas.idCinema = rooms.idCinema 
+        
+        where functions.idRoom = :idRoom
+        and functions.time between :start and :end
+        and functions.deleted = 0
+        and functions.day = :day
+        ;";
+
+        $response = $conection->Execute(
+            $query,
+            array('start' => $start, 'end' => $end, 'idRoom' => $idRoom, 'day' => $date)
+        );
+
+        if ($response != null)
+            return (sizeof($response) > 0) ? true : false;
+
+        return false;
+    }
+
+    public static function add(String $time, String $date, int $roomId, int $movieId)
+    {
+        $date = (string) date('Y-m-d', strtotime($date));
+
+        $exceptionArray = [];
+
+        /*problemas con el dia de funcion*/
+        if (FunctionsDAO::checkIfMovieIsInDayInCinema($movieId, $date))
+            array_push($exceptionArray, "The Movie is already ocupied for that day");
+        /*problemas con el dia de funcion*/
+
+        /*problemas con los tiempos de funcion*/
+        $startimtime = (string) date('H:i:s', strtotime($time));
+
+        $movieTiTime = (string) date('h:i:s', strtotime(MovieDAO::getMovieById($movieId)->getRuntime()));
+
+        $finnishtime = (string) date('H:i:s', strtotime($time));
+
+        $finnishtime = date('H:i:s', strtotime('+' . (string) date('h', strtotime($movieTiTime)) . ' hour',     strtotime($finnishtime)));
+        $finnishtime = date('H:i:s', strtotime('+' . (string) date('i', strtotime($movieTiTime)) . ' minute',   strtotime($finnishtime)));
+        $finnishtime = date('H:i:s', strtotime('+' . (string) date('s', strtotime($movieTiTime)) . ' second',   strtotime($finnishtime)));
+
+        $cin = RoomDBDAO::getCinemaByRoomId($roomId);
+        $startimtime_15minOffset = date('H:i:s', strtotime('-15 minute',  strtotime($startimtime)));
+        $finnishtime_15minOffset = date('H:i:s', strtotime('+15 minute',  strtotime($finnishtime)));
+
+        /*buscar si chocan con los tiempos de cine*/
+        if (strtotime($cin->getopeningTime()) >= strtotime($startimtime_15minOffset))
+            array_push($exceptionArray, "The start of the function is earlier than the opening time");
+
+        if (strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset))
+            array_push($exceptionArray, "The end of the function is later than the closing time");
+
+        /*buscar si chocan con los tiempos de funciones*/
+        if (FunctionsDAO::checkIfStartCollideWithFunctionInRoom($startimtime_15minOffset, $finnishtime_15minOffset, $roomId, $date))
+            array_push($exceptionArray, "This function collides with another function's start");
+
+        if (FunctionsDAO::checkIfEndCollideWithFunctionInRoom($startimtime_15minOffset, $finnishtime_15minOffset, $roomId, $date))
+            array_push($exceptionArray, "This function collides with another function's end");
+        /*problemas con los tiempos de funcion*/
+
+        if (!empty($exceptionArray))
+            throw new ArrayException("Error Processing Request", $exceptionArray, 1);
+
+        else {
+            $query = "insert into functions(time, idMovie, idRoom, deleted, finishTime, day) 
+            values (:time, :idMovie, :idRoom, :deleted, :finishTime, :day)";
+            $param = [];
+            $param['time'] = $startimtime;
+            $param['idMovie'] = $movieId;
+            $param['idRoom'] = $roomId;
+            $param['deleted'] = 0;
+            $param['finishTime'] = $finnishtime;
+            $param['day'] = $date;
+
+            $conection = Connection::GetInstance();
+            $response = $conection->ExecuteNonQuery($query, $param);
+        }
+    }
+
+    public static function update(String $time, String $date, int $roomId, int $functionId, int $movieId)
+    {
+        (string) date('h:i:s', strtotime($time));
+        (string) date('Y-m-d', strtotime($date));
+
+        /*
+            Una película solo puede ser proyectada en un único cine por día (Pero no puede ser
+            reproducida en más de una sala del cine. Revisión 3)
+            Validar que el comienzo de una función sea 15 minutos después de la anterior.
+         */
+
+        $exceptionArray = [];
+        array_push($exceptionArray, "arra");
+        throw new ArrayException("Error Processing Request", $exceptionArray, 1);
+    }
+
     public static function delete(int $id)
     {
         $query = "update functions set deleted = 1 where id = :id";
@@ -30,8 +187,9 @@ class FunctionsDAO
         $roleArray = array_map(function (array $obj) {
             $funToReturn = new Functions();
             $funToReturn->setidFunction($obj['id']);
-            $funToReturn->setTime((String) date('h:i:s', strtotime($obj['time'])));
-            $funToReturn->setfinishTime((String) date('h:i:s', strtotime($obj['finishTime'])));
+            $funToReturn->setTime((string) date('h:i:s', strtotime($obj['time'])));
+            $funToReturn->setfinishTime((string) date('h:i:s', strtotime($obj['finishTime'])));
+            $funToReturn->setDay((string) date('Y-m-d', strtotime($obj['finishTime'])));
             $funToReturn->setMovie(MovieDAO::getMovieById($obj['idMovie']));
             $funToReturn->setidRoom($obj['idRoom']);
             $funToReturn->setDeleteFunction($obj['deleted']);

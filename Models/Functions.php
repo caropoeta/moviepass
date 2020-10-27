@@ -6,6 +6,7 @@ class Functions
 {
 	private $idFunction;
 	private $time;
+	private $day;
 	private $asistencia;
 	private $deleteFunction;
 
@@ -58,6 +59,15 @@ class Functions
 		return $this->finishtime;
 	}
 
+	public function setDay(String $day)
+	{
+		$this->day = $day;
+	}
+
+	public function getDay()
+	{
+		return $this->day;
+	}
 	public function setTime($time)
 	{
 		$this->time = $time;

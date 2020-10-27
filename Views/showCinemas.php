@@ -43,32 +43,28 @@ include('navbaradmin.php');
       foreach ($cinemaList as $cinema) {
         ?>
         <tr>
-         <td><?php echo $cinema->getIdCinema()?></td>
-         <td><?php echo $cinema->getNameCinema()?></td>
-         <td><?php echo $cinema->getAddress()?></td>
-         <td><?php echo $cinema->getOpeningTime(). 'hs<br>';?></td>
-         <td><?php echo $cinema->getClosingTime(). 'hs<br>';?></td>
-         <td><?php echo "$" . $cinema->getTicketValue();?></td>
-         <td><?php echo $cinema->getCapacity();?></td>
+         <td><?php echo $cinema->getidCinema()?></td>
+         <td><?php echo $cinema->getnameCinema()?></td>
+         <td><?php echo $cinema->getaddress()?></td>
+         <td><?php echo $cinema->getopeningTime(). 'hs<br>';?></td>
+         <td><?php echo $cinema->getclosingTime(). 'hs<br>';?></td>
+         <td><?php echo "$" . $cinema->getticketValue();?></td>
+         <td><?php echo $cinema->getcapacity();?></td>
          <th>
         
 
              <div class="row">
               <form method="POST">
                <div class="p-2">
-
-                <button formaction="<?php echo FRONT_ROOT ?>Room/List" class="btn btn-secondary" type="submit" name="room" value="<?php echo $cinema->getIdCinema(); ?>">Rooms</button>        
-           </div>
+                <button formaction="<?php echo FRONT_ROOT ?>Room/List" class="btn btn-dark" type="submit" name="room" value="<?php echo $cinema->getidCinema(); ?>">Rooms</button>        
+              </div>
               <form method="POST">
                <div class="p-2">
-                <button formaction="<?php echo FRONT_ROOT ?>Cinema/ModifyCinema" class="btn btn-secondary" type="submit" name="modifyId" value="<?php echo $cinema->getIdCinema(); ?>">Modify</button>        
-
+                <button formaction="<?php echo FRONT_ROOT ?>Cinema/ModifyCinema" class="btn btn-warning" type="submit" name="modifyId" value="<?php echo $cinema->getidCinema(); ?>">Modify</button>        
               </div>
-            </li>
-          </form>
-             <li class="nav-item">
+          </form>            
              <div class="p-2">
-              <button formaction="<?php echo FRONT_ROOT ?>Cinema/DeleteCinema" class="btn btn-secondary" type="submit" name="deleteId" value="<?php echo $cinema->getIdCinema(); ?>">Delete</button>        
+              <button formaction="<?php echo FRONT_ROOT ?>Cinema/DeleteCinema" class="btn btn-danger" type="submit" name="deleteId" value="<?php echo $cinema->getidCinema(); ?>">Delete</button>        
             </div>
         </form>
     </th>

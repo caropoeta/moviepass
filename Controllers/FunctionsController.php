@@ -5,6 +5,8 @@ namespace Controllers;
 use DAO\FunctionsDAO;
 use DAO\MovieXGenreDAO;
 use DAO\Session;
+use Models\Exceptions\ArrayException;
+use Models\PopupAlert;
 
 class FunctionsController
 {
@@ -37,7 +39,7 @@ class FunctionsController
         FunctionsController::List($roomid);
     }
 
-    public static function SelectMovieAdd(String $time, int $roomId, int $functionId, int $page = 1)
+    public static function SelectMovieAdd(String $time, String $date, int $roomId, int $page = 1)
     {
         if ($page <= 0)
             $page = 1;
@@ -46,7 +48,7 @@ class FunctionsController
         require_once(VIEWS_PATH . 'movieSelectAddFunction.php');
     }
 
-    public static function SelectMovieUpdate(String $time, int $roomId, int $functionId, int $page = 1)
+    public static function SelectMovieUpdate(String $time, String $date, int $roomId, int $functionId, int $page = 1)
     {
         if ($page <= 0)
             $page = 1;
@@ -55,15 +57,27 @@ class FunctionsController
         require_once(VIEWS_PATH . 'movieSelectUpdateFunction.php');
     }
 
-    public static function Update(String $time, int $roomId, int $functionId, int $movieId)
+    public static function Update(String $time, String $date, int $roomId, int $functionId, int $movieId)
     {
-        //FunctionsDAO::update($id);
+        try {
+            FunctionsDAO::update($time, $date, $roomId, $functionId, $movieId);
+        } catch (ArrayException $EX) {
+            $alert = new PopupAlert($EX->getExceptionArray());
+            $alert->Show();
+        }
+
         FunctionsController::List($roomId);
     }
 
-    public static function Add(String $time, int $roomId, int $functionId, int $movieId)
+    public static function Add(String $time, String $date, int $roomId, int $movieId)
     {
-        //FunctionsDAO::add($id);
+        try {
+            FunctionsDAO::add($time, $date, $roomId, $movieId);
+        } catch (ArrayException $EX) {
+            $alert = new PopupAlert($EX->getExceptionArray());
+            $alert->Show();
+        }
+
         FunctionsController::List($roomId);
     }
 }
