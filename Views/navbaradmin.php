@@ -9,7 +9,7 @@
       <li class="nav-item">
         <form method="POST">
           <div class="p-2">
-            <button formaction="<?php echo FRONT_ROOT ?>Session/Logout" class="btn btn-secondary" type="submit" name="action" value="register"> Log Out </button>
+            <button formaction="<?php echo FRONT_ROOT ?>Session/Logout" class="btn btn-outline-success" type="submit" name="action" value="register"> Log Out </button>
           </div>
 
       </li>
@@ -17,29 +17,29 @@
       <li class="nav-item">
 
         <div class="p-2">
-          <button formaction="<?php echo FRONT_ROOT ?>Users/List" class="btn btn-secondary" type="submit">UsersList</button>
+          <button formaction="<?php echo FRONT_ROOT ?>Users/List" class="btn btn-outline-success" type="submit">UsersList</button>
         </div>
       </li>
 
       <li class="nav-item">
         <div class="p-2">
-          <button formaction="<?php echo FRONT_ROOT ?>Api/List" class="btn btn-secondary" type="submit">ApiList</button>
+          <button formaction="<?php echo FRONT_ROOT ?>Api/List" class="btn btn-outline-success" type="submit">ApiList</button>
         </div>
       </li>
 
       <li class="nav-item">
         <div class="p-2">
-          <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-secondary" type="submit">Cinema</button>
+          <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-outline-success" type="submit">Cinema</button>
         </div>
       </li>
         <div class="p-2">
-          <button formaction="<?php echo FRONT_ROOT ?>Movies/List" class="btn btn-secondary" type="submit">List Current Movies</button>
+          <button formaction="<?php echo FRONT_ROOT ?>Movies/List" class="btn btn-outline-success" type="submit">List Current Movies</button>
         </div>
       </li>
 
       <li class="nav-item">
         <div class="p-2">
-          <button formaction="<?php echo FRONT_ROOT ?>Session/Index" class="btn btn-secondary" type="submit" name="action" value="edit"> Edit account information </button>
+          <button formaction="<?php echo FRONT_ROOT ?>Session/Index" class="btn btn-outline-success" type="submit" name="action" value="edit"> Edit account information </button>
         </div>
         </form>
       </li>

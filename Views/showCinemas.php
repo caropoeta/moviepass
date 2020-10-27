@@ -3,16 +3,24 @@ use Models\PopupAlert;
 include('navbaradmin.php');
 
 ?>
-<h2 class="fuente text-center"> Cinemas Admin</h2>
+<br>
+<br>
+<br>
+<h2 class="fuente4 text-center"> Cinemas Admin</h2>
+<br>
+<br>
 <br>
 
 <form method="POST">
   <div class="p-2 text-center">
-    <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-secondary" type="submit" name="action" value="register"> Back </button>
+    <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-info" type="submit" name="action" value="register"> Back </button>
   </div>
-
+  <br>
+<br>
+<br>
+<div class="table-responsive">
   <table class="table">
-   <thead>
+   <thead class="thead-dark">
 
 
      <tr>
@@ -23,9 +31,10 @@ include('navbaradmin.php');
       <th>Closing Time</th>
       <th>Ticket Value</th>
       <th>Capacity</th>
+      <th></th>
 
     </tr>
-  </thead>
+  </thead >
   <tbody class="table-hover">
 
     <?php
@@ -42,45 +51,29 @@ include('navbaradmin.php');
          <td><?php echo "$" . $cinema->getticketValue();?></td>
          <td><?php echo $cinema->getcapacity();?></td>
          <th>
-          <nav class="navbar navbar-expand-lg">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            </button>
+        
 
-            <ul class="navbar-nav ml-auto">
-
-              <li class="nav-item">
+             <div class="row">
               <form method="POST">
                <div class="p-2">
-                <button formaction="<?php echo FRONT_ROOT ?>Room/List" class="btn btn-secondary" type="submit" name="room" value="<?php echo $cinema->getidCinema(); ?>">Rooms</button>        
+                <button formaction="<?php echo FRONT_ROOT ?>Room/List" class="btn btn-dark" type="submit" name="room" value="<?php echo $cinema->getidCinema(); ?>">Rooms</button>        
               </div>
-            </li>
-             <li class="nav-item">
               <form method="POST">
                <div class="p-2">
-                <button formaction="<?php echo FRONT_ROOT ?>Cinema/ModifyCinema" class="btn btn-secondary" type="submit" name="modifyId" value="<?php echo $cinema->getidCinema(); ?>">Modify</button>        
-
+                <button formaction="<?php echo FRONT_ROOT ?>Cinema/ModifyCinema" class="btn btn-warning" type="submit" name="modifyId" value="<?php echo $cinema->getidCinema(); ?>">Modify</button>        
               </div>
-            </li>
-          </form>
-        </ul>
-            <li class="nav-item">
+          </form>            
              <div class="p-2">
-              <button formaction="<?php echo FRONT_ROOT ?>Cinema/DeleteCinema" class="btn btn-secondary" type="submit" name="deleteId" value="<?php echo $cinema->getidCinema(); ?>">Delete</button>        
+              <button formaction="<?php echo FRONT_ROOT ?>Cinema/DeleteCinema" class="btn btn-danger" type="submit" name="deleteId" value="<?php echo $cinema->getidCinema(); ?>">Delete</button>        
             </div>
-          </li>
         </form>
-      </ul>
-
     </th>
   </tr>
-
-
     <?php
   }
 }
-
-
 ?>              
 </tbody>
 </table>
+</div>
 

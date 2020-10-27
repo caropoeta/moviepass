@@ -4,15 +4,15 @@
           <header class="text-center">
                <h2 class="fuente4">Movie Pass Log-in</h2>
           </header>
-          <div class="login-form bg-dark-alpha p-5 bg-light">
+          <div class="login-form bg-dark-alpha p-5 bg-light rounded back">
                <form method="post">
 
                     <div class="form-group">
-                         <label for="">User</label>
+                         
                          <input type="text" name="username" class="form-control form-control-lg" placeholder="Enter User" required>
                     </div>
                     <div class="form-group">
-                         <label for="">Password</label>
+                       
                          <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter Password" required>
                     </div>
 

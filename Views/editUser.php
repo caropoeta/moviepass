@@ -1,11 +1,19 @@
+<section>
+    <?php include('navbaradmin.php'); ?>
+</section>
+
+
+
 <?php
 
 use Models\UserRole; ?>
 
 <br>
-
+<br>
+<br>
+<br>
+<h2 class=" text-center fuente4">Edit Account Information</h2>
 <div class="user_add_div">
-    <h2 class=" text-center fuente">Edit account information</h2>
     <div class="container-fluid">
         <form action="<?php echo FRONT_ROOT ?>Session/Edit" method="POST">
             <br>

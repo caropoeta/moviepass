@@ -13,11 +13,11 @@
 
 <section id="listado" class="mb-5">
      <div class="container-fluid">
-          <h2 class="fuente4  text-center">Movie List</h2>
+          <h2 class="fuente4  text-center">Movie List From Api</h2>
           <br>
           <div class="col-auto">
                <small class="text-muted">
-                    *Search either by name/date/genres.
+                    *Search either by name or date and genres.
                </small>
 
                <form method="POST">
@@ -31,7 +31,7 @@
 
                          <div class="form-check">
                               <small class="text-muted">
-                                   *Search by genres.
+                                   *Search with genres.
                               </small>
                               <br>
                               <input type='hidden' name='genre-with' value="[]" />
