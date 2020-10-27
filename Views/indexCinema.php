@@ -35,40 +35,25 @@ include('navbaradmin.php');
                     </button>
                 </div>
 
-                <!-- Modal -->
-                <div class="modal fade bd-example-modal-lg" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <form method="POST">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add cinema</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <br>
-                                        <input type="text" name="name" class="form-control" required placeholder="Enter cinema name">
-                                        <br>
-                                        <input type="text" name="adress" placeholder="Enter Cinema Adress" required class="form-control">
-                                        <br>
-                                        <input type="time" name="openingTime" placeholder="Enter Opening Time" required class="form-control">
-                                        <br>
-                                        <input type="time" name="closingTime" placeholder="Enter Closing Time" required class="form-control">
-                                        <br>
-                                        <input type="number" name="ticketValue" placeholder="Enter Ticket Value" required class="form-control">
-                                        <br>
-                                        <input type="number" name="capacity" placeholder="Enter capacity Value" required class="form-control">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button formaction="<?php echo FRONT_ROOT ?>Cinema/AddCinema" class="btn btn-primary offset-6 btn-md active" type="submit">Add</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+
+            <h2 class="fuente5 text-center"> Add cinema</h2>
+            <form action="<?php echo FRONT_ROOT ?>Cinema/AddCinema" method="POST">
+                <div class="form-group">
+                    <br>
+                    <input type="text" name="name" class="form-control" required placeholder="Enter Cinema Name">
+                    <br>
+                    <input type="text" name="adress" placeholder="Enter Cinema Adress" required class="form-control">
+                    <br>
+                    <input type="time" name="openingTime" placeholder="Enter Opening Time" required class="form-control">
+                    <br>
+                    <input type="time" name="closingTime" placeholder="Enter Closing Time" required class="form-control">
+                    <br>
+                    <input type="number" name="ticketValue" placeholder="Enter Ticket Value" required class="form-control">
+                    <br>
+                    <input type="number" name="capacity" placeholder="Enter Capacity Value" required class="form-control">
+                    <br>
+                    <button type="submit" class="btn btn-primary offset-4  ">Add Cinema</button>
+
                 </div>
             </section>
         </div>

@@ -11,7 +11,7 @@
         <br>
         <!-- user_list-->
         <div class="user_list_div">
-            <h2 class="text-center fuente3 ">Usuarios</h2>
+            <h2 class="text-center fuente3 ">Users</h2>
             <br>
             <div class="container-fluid">
                 <br>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <select class=" col-md-4 offset-4" name="role">
-                            <option default>Anything</option>
+                            <option default>Everyone</option>
                             <?php
                             foreach ($roles as $role) {
                                 if ($role instanceof UserRole) {
@@ -54,13 +54,13 @@
                                 <div class="col-auto">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="<?php echo '#usuario' . $user->getId(); ?>">
-                                        Editar
+                                        Edit
                                     </button>
                                 </div>
 
                                 <div class="col-auto">
                                     <form method="POST">
-                                        <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Users/Delete" type="submit" name="id" value="<?php echo $user->getId(); ?>">Borrar</button>
+                                        <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Users/Delete" type="submit" name="id" value="<?php echo $user->getId(); ?>">Delete</button>
                                     </form>
                                 </div>
 
@@ -70,7 +70,7 @@
                                         <div class="modal-content">
                                             <form method="POST">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -147,6 +147,27 @@
         </div>
         <br>
 
+        <!-- user_add_form-->
+        <div class="user_add_div">
+            <h2 class=" text-center fuente">Add User</h2>
+            <div class="container-fluid">
+                <form action="<?php echo FRONT_ROOT ?>Users/Add" method="POST">
+                    <br>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4 offset-4">
+                                <input type="text" name="username" required placeholder="Username" class="form-control form-control-lg" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-4 offset-4">
+                            <input type="password" name="password" class="form-control form-control-lg" required placeholder="Password" />
+                        </div>
+                    </div>
+
+
         <div class="col-auto">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#add">
@@ -205,24 +226,26 @@
                             <div class="row">
                                 <h3 class=" text-center fuente5 offset-6">Rol</h3>
 
-                            </div>
-                            <div class="row">
-                                <select class="custom-select col-lg-4 offset-4" name="role">
-                                    <?php foreach ($roles as $role) {
-                                        if ($role instanceof UserRole) { ?>
-                                            <option><?php echo $role->getName(); ?></option>
-                                    <?php }
-                                    } ?>
-                                </select>
-                                <br>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button formaction="<?php echo FRONT_ROOT ?>Users/Add" class="btn btn-primary offset-6 btn-md active" type="submit">Add</button>
-                        </div>
-                    </form>
-                </div>
+
+                    </div>
+                    <div class="row">
+                        <select class="custom-select col-lg-4 offset-4" name="role">
+                            <?php foreach ($roles as $role) {
+                                if ($role instanceof UserRole) { ?>
+                                    <option><?php echo $role->getName(); ?></option>
+                            <?php }
+                            } ?>
+                        </select>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <button class="btn btn-primary offset-6 btn-md active" type="submit">Add</button>
+                        <br>
+                    </div>
+                    <br>
+                </form>
+
             </div>
         </div>
 </section>

@@ -147,6 +147,7 @@ class CinemaController
         $cinema->setclosingTime($closingTime);
         $cinema->setticketValue($ticketValue);
         $cinema->setcapacity($capacity);
+       
 
 
         $CinemaDBDAO= new CinemaDBDAO;

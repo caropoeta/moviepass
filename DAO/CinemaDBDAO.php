@@ -65,11 +65,12 @@ class CinemaDBDAO
       return false;
   }
 
-  public function Add(Cinema $cinema)
-  {
-    // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada 
 
-    $sql = "INSERT INTO cinemas (cinemaName,address,openingTime,closingTime,ticket_value,capacity,Cinemadelete)VALUES (:cinemaName, :address,:openingTime,:closingTime,:ticket_value,:capacity,:Cinemadelete );";
+public function Add($cinema){
+      // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada 
+
+  $sql = "INSERT INTO cinemas (cinemaName,address,openingTime,closingTime,ticket_value,capacity,Cinemadelete)VALUES (:cinemaName, :address,:openingTime,:closingTime,:ticket_value,:capacity,:Cinemadelete );";
+
 
     $parameters['cinemaName'] = $cinema->getnameCinema();
     $parameters['address'] = $cinema->getaddress();
@@ -107,6 +108,7 @@ class CinemaDBDAO
       echo $e;
     }
   }
+
   public function Update(Cinema $cinemaToUpdate)
   {
 
@@ -121,6 +123,7 @@ s
   capacity=:capacity
 
   WHERE idCinema = :idCinema ";
+
     $parameters = [];
     $parameters['idCinema'] = $cinemaToUpdate->getidCinema();
     $parameters['cinemaName'] = $cinemaToUpdate->getnameCinema();
@@ -138,6 +141,7 @@ s
 
       echo $e;
     }
+
   }
   public function Read($idCinema)
   {
