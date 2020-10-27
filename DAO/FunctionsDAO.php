@@ -10,12 +10,12 @@ class FunctionsDAO
 {
     public static function delete(int $id)
     {
-        $query = "update functions set deleted = 0 where id = :id";
+        $query = "update functions set deleted = 1 where id = :id";
         $param = [];
         $param['id'] = $id;
 
         $conection = Connection::GetInstance();
-        $response = $conection->ExecuteNonQuerry($query, $param);
+        $response = $conection->ExecuteNonQuery($query, $param);
     }
 
     public static function getAllFromRoom(int $id)

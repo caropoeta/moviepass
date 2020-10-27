@@ -29,7 +29,7 @@ include('navbaradmin.php');
           <td>
             <form action=<?php echo FRONT_ROOT . 'Functions/List' ?> method="POST">
               <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
-              <button type=submit>List Rooms </button>
+              <button type=submit>List functions </button>
             </form>
           </td>
           <td>
@@ -40,8 +40,7 @@ include('navbaradmin.php');
           </td>
           <td>
             <form action=<?php echo FRONT_ROOT . 'Room/Remove' ?> method="POST">
-              <input type="hidden" name="id" value=<?php echo $room->getId() ?>>
-              <input type="hidden" name="price" value=<?php echo $room->getPrice() ?>>
+              <input type="hidden" name="id" value=<?php echo $room->getId()?>>
               <input type="hidden" name="cinemaId" value=<?php echo $room->getCinema()->getidCinema() ?>>
               <button type=submit> Delete </button>
             </form>

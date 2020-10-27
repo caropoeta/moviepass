@@ -16,7 +16,7 @@ class RoomDBDAO
     }
 
     public function readAllByCinema($cinemaId){
-        $sql = "SELECT * FROM rooms WHERE idCinema = :idCinema";
+        $sql = "SELECT * FROM rooms WHERE idCinema = :idCinema and deleted = 0";
         $parameter['idCinema'] = $cinemaId;
 
         try
@@ -107,7 +107,6 @@ class RoomDBDAO
         $parameters['capacity'] = $room->getCapacity();
         $parameters['price']=$room->getPrice();
         $parameters['idRoom'] = $room->getId();
-        $parameters['idCinema']=$room->getCinema();
   
         try{
           $this->connection = Connection::getInstance();
@@ -119,7 +118,7 @@ class RoomDBDAO
       }
 
         public function Remove($id){
-            $sql = "DELETE FROM rooms WHERE idRoom = :idRoom";
+            $sql = "update rooms set deleted = 1 WHERE idRoom = :idRoom";
             $parameters['idRoom'] = $id;
             
             try{

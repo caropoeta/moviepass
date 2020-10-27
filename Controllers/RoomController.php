@@ -3,8 +3,10 @@
 namespace Controllers;
 
 use DAO\CinemaDBDAO as CinemaDBDAO;
+use DAO\FunctionsDAO;
 use Models\Room as Room;
 use DAO\RoomDBDAO as RoomDBDAO;
+use Models\Functions;
 use Models\PopupAlert;
 
 
@@ -47,18 +49,15 @@ use Models\PopupAlert;
 
         public function Remove($id,$cinemaId)
         {
-            
-            $response = false; //$this->movieFunctionDAO->functionsExistsInRoom($id);
-            
-            if($response !=false){
-                $this->List($cinemaId,"The room cannot be deleted because it has loaded functions");
-
-            }else{
+            if(!empty(FunctionsDAO::getAllFromRoom($id))){
+                $ppu = [];
+                array_push($ppu, "The room cannot be deleted because it has loaded functions");
+                $alert = new PopupAlert($ppu);
+                $alert->Show();
+            }else
                 $this->RoomDBDAO->Remove($id);
-
-                $this->List($cinemaId,"The room was successfully removed");
-            }
             
+            $this->List($cinemaId);
         }
 
         public function ShowUpdateRoom($id){

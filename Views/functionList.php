@@ -31,6 +31,7 @@ include('navbaradmin.php');
                         <td>
                             <form action=<?php echo FRONT_ROOT . 'Functions/Delete' ?> method="POST">
                                 <input type="hidden" name="id" value=<?php echo $function->getidFunction() ?>>
+                                <input type="hidden" name="fni" value=<?php echo $roomId ?>>
                                 <button type=submit>Delete </button>
                             </form>
                         </td>
