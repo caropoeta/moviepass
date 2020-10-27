@@ -5,7 +5,7 @@ namespace DAO;
 use Models\Room as Room;
 use DAO\CinemaDBDAO as CinemaDBDAO;
 use \Exception as Exception;
-
+use Models\Cinema;
 
 class RoomDBDAO
 {
@@ -16,7 +16,7 @@ class RoomDBDAO
     }
 
     public function readAllByCinema($cinemaId){
-        $sql = "SELECT * FROM rooms WHERE idCinema = :idCinema";
+        $sql = "SELECT * FROM rooms WHERE idCinema = :idCinema and deleted = 0";
         $parameter['idCinema'] = $cinemaId;
 
         try
@@ -32,6 +32,27 @@ class RoomDBDAO
         {
             echo $e;
         }
+    }
+
+    public static function getCinemaByRoomId(int $roomid)
+    {
+        $conection = Connection::GetInstance();
+        $query = "
+        select idCinema from rooms where idRoom = :idRoom;";
+        $response = $conection->Execute($query, array('idRoom' => $roomid));
+
+        $roleArray = array_map(function (array $obj) {
+            return $obj['idCinema'];
+        }, $response);
+
+        $cinema = new CinemaDBDAO();
+
+        $responseCin = [];
+        foreach ($roleArray as $value) {
+            array_push($responseCin, $cinema->Read($value));
+        }        
+
+        return ((isset($responseCin[0])) ? $responseCin[0] : null);
     }
 
     protected function mapear($value) 
@@ -86,7 +107,6 @@ class RoomDBDAO
         $parameters['capacity'] = $room->getCapacity();
         $parameters['price']=$room->getPrice();
         $parameters['idRoom'] = $room->getId();
-        $parameters['idCinema']=$room->getCinema();
   
         try{
           $this->connection = Connection::getInstance();
@@ -98,7 +118,7 @@ class RoomDBDAO
       }
 
         public function Remove($id){
-            $sql = "DELETE FROM $this->tablename WHERE idRoom = :idRoom";
+            $sql = "update rooms set deleted = 1 WHERE idRoom = :idRoom";
             $parameters['idRoom'] = $id;
             
             try{

@@ -18,7 +18,7 @@
       <li class="nav-item">
         <form action="<?php echo FRONT_ROOT ?>Session/Index" method="POST">
           <div class="p-2">
-            <button class="btn btn-secondary" type="submit" name="action" value="register"> Register </button>
+            <button class="btn btn-outline-success" type="submit" name="action" value="register"> Register </button>
           </div>
         </form>
       </li>
@@ -26,7 +26,7 @@
       <li class="nav-item">
         <form action="<?php echo FRONT_ROOT ?>Session/Index" method="POST">
           <div class="p-2">
-            <button class="btn btn-secondary" type="submit" name="action" value="login">Login</button>
+            <button class="btn btn-outline-success" type="submit" name="action" value="login">Login</button>
           </div>
         </form>
       </li>
@@ -38,16 +38,13 @@
 <div class="container-fluid">
 
 
-  <h1 class="text-center fuente">Awesome Experience</h1>
+  <h1 class="text-center fuente3"> Movie-Pass </h1>
 
 
-  <h2 class="text-center fuente3"> Movie-Pass </h2>
+  <h2 class="text-center fuente4"> Cinema !</h2>
 
 
-  <h3 class="text-center fuente4"> Cinema !</h3>
 
-
-</div>
 <div class="container-fluid">
   <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel" data-interval="1000">
     <!--Indicators-->
@@ -85,7 +82,7 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
-    <!--/.Controls-->
+    
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

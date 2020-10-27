@@ -140,6 +140,7 @@ class CinemaController
     if($hasError == false){
 
         $cinema=new Cinema();
+
         $cinema->setIdCinema($idCinema);
         $cinema->setNameCinema($nameCinema);
         $cinema->setAddress($address);
@@ -147,7 +148,6 @@ class CinemaController
         $cinema->setClosingTime($closingTime);
         $cinema->setTicketValue($ticketValue);
         $cinema->setCapacity($capacity);
-
 
         $CinemaDBDAO= new CinemaDBDAO;
         $CinemaDBDAO->Update($cinema);

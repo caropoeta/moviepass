@@ -154,13 +154,13 @@ public function Read ($idCinema)
     {
      $result = $this->mapear($resultSet);
      $cinema = new Cinema();
-     $cinema->setnameCinema($result[0]->getnameCinema());
-     $cinema->setaddress($result[0]->getaddress());
-     $cinema->setopeningTime($result[0]->getopeningTime());
-     $cinema->setclosingTime($result[0]->getclosingTime());
-     $cinema->setticketValue($result[0]->getticketValue()); 
-     $cinema->setcapacity($result[0]->getcapacity());
-     $cinema->setidCinema($result[0]->getidCinema());
+     $cinema->setNameCinema($result[0]->getNameCinema());
+     $cinema->setAddress($result[0]->getAddress());
+     $cinema->setOpeningTime($result[0]->getOpeningTime());
+     $cinema->setClosingTime($result[0]->getClosingTime());
+     $cinema->setTicketValue($result[0]->getTicketValue()); 
+     $cinema->setCapacity($result[0]->getCapacity());
+     $cinema->setIdCinema($result[0]->getIdCinema());
      return $cinema;  
 
    }else
