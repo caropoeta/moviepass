@@ -4,6 +4,7 @@ namespace Controllers;
 
 use DAO\FunctionsDAO;
 use DAO\MovieXGenreDAO;
+use DAO\RoomDBDAO;
 use DAO\Session;
 use Models\Exceptions\ArrayException;
 use Models\PopupAlert;
@@ -29,6 +30,9 @@ class FunctionsController
 
     public static function List(int $roomId)
     {
+        $cin = RoomDBDAO::getCinemaByRoomId($roomId);
+        $opt = $cin->getopeningTime();
+        $cst = $cin->getclosingTime();
         $functions = FunctionsDAO::getAllFromRoom($roomId);
         require_once(VIEWS_PATH . 'functionList.php');
     }

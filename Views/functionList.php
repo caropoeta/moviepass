@@ -9,6 +9,23 @@ include('navbaradmin.php');
 <br>
 
 <div class="p-2 text-center">
+    <table>
+        <thead>
+            <tr>
+                <th>Opening time</th>
+                <th>Closing time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?php echo $opt ?></td>
+                <td><?php echo $cst ?></td>
+            <tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<div class="p-2 text-center">
     <table class="table">
         <thead>
             <tr>
@@ -60,14 +77,14 @@ include('navbaradmin.php');
                                     </div>
                                     <div class="modal-body">
                                         <input type="time" name="Starting time" value="<?php echo $function->getTime() ?>" placeholder="Enter Closing Time" required class="form-control">
-                                        <br> 
-                                        <input type="date" name="Day" value = "<?php echo date('Y-m-d',strtotime($function->getDay())) ?>" placeholder="Enter Day" required class="form-control">
+                                        <br>
+                                        <input type="date" name="Day" value="<?php echo date('Y-m-d', strtotime($function->getDay())) ?>" placeholder="Enter Day" required class="form-control">
                                         <br>
                                         <input type="hidden" name="roomid" value="<?php echo $roomId ?>">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $roomId ?>">Update</button>
+                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="btn btn-primary offset-6 btn-md active" type="submit" name="funid" value="<?php echo $function->getidFunction() ?>">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -101,9 +118,9 @@ include('navbaradmin.php');
                 </div>
                 <div class="modal-body">
                     <input type="time" name="Starting time" placeholder="Enter Closing Time" required class="form-control">
-                    <br>     
-                    <input type="date" name="Day" placeholder="Enter Closing Time" required class="form-control">                    <br>     
-                    <br>     
+                    <br>
+                    <input type="date" name="Day" placeholder="Enter Closing Time" required class="form-control"> <br>
+                    <br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
