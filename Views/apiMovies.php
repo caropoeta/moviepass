@@ -68,7 +68,7 @@
                          <small class="text-muted">
                                    *Search by year.
                               </small>
-                              <input style="width:10%" type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
+                              <input min="1582" max="9999" style="width:10%" type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
 
                          </div>
 

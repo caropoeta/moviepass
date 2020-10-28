@@ -257,7 +257,7 @@ class FunctionsDAO
             $funToReturn->setidFunction($obj['id']);
             $funToReturn->setTime((string) date('h:i:s', strtotime($obj['time'])));
             $funToReturn->setfinishTime((string) date('h:i:s', strtotime($obj['finishTime'])));
-            $funToReturn->setDay((string) date('Y-m-d', strtotime($obj['finishTime'])));
+            $funToReturn->setDay((string) date('Y-m-d', strtotime($obj['day'])));
             $funToReturn->setMovie(MovieDAO::getMovieById($obj['idMovie']));
             $funToReturn->setidRoom($obj['idRoom']);
             $funToReturn->setDeleteFunction($obj['deleted']);
