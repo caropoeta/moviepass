@@ -57,7 +57,7 @@
 
                               <br>
                               <div class="form-group">
-                                   <input type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
+                                   <input type="number" min="1582" max="9999" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
                               </div>
                               <div class="align-items-center">
                                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/List/" name="page" value="1" type="submit">Search</button>

@@ -1,9 +1,3 @@
-<section>
-    <?php include('navbaradmin.php'); ?>
-</section>
-
-
-
 <?php
 
 use Models\UserRole; ?>

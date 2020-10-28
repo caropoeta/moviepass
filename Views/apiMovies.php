@@ -51,12 +51,9 @@
                </div>
                <br>
                <div class="row">
-
                     <div class="col-md-12">
                          <small class="offset-5">
-
                               *Search without genres.
-
                          </small>
                     </div>
                     <br>
@@ -75,13 +72,13 @@
                <br>
           </div>
           <div class="col-auto">
-               <small class="offset-5">
-                    *Search by year.
-               </small>
+            <small class="text-muted">
+               *Search by year.
+            </small>
+            <input min="1582" max="9999" style="width:10%" type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
+            <br>
           </div>
-          <div class="form-group col-md-6 offset-5">    
-               <input style="width:25%" type="number" class="form-control" name="year" placeholder="Enter movie year of release">
-                 <br>
+          <div class="form-group col-md-6 offset-5">     
 
                <button class="btn btn-primary offset-1 " formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>
 
