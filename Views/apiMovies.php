@@ -23,10 +23,7 @@
                <form method="POST">
                     <div>
                          <div class="form-group">
-
                               <input style="width:25%" type="text" class="form-control" name="name" placeholder="Enter movie name" value="<?php echo $name ?>">
-
-
                          </div>
 
                          <div class="form-check">
@@ -64,12 +61,10 @@
                          </div>
                          <br>
                          <div class="form-group">
-
-                         <small class="text-muted">
+                              <small class="text-muted">
                                    *Search by year.
                               </small>
-                              <input min="1582" max="9999" style="width:10%" type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
-
+                              <input min="0000" max="9999" style="width:10%" type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
                          </div>
 
                          <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>

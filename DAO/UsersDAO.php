@@ -86,10 +86,34 @@ class UsersDAO
 
         return false;
     }
+    
+    public static function isUserDeletedByUsername(String $obj)
+    {
+        $conection = Connection::GetInstance();
+        $query = "select true from users where user_name = :user_name and 
+        deleted = 1;";
+        $response = $conection->Execute($query, array('user_name' => $obj));
 
+        if ($response != null)
+            return (sizeof($response) > 0) ? true : false;
+
+        return false;
+    }
+
+    public static function isUserDeletedByEmail(String $obj)
+    {
+        $conection = Connection::GetInstance();
+        $query = "select true from users where user_email = :user_email and 
+        deleted = 1;";
+        $response = $conection->Execute($query, array('user_email' => $obj));
+
+        if ($response != null)
+            return (sizeof($response) > 0) ? true : false;
+
+        return false;
+    }
 
     public static function getUsers(String $name = "", String $email = "", String $dni = "", String $role = "")
-
     {
         $conection = Connection::GetInstance();
         $query = "
@@ -99,6 +123,7 @@ class UsersDAO
         ON roles.role_id=users.user_role
 
         WHERE user_name like :name
+        AND deleted = 0
         AND user_email like :email
         AND CAST(user_dni as varchar(50)) like :dni
         AND CAST(user_role as varchar(50)) like :role
@@ -142,11 +167,12 @@ class UsersDAO
 
         $conection = Connection::GetInstance();
         $query = "
-            SELECT user_password,user_name,user_id,user_dni,user_email,user_birthday,role_name
+            SELECT *
             FROM users 
             INNER JOIN roles
             ON roles.role_id = users.user_role
-            WHERE user_email = :email";
+            WHERE user_email = :email 
+            AND deleted = 0";
         $response = $conection->Execute($query, array('email' => $email));
 
         $userArray = array_map(function (array $obj) {
@@ -164,7 +190,8 @@ class UsersDAO
             FROM users 
             INNER JOIN roles
             ON roles.role_id = users.user_role
-            WHERE user_id = :id";
+            WHERE user_id = :id
+            AND deleted = 0";
         $response = $conection->Execute($query, array('id' => $id));
 
         $userArray = array_map(function (array $obj) {
@@ -189,6 +216,11 @@ class UsersDAO
 
         if (!UsersDAO::existsUsername($username)) {
             array_push($exceptionArray, 'This user name does not exist');
+            throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
+        }
+
+        if(UsersDAO::isUserDeletedByUsername($username)) {
+            array_push($exceptionArray, 'This account is banned');
             throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
         }
 
@@ -224,12 +256,8 @@ class UsersDAO
     public static function deleteUser(int $id)
     {
         $conection = Connection::GetInstance();
-        $query = "DELETE FROM users WHERE user_id = :id";
-
-        $response = $conection->ExecuteNonQuery(
-            $query,
-            array('id' => $id)
-        );
+        $query = "update users set deleted = :deleted where id = :id;";
+        $conection->ExecuteNonQuery($query, array('id' => $id, 'deleted' => 1));
     }
 
     public static function addUser(UserModel $user)
@@ -262,7 +290,7 @@ class UsersDAO
             $params['name']         = $user->getName();
             $params['password']     = password_hash($user->getPassword(), PASSWORD_DEFAULT);
             $params['role']         = RolesDAO::getRoleByName($user->getRole())->getId();
-            $params['dni']          = $user->getDni();
+            $params['dni']          = (int) $user->getDni();
             $params['email']        = $user->getEmail();
             $params['birthday']     = $user->getBirthday();
 

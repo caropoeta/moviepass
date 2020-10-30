@@ -8,7 +8,8 @@ use \DAO\UsersDAO as UserDAO;
 use Models\Exceptions\AddUserException;
 use Models\PopupAlert;
 use DAO\Session;
-
+use DAO\UsersDAO;
+use Models\Exceptions\ValidateUserCredentialsException;
 
 class FacebookSessionController
 {
@@ -52,10 +53,19 @@ class FacebookSessionController
             HomeController::MainPage();
             exit;
         }
-    
+
         $fbUser = FacebookDAO::GetInstance()->GetUserData();
 
+        if (UsersDAO::isUserDeletedByEmail($fbUser['email'])) {
+            $alert = new PopupAlert(array('This account is banned'));
+            $alert->Show();
+
+            HomeController::MainPage();
+            return;
+        }
+
         $usr = UserDAO::getUserByEmail($fbUser['email']);
+
         if ($usr instanceof UserModel) {
             Session::SetSession($usr);
             HomeController::MainPage();
