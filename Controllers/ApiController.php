@@ -4,6 +4,7 @@ namespace Controllers;
 
 use DAO\ApiGenreDAO;
 use DAO\ApiMovieDAO;
+use DAO\MovieDAO;
 use DAO\MovieXGenreDAO;
 use DAO\Session;
 
@@ -47,6 +48,11 @@ class ApiController
 
         else
             $movies = ApiMovieDAO::getApiMovieSearchByDateAndGenre($page, (int) $year, $genreW, $genreWO);
+
+        $currMov = [];
+        foreach ($movies as $movie) {
+            $currMov[$movie->getId()] = MovieDAO::checkMovieById($movie->getId());
+        }
 
         require_once(VIEWS_PATH . 'apiMovies.php');
     }

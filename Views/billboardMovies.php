@@ -3,7 +3,6 @@
     include('navbarclient.php');
 
     use DAO\GenreDAO;
-    use DAO\MovieDAO;
     use Models\Genre;
     use Models\Movie as Movie;
     ?>
@@ -53,7 +52,7 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        <input type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
+                        <input type="number" min="0000" max="9999" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
                     </div>
 
                     <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" name="page" value="1" type="submit">Search</button>
@@ -95,7 +94,7 @@
                                             } ?></td>
                                         <td>
                                             <div class="col-auto">
-                                                <?php if (!MovieDAO::checkMovieDeletedById($movie->getId()) && false) { ?>
+                                                <?php if (false) { ?>
                                                     <!--
                                                     <input type="checkbox" class="form-check-input" id="mov<?php echo $movie->getId() ?>" name="mov[]" value="<?php echo $movie->getId() ?>">
                                                     <label class="form-check-label" for="mov<?php echo $movie->getId() ?>">Delete</label><br>

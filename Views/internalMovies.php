@@ -3,7 +3,6 @@
      include('navbaradmin.php');
 
      use DAO\GenreDAO;
-     use DAO\MovieDAO;
      use Models\Genre;
      use Models\Movie as Movie;
      ?>
@@ -104,11 +103,9 @@
                                              } ?></td>
                                              <td>
                                                   <div class="col-auto">
-                                                       <?php if (!MovieDAO::checkMovieDeletedById($movie->getId())) { ?>
                                                             <div class="justify-content-center">
                                                             <input type="checkbox" class="form-check-input" id="mov<?php echo $movie->getId() ?>" name="mov[]" value="<?php echo $movie->getId() ?>">
                                                             <label class="form-check-label" for="mov<?php echo $movie->getId() ?>">Delete</label><br>
-                                                       <?php } ?>
                                                   </div>
                                              </div>
                                              </td>
