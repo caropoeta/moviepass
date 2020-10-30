@@ -1,6 +1,5 @@
 <section>
     <?php
-    include('navbarclient.php');
 
     use Models\Genre;
     use Models\Movie as Movie;
@@ -65,53 +64,40 @@
         </div>
         <div class=col-auto>
             <div class="">
-                <form method="POST">
-                    <table class="table bg-light">
-                        <thead class="bg-dark text-white">
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Genres</th>
-                            <th>Movie Photo</th>
-                            <th></th>
-                        </thead>
-                        <tbody>
-                            <?php
+                <table class="table bg-light">
+                    <thead class="bg-dark text-white">
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Genres</th>
+                        <th>Movie Photo</th>
+                    </thead>
+                    <tbody>
+                        <?php
 
-                            foreach ($movies as $movie) {
-                                if ($movie instanceof Movie) { ?>
-                                    <tr>
-                                        <td><?php echo $movie->getTitle(); ?></td>
-                                        <td><?php echo $movie->getDescription(); ?></td>
-                                        <td><?php
-                                            foreach ($movie->getGenres() as $value) {
-                                                if ($value instanceof Genre)
-                                                    echo $value->getDescription() . '<br>';
-                                            }
-                                            ?></td>
-                                        <td><?php if ($movie->getPoster() != null) {
-                                                echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
-                                            } ?></td>
-                                        <td>
-                                            <div class="col-auto">
-                                                <?php if (false) { ?>
-                                                    <!--
-                                                    <input type="checkbox" class="form-check-input" id="mov<?php echo $movie->getId() ?>" name="mov[]" value="<?php echo $movie->getId() ?>">
-                                                    <label class="form-check-label" for="mov<?php echo $movie->getId() ?>">Delete</label><br>
-                                                    -->
-                                                <?php } ?>
-                                            </div>
-                                        </td>
-                                    </tr>
-                            <?php
-                                }
+                        foreach ($movies as $movie) {
+                            if ($movie instanceof Movie) { ?>
+                                <tr>
+                                    <td><?php echo $movie->getTitle(); ?></td>
+                                    <td><?php echo $movie->getDescription(); ?></td>
+                                    <td><?php
+                                        foreach ($movie->getGenres() as $value) {
+                                            if ($value instanceof Genre)
+                                                echo $value->getDescription() . '<br>';
+                                        }
+                                        ?></td>
+                                    <td><?php if ($movie->getPoster() != null) {
+                                            echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
+                                        } ?></td>
+                                </tr>
+                        <?php
                             }
-                            ?>
-                        </tbody>
-                    </table>
+                        }
+                        ?>
+                    </tbody>
+                </table>
 
-                    <!-- 
-                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
-                    -->
+                <form action="<?php echo FRONT_ROOT ?>Home" method="POST">
+                    <button class="btn btn-primary mb-2 " type="submit">Home</button>
                 </form>
             </div>
         </div>

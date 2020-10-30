@@ -8,16 +8,8 @@ use DAO\MoviesXFunctionsDAO;
 
 use DAO\Session;
 
-class UserMoviesController
+class BillboardController
 {
-    public function __construct()
-    {
-        if (!Session::ValidateSession()) {
-            HomeController::MainPage();
-            exit();
-        }
-    }
-
     public function Index()
     {
         HomeController::MainPage();
