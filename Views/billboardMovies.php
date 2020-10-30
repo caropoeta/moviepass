@@ -2,7 +2,6 @@
     <?php
     include('navbarclient.php');
 
-    use DAO\GenreDAO;
     use Models\Genre;
     use Models\Movie as Movie;
     ?>
@@ -28,7 +27,7 @@
                         <?php foreach ($genres as $value) {
                             if ($value instanceof Genre) {
                         ?>
-                                <input <?php if (GenreDAO::searchInGeneres($value->getId(), $genreW)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-with[]" value="<?php echo $value->getId() ?>">
+                                <input <?php if (in_array($value->getId(), $genreW)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-with[]" value="<?php echo $value->getId() ?>">
                                 <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
                         <?php
                             }
@@ -44,8 +43,8 @@
                         <?php foreach ($genres as $value) {
                             if ($value instanceof Genre) {
                         ?>
-                                <input <?php if (GenreDAO::searchInGeneres($value->getId(), $genreWO)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-without[]" value="<?php echo $value->getId() ?>">
-                                <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
+                                <input <?php if (in_array($value->getId(), $genreWO)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnrO<?php echo $value->getId() ?>" name="genre-without[]" value="<?php echo $value->getId() ?>">
+                                <label class="form-check-label" for="gnrO<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
                         <?php
                             }
                         } ?>

@@ -66,26 +66,4 @@ class GenreDAO
             );
         }
     }
-
-    public static function checkGenreById(int $id)
-    {
-        $conection = Connection::GetInstance();
-        $query = "select true from genres where id = :id;";
-        $response = $conection->Execute($query, array('id' => $id));
-
-        if ($response != null)
-            return (sizeof($response) > 0) ? true : false;
-
-        return false;
-    }
-
-    public static function searchInGeneres(int $id, array $wG)
-    {
-        foreach ($wG as $value) {
-            if ($value == $id)
-                return true;
-        }
-
-        return false;
-    }
 }
