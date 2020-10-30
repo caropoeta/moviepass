@@ -120,7 +120,7 @@ class SessionController
                 $time = strtotime($birthday);
                 $newformat = date('Y-m-d', $time);
 
-                $newUser = new UserModel($username, $password, 'Client', $dni, $email, $newformat);
+                $newUser = new UserModel($username, $password, CLIENT_ROLE_NAME, $dni, $email, $newformat);
                 $result = UserDAO::addUser($newUser);
 
                 if ($result instanceof UserModel)

@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use DAO\Session;
-use DAO\UsersDAO as UsersDAO;
 
 class HomeController
 {
@@ -16,12 +15,16 @@ class HomeController
     {
         if (Session::ValidateSession())
             switch (Session::GetUserRole()) {
-                case 'Admin':
-                    require_once(VIEWS_PATH . 'adminMenu.php');
+                case ADMIN_ROLE_NAME:
+                    BillboardController::List();
                     return;
 
-                case 'Client':
-                    require_once(VIEWS_PATH . 'clientMenu.php');
+                case CLIENT_ROLE_NAME:
+                    BillboardController::List();
+                    return;
+
+                case GUEST_ROLE_NAME:
+                    BillboardController::List();
                     return;
 
                 default:

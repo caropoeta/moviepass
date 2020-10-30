@@ -19,7 +19,7 @@ class UsersController
             HomeController::MainPage();
             exit();
         }
-        if (!Session::IsUserThisRole('Admin')) {
+        if (!Session::IsUserThisRole(ADMIN_ROLE_NAME)) {
             HomeController::MainPage();
             exit();
         }
@@ -46,7 +46,6 @@ class UsersController
     {
         $this->List();
     }
-
 
     public function List(String $name = "", String $email = "", String $dni = "", String $role = "")
     {   

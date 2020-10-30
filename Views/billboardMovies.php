@@ -3,6 +3,16 @@
 
     use Models\Genre;
     use Models\Movie as Movie;
+
+    if($currRole == GUEST_ROLE_NAME) { ?>
+        <form action="<?php echo FRONT_ROOT ?>Home" method="POST">
+        <button type="submit"></button>
+        </form>
+    <?php }
+
+    if($currRole == ADMIN_ROLE_NAME) include('navbaradmin.php');
+    
+    if($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
     ?>
 </section>
 
@@ -53,12 +63,12 @@
                         <input type="number" min="0000" max="9999" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
                     </div>
 
-                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" name="page" value="1" type="submit">Search</button>
+                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Billboard/List/" name="page" value="1" type="submit">Search</button>
                 </div>
                 <hr>
                 <div class="align-items-center">
-                    <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
-                    <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
+                    <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+                    <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
                 </div>
             </form>
         </div>
@@ -95,10 +105,6 @@
                         ?>
                     </tbody>
                 </table>
-
-                <form action="<?php echo FRONT_ROOT ?>Home" method="POST">
-                    <button class="btn btn-primary mb-2 " type="submit">Home</button>
-                </form>
             </div>
         </div>
     </div>

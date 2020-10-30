@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 define("ROOT", dirname(__DIR__) . "/");
 //Path to your project's root folder
@@ -6,8 +8,8 @@ define("ROOT", dirname(__DIR__) . "/");
 define("FRONT_ROOT", "/personal/moviepass/");
 
 define("VIEWS_PATH", "Views/");
-define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
-define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
+define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "css/");
+define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "js/");
 define("IMG_PATH", VIEWS_PATH . "img/");
 define('DATA_PATH', 'Data/');
 
@@ -19,7 +21,12 @@ define('API_KEY', '69b28faa719e69ade504cc5f24994250');
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 //Database
-define('DB_HOST',"localhost");
-define('DB_USER',"university");
-define('DB_PASS',"");
-define('DB_NAME',"moviepass");
+define('DB_HOST', "localhost");
+define('DB_USER', "university");
+define('DB_PASS', "");
+define('DB_NAME', "moviepass");
+
+
+define('ADMIN_ROLE_NAME', "Admin");
+define('CLIENT_ROLE_NAME', "Client");
+define('GUEST_ROLE_NAME', "Guest");
