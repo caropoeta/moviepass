@@ -1,0 +1,21 @@
+[
+    {
+
+        "username": "admin",
+        "id": 3,
+        "password": "admin",
+        "birthday": "2020-10-05",
+        "email": "qqq@qqq",
+        "dni": 60000000,
+        "role": "Admin"
+    },
+    {
+        "username": "Graciela Astudillo",
+        "id": 4,
+        "password": "good@dreams",
+        "birthday": "2020-09-28",
+        "email": "astudillograciela@hotmail.com",
+        "dni": 5000000,
+        "role": "Client"
+    }
+]

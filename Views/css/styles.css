@@ -1,0 +1,168 @@
+*{
+  font-family: 'Josefin Sans', sans-serif;
+  margin:0px;
+  padding:0px;
+  box-sizing: border-box;
+}
+
+nav{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 8vh;
+  background-color: #a5a4a4;
+}
+
+.logo{
+  color: rgb(226,226,226);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 20px;
+}
+
+.nav-links{
+  display:flex;
+  justify-content:space-around inline;
+  width: 30%;
+}
+.nav-links li{
+  list-style: none;
+  text-align: center;
+  padding: 20px;
+  display: inline;
+}
+.nav-links a{
+  color:rgb(226,226,226);
+  text-decoration: none;
+  letter-spacing:4px;
+  font-weight: bold;
+  font-size: 14px;
+}
+a {
+  color: #db5555;
+}
+
+a:hover, a:active, a:focus {
+  color: #db5555;
+  outline: none;
+  text-decoration: none;
+}
+body{
+  background-image: url("../img/fondo.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  
+}
+.content{
+  min-height:calc(100vh- 300px- 100px);
+
+}
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  background: #a5a4a4;
+  padding: 30px 0;
+  color: #fff;
+  font-size: 14px;
+  margin-top: 180px;
+  
+}
+
+#footer .copyright {
+  text-align: center;
+}
+
+#footer .credits {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #ccc;
+}
+
+
+.register-btn {
+  float: center;
+  margin-right: 35px;
+  font-size: 0.9em;
+  width: 100%;
+  background: none !important;
+  border: none;
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: center;
+}
+
+/*--------------------------------------------------------------
+# MAIN - LOGIN - REGISTER
+--------------------------------------------------------------*/
+.title-principal{
+  color:white;
+  width: 400px;
+  margin: auto;
+  font-size: 50px;
+  text-align: center;
+  text-shadow: 7px 5px 5px #24303c;
+  margin-top: 20px;
+ 
+}
+
+.main{
+  margin: auto;
+  margin-top: 50px;
+}
+
+
+.login-form{
+  width:400px;
+  background-color: white;
+  padding: 30px;
+  margin: auto;
+  margin-top:50px;
+  margin-bottom: 55px;
+  border-radius: 4px;
+
+}
+
+.login-form h2{
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+  
+}
+
+.controls{
+  width: 100%;
+  background: #24303c;
+  padding:10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #db5555;
+}
+
+.form-group{
+  width: 100%;
+  background: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #db5555;
+  font-size: 18px;
+}
+
+.form-group input{
+  background: white;
+
+}
+
+ .botons{
+  width: 100%;
+  background-color: #db5555;
+  border: none;
+  padding: 12px;
+  color: white;
+  margin: 16px 0;
+  font-size: 16px;
+}
