@@ -170,9 +170,14 @@ class MoviesXFunctionsDAO
                 select * from (
                     select functions.idMovie as id 
                     from functions 
-                    where functions.deleted = 0";
+                    where functions.deleted = 0
+                    and functions.day > :date";
         $subQ = $subQ . ") as x where x.id = movies.id
             )";
+  
+        $param['date'] = (String) date('Y/m/d', time());
+                  
+
         array_push($addToQuerry, $subQ);
         /** filtrado de funcion */
 

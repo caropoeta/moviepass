@@ -69,7 +69,7 @@ nav{
 }
 body {
   height: 100%;
-  background-image: url("../img/new.jpeg");
+  background-image: url("../img/bg.png");
   background-color: darkslateblue;
 }
 .social {
@@ -312,7 +312,4 @@ div.movie_container {
   background-image: url("../img/reflector.jpg");
   opacity: 1.0 no-repeat;
 
-}
-.inputstyle{
-  width: 100%;
 }
