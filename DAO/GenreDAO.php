@@ -78,14 +78,4 @@ class GenreDAO
 
         return false;
     }
-
-    public static function searchInGeneres(int $id, array $wG)
-    {
-        foreach ($wG as $value) {
-            if ($value == $id)
-                return true;
-        }
-
-        return false;
-    }
 }

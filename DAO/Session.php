@@ -48,6 +48,8 @@ class Session
             if ($currUsr instanceof UserModel)
                 return $currUsr->getId();
         }
+
+        return null;
     }
 
     public static function GetUserRole()
@@ -57,5 +59,7 @@ class Session
             if ($currUsr instanceof UserModel)
                 return $currUsr->getRole();
         }
+
+        return GUEST_ROLE_NAME;
     }
 }

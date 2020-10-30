@@ -17,7 +17,7 @@ class FunctionsController
             HomeController::MainPage();
             exit();
         }
-        if (!Session::IsUserThisRole('Admin')) {
+        if (!Session::IsUserThisRole(ADMIN_ROLE_NAME)) {
             HomeController::MainPage();
             exit();
         }

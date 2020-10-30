@@ -32,8 +32,16 @@
           <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-outline-success" type="submit">Cinema</button>
         </div>
       </li>
+
+      <li class="nav-item">
         <div class="p-2">
           <button formaction="<?php echo FRONT_ROOT ?>Movies/List" class="btn btn-outline-success" type="submit">List Current Movies</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Billboard/List" class="btn btn-secondary" type="submit"> Billboard </button>
         </div>
       </li>
 

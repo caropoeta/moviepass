@@ -8,23 +8,14 @@ use DAO\MoviesXFunctionsDAO;
 
 use DAO\Session;
 
-class UserMoviesController
+class BillboardController
 {
-    public function __construct()
-    {
-        if (!Session::ValidateSession()) {
-            HomeController::MainPage();
-            exit();
-        }
-    }
-
     public function Index()
     {
-        HomeController::MainPage();
+        BillboardController::List();
     }
 
-
-    public function List(String $name = "", $genreW = [], $genreWO = [], $year = '0000', int $page = 1)
+    public static function List(String $name = "", $genreW = [], $genreWO = [], $year = '0000', int $page = 1)
     {
         if ($page <= 0)
             $page = 1;
@@ -38,8 +29,9 @@ class UserMoviesController
         $currPage = $page;
         $genres = GenreDAO::getGenres();
         $movies = MoviesXFunctionsDAO::getMoviesFromFunctions($page, $name, $year, $genreW, $genreWO);
-        
+
+        $currRole = Session::GetUserRole();
+
         require_once(VIEWS_PATH . 'billboardMovies.php');
     }
-
 }
