@@ -13,24 +13,23 @@
 
 <section id="listado" class="mb-5">
      <div class="container-fluid">
-          <h2 class="fuente4  text-center">Movie List From Api</h2>
+          <br>
+          <h2 style="position:center">Movie List From Api</h2>
           <br>
           
-          <div class="col-auto ">
+          <div class="col-mb-4 ">
                <small class="offset-5">
                     *Search either by name or date and genres.
                </small>
           </div>
           <form method="POST">
                <div>
-                    <div class="form-group col-md-6 offset-5">
+                    <div class="form-group" style="width:28% ">
 
-                         <input style="width:25%" type="text" class="form-control" name="name" placeholder="Enter movie name"class="form-control" value="<?php echo $name ?>">
-
-
+                         <input style="width:100%" class="form-group" type="text"  name="name" placeholder="Enter movie name" value="<?php echo $name ?>">
                     </div> 
 
-                    <div class="col-auto">
+                    <div class="col-mb-4">
                          <small class="offset-5">
                               *Search with genres.
                          </small>
@@ -41,7 +40,7 @@
                          <?php foreach ($genres as $value) {
                               if ($value instanceof Genre) {
                                    ?>
-
+                              
                                    <input <?php if (GenreDAO::searchInGeneres($value->getId(), $genreW)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-with[]" value="<?php echo $value->getId() ?>">
                                    <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
                                    <?php
@@ -51,7 +50,7 @@
                </div>
                <br>
                <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                          <small class="offset-5">
                               *Search without genres.
                          </small>
@@ -80,19 +79,19 @@
           </div>
           <div class="form-group col-md-6 offset-5">     
 
-               <button class="btn btn-primary offset-1 " formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>
+               <button class="botons-chico " formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>
 
           </div>
      </div>
      <hr>
-     <div class="row justify-content-center ">
+     <form>
           <div class="p-2">
-               <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+               <button class="botons-chico" id="izq"formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
           </div>
           <div class="p-2">
-               <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
+               <button class="botons-chico"  id="der" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
           </div>
-     </div>
+                    </form>
 </div>
 </div>
 </form>
@@ -141,7 +140,7 @@
                </tbody>
           </table>
 
-          <button class="btn btn-primary offset-6"  formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
+          <button class="botons-chico"  formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
      </form>
 </div>
 </div>

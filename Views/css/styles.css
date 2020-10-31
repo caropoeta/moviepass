@@ -231,3 +231,33 @@ body{
   margin: auto auto; 
 }
 
+#listado{
+  color: white;
+}
+
+.table{
+  width: 95%;
+  background-color: white;
+  color:black;
+  padding: 10px;
+  margin: auto;
+}
+
+.table th{
+  font-size: 20px;
+  font-style: inherit;
+  background-color: #db5555;
+  height: 40px;
+  
+  border: 1px solid #db5555;
+}
+
+#izq{
+  position: left;
+  width: 10%;
+}
+
+#der{
+  position: right;
+  width: 10%;
+}
