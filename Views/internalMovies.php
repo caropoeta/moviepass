@@ -11,7 +11,7 @@
 
 <section id="listado" class="mb-5">
      <div class="container-fluid">
-          <h2 class="fuente4  text-center">Movie List</h2>
+          <h2 class="title-secondary">Movie List</h2>
           <br>
           <div class="user_add_div">
                <div class="col-auto">
@@ -124,7 +124,7 @@
                          </tbody>
                     </table>
                     
-                    <button class="botons-chico" id="add" style="float:right" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
+                    <button class="botons-chico" id="addmovie" style="float:right" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
                     
                </form>
           

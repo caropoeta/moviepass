@@ -3,7 +3,7 @@
 include('navbaradmin.php');
 
 ?>
-<h2 class="fuente text-center"> Rooms Admin</h2>
+<h2 class="title-secondary"> Rooms Admin</h2>
 <br>
 
 <div class="p-2 text-center">

@@ -5,7 +5,7 @@ use Models\Functions;
 include('navbaradmin.php');
 
 ?>
-<h2 class="fuente text-center"> Functions Admin</h2>
+<h2 class="title-secondary"> Functions Admin</h2>
 <br>
 
 <div class="p-2 text-center">

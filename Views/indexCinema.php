@@ -5,7 +5,7 @@ include('navbaradmin.php');
 <br>
 <br>
 <br>
-<h2 >Search and Add a cinema</h2>
+<h2 class="title-secondary">Search and Add a cinema</h2>
 
 <main class="d-flex  justify-content-center ">
     <div class="content">

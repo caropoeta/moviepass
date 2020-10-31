@@ -14,7 +14,7 @@
 <section id="listado" class="mb-5">
      <div class="container-fluid">
           <br>
-          <h2 >Movie List From Api</h2>
+          <h2 class="title-secondary" >Movie List From Api</h2>
           <br>
           
           <div class="col-mb-4 ">
@@ -140,7 +140,7 @@
                </tbody>
           </table>
 
-          <button class="botons-chico" id="add" style="float:right" formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
+          <button class="botons-chico" id="addmovie" style="float:right" formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
      </form>
 </div>
 </div>

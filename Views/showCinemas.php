@@ -6,7 +6,7 @@ include('navbaradmin.php');
 <br>
 <br>
 <br>
-<h2 class="fuente4 text-center"> Cinemas Admin</h2>
+<h2 class="title-secondary"> Cinemas Admin</h2>
 <br>
 <br>
 <br>

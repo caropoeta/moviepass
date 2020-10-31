@@ -11,7 +11,7 @@
 
 <section id="listado" class="mb-5">
     <div class="container-fluid">
-        <h2 class="fuente4  text-center">Billboard</h2>
+        <h2 class="title-secondary">Billboard</h2>
         <br>
         <div class="col-auto">
             <form method="POST">

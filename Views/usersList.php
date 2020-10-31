@@ -11,7 +11,7 @@
         <br>
         <!-- user_list-->
         <div class="login-form">
-            <h2>Search Users</h2>
+            <h2 >Search Users</h2>
             <br>
             <div class="form-group">
                 <br>

@@ -283,7 +283,7 @@ td .descriptions{
   border: 1px solid white;
 }
 
-h2{
+ .title-secondary{
   padding: 0.5em;
   margin: auto;
   text-align: center;
@@ -292,7 +292,7 @@ h2{
   text-shadow: 0 2px 12px 0 rgba(0,0,0,.4);
 }
 
-#add{
+#addmovie{
   margin-right: 40px;
   width: 10%;
   border: 1px solid white;
