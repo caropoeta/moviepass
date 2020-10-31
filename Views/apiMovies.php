@@ -140,7 +140,7 @@
                </tbody>
           </table>
 
-          <button class="botons-chico"  formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
+          <button class="botons-chico" id="add" style="float:right" formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
      </form>
 </div>
 </div>

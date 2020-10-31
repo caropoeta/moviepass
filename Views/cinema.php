@@ -1,7 +1,7 @@
 <main class="d-flex  justify-content-center ">
    <div class="content">
     <header class="text-center">
-        <h2 class="fuente4 text-center">Cinema to modify</h2>
+        <h2 >Cinema to modify</h2>
     </header>
     <div class="login-form bg-dark-alpha p-5 bg-light">
         <section>

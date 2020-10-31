@@ -56,14 +56,16 @@
                         <input type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
                     </div>
 
-                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" name="page" value="1" type="submit">Search</button>
+                    <button class="botons" formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" name="page" value="1" type="submit">Search</button>
                 </div>
                 <hr>
-                <div class="align-items-center">
-                    <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
-                    <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>UserMovies/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
-                </div>
+
+                <form>
+                        <button class="botons-chico" id="izq" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+                        <button class="botons-chico" id="der" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
+                </form>
             </form>
+
         </div>
         <div class=col-auto>
             <div class="">

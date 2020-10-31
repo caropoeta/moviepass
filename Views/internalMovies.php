@@ -67,10 +67,14 @@
                </div>
                    <br>
                    <br>
-               <div class="row justify-content-center offset-1">
-                    <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
-                    <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
-               </div>
+                   <form>
+          <div class="p-2">
+               <button class="botons-chico" id="izq"formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+          </div>
+          <div class="p-2">
+               <button class="botons-chico"  id="der" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
+          </div>
+                    </form>
           </form>
           <hr>
      </div>
@@ -100,7 +104,7 @@
                                              }
                                              ?></td>
                                              <td><?php if ($movie->getPoster() != null) {
-                                                  echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
+                                                  echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="100" height="142">';
                                              } ?></td>
                                              <td>
                                                   <div class="col-auto">
@@ -119,9 +123,9 @@
                               ?>
                          </tbody>
                     </table>
-                    <div class="align-content-center">
-                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
-                    </div>
+                    
+                    <button class="botons-chico" id="add" style="float:right" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
+                    
                </form>
           
           </div>
