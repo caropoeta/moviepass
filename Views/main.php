@@ -23,7 +23,11 @@
 
     </form>
 
+    <form action="<?php echo FRONT_ROOT ?>Session/Index" method="POST">
 
+      <button class="botons" type="submit" name="action" value="login">Billboard</button>
+
+    </form>
 
   </div>
 

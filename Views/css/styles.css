@@ -166,3 +166,68 @@ body{
   margin: 16px 0;
   font-size: 16px;
 }
+
+.options{
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #db5555;
+  position:absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+
+.botons-chico{
+  width: 25%;
+  background-color: #db5555;
+  border: none;
+  padding: 12px;
+  color: white;
+  margin: 16px 0;
+  font-size: 16px;
+}
+
+
+.modal-content{
+  position:absolute;
+  margin: 0px auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display:none;
+}
+
+.modal{
+  background-color: white 100%;
+  margin: 0px auto;
+  width: 800px;
+  height: 750px;
+  border-radius: 3px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.4);
+  
+}
+
+
+.modal-body input{
+  position:center;
+  width: 80%;
+  margin: 0px auto;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #db5555;
+  font-size: 18px;
+}
+.options-modal{
+  transform: translate(-50%, -50%);
+}
+
+
+.user {
+ padding: 10px;
+}
+
+.modal-body .row{
+  margin: auto auto; 
+}
+
