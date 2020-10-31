@@ -27,7 +27,7 @@ class FunctionsDAO
 
         $param = array('idMovie' => $idMov, 'day' => $day);
 
-        if($functionId != NULL) {
+        if ($functionId != NULL) {
             $query = $query . 'and functions.id != :funid';
             $param['funid'] = $functionId;
         }
@@ -59,7 +59,7 @@ class FunctionsDAO
 
         $param = array('start' => $start, 'end' => $end, 'idRoom' => $idRoom, 'day' => $date);
 
-        if($functionId != NULL) {
+        if ($functionId != NULL) {
             $query = $query . 'and functions.id != :funid';
             $param['funid'] = $functionId;
         }
@@ -94,7 +94,7 @@ class FunctionsDAO
 
         $param = array('start' => $start, 'end' => $end, 'idRoom' => $idRoom, 'day' => $date);
 
-        if($functionId != NULL) {
+        if ($functionId != NULL) {
             $query = $query . 'and functions.id != :funid';
             $param['funid'] = $functionId;
         }
@@ -138,10 +138,13 @@ class FunctionsDAO
 
         /*buscar si chocan con los tiempos de cine*/
         if (strtotime($cin->getopeningTime()) >= strtotime($startimtime_15minOffset))
-            array_push($exceptionArray, "The start of the function is earlier than the opening time");
+            array_push($exceptionArray, "The start of the function conflicts with the opening time");
 
-        if (strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset))
-            array_push($exceptionArray, "The end of the function is later than the closing time");
+        if (
+            strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset) ||
+            strtotime($finnishtime_15minOffset) <= strtotime($startimtime_15minOffset)
+        )
+            array_push($exceptionArray, "The end of the function conflicts with the closing time");
 
         /*buscar si chocan con los tiempos de funciones*/
         if (FunctionsDAO::checkIfStartCollideWithFunctionInRoom($startimtime_15minOffset, $finnishtime_15minOffset, $roomId, $date))
@@ -195,7 +198,7 @@ class FunctionsDAO
         $cin = RoomDBDAO::getCinemaByRoomId($roomId);
         $startimtime_15minOffset = date('H:i:s', strtotime('-15 minute',  strtotime($startimtime)));
         $finnishtime_15minOffset = date('H:i:s', strtotime('+15 minute',  strtotime($finnishtime)));
-        
+
         $startimtimeCiin = date('H:i:s', strtotime($cin->getopeningTime()));
         $finnishtimeCin = date('H:i:s', strtotime($cin->getclosingTime()));
 
