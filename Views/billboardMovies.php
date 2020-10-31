@@ -83,7 +83,7 @@
                                 if ($movie instanceof Movie) { ?>
                                     <tr>
                                         <td><?php echo $movie->getTitle(); ?></td>
-                                        <td><?php echo $movie->getDescription(); ?></td>
+                                        <td class="description"><?php echo $movie->getDescription(); ?></td>
                                         <td><?php
                                             foreach ($movie->getGenres() as $value) {
                                                 if ($value instanceof Genre)
@@ -91,7 +91,7 @@
                                             }
                                             ?></td>
                                         <td><?php if ($movie->getPoster() != null) {
-                                                echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
+                                                echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="100" height="142">';
                                             } ?></td>
                                         <td>
                                             <div class="col-auto">

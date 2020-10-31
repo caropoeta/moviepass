@@ -241,6 +241,8 @@ body{
   color:black;
   padding: 10px;
   margin: auto;
+  border-spacing: 0;
+  border: 1px solid #000;
 }
 
 .table th{
@@ -251,13 +253,33 @@ body{
   
   border: 1px solid #db5555;
 }
+th, td {
+  width: 25%;
+  text-align:center;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  padding: 0.3em;
+}
+
+td .descriptions{
+  text-align: justify;
+}
 
 #izq{
-  position: left;
+  float: left;
   width: 10%;
 }
 
 #der{
-  position: right;
+  float: right;
   width: 10%;
+}
+
+h2{
+  padding: 0.5em;
+  margin: auto;
+  text-align: center;
+  color: white;
+  font-size: 40px; 
+  text-shadow: 0 2px 12px 0 rgba(0,0,0,.4);
 }

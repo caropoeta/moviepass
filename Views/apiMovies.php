@@ -14,7 +14,7 @@
 <section id="listado" class="mb-5">
      <div class="container-fluid">
           <br>
-          <h2 style="position:center">Movie List From Api</h2>
+          <h2 >Movie List From Api</h2>
           <br>
           
           <div class="col-mb-4 ">
@@ -115,14 +115,14 @@
                               <tr>
                                    <td><?php echo $movie->getTitle(); ?></td>
                                    <td><?php echo $movie->getDescription(); ?></td>
-                                   <td><?php
+                                   <td class="description"><?php
                                    foreach ($movie->getGenres() as $value) {
                                         if ($value instanceof Genre)
                                              echo $value->getDescription() . '<br>';
                                    }
                                    ?></td>
                                    <td><?php if ($movie->getPoster() != null) {
-                                        echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
+                                        echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="100" height="142">';
                                    } ?></td>
                                    <td>
                                         <div class="col-auto">
