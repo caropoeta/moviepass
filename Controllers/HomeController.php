@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use DAO\Session;
+use Models\ViewsHandler;
 
 class HomeController
 {
@@ -28,11 +29,11 @@ class HomeController
                     return;
 
                 default:
-                    require_once(VIEWS_PATH . 'main.php');
+                    ViewsHandler::Main();
                     return;
             }
 
-        require_once(VIEWS_PATH . 'main.php');
+        ViewsHandler::Main();
         return;
     }
 }

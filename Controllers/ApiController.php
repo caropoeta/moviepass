@@ -5,8 +5,8 @@ namespace Controllers;
 use DAO\ApiGenreDAO;
 use DAO\ApiMovieDAO;
 use DAO\MovieDAO;
-use DAO\MovieXGenreDAO;
 use DAO\Session;
+use Models\ViewsHandler;
 
 class ApiController
 {
@@ -38,7 +38,6 @@ class ApiController
         if (!is_array($genreWO))
             $genreWO = [];
 
-        $currPage = $page;
         $genres = ApiGenreDAO::getApiGenres();
 
         if ($name == "" && $year == '0000' && empty($genreW) && empty($genreWO)) {
@@ -54,6 +53,6 @@ class ApiController
             $currMov[$movie->getId()] = MovieDAO::checkMovieById($movie->getId());
         }
 
-        require_once(VIEWS_PATH . 'apiMovies.php');
+        ViewsHandler::ApiMovies($currMov, $movies, $genres, $page, $name, $genreW, $genreWO, $year);
     }
 }

@@ -7,6 +7,7 @@ use DAO\GenreDAO;
 use DAO\MovieDAO;
 use DAO\MovieXGenreDAO;
 use DAO\Session;
+use Models\ViewsHandler;
 
 class MoviesController
 {
@@ -38,11 +39,10 @@ class MoviesController
         if (!is_array($genreWO))
             $genreWO = [];
 
-        $currPage = $page;
         $genres = GenreDAO::getGenres();
         $movies = MovieXGenreDAO::getMovies($page, $name, (int) $year, $genreW, $genreWO);
 
-        require_once(VIEWS_PATH . 'internalMovies.php');
+        ViewsHandler::InternalMovies($name, $genreW, $genreWO, $year, $page, $genres, $movies);
     }
 
     public static function Delete($ids)
