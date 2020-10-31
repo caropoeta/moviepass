@@ -7,6 +7,7 @@ use DAO\GenreDAO;
 use DAO\MoviesXFunctionsDAO;
 
 use DAO\Session;
+use Models\ViewsHandler;
 
 class BillboardController
 {
@@ -32,6 +33,6 @@ class BillboardController
 
         $currRole = Session::GetUserRole();
 
-        require_once(VIEWS_PATH . 'billboardMovies.php');
+        ViewsHandler::BillboardMovies($currRole, $movies, $genres, $currPage, $name, $genreW, $genreWO, $year);
     }
 }

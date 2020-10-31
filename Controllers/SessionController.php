@@ -9,6 +9,7 @@ use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
 use Models\Exceptions\ValidateUserCredentialsException;
 use DAO\Session;
+use Models\ViewsHandler;
 
 class SessionController
 {
@@ -43,7 +44,7 @@ class SessionController
                 $alert->Show();
             }
         }
-        
+
         HomeController::MainPage();
     }
 
@@ -54,7 +55,7 @@ class SessionController
                 if (Session::ValidateSession())
                     HomeController::MainPage();
                 else
-                    require_once(VIEWS_PATH . 'register.php');
+                    ViewsHandler::Register();
 
                 break;
 
@@ -62,7 +63,7 @@ class SessionController
                 if (Session::ValidateSession())
                     HomeController::MainPage();
                 else
-                    require_once(VIEWS_PATH . 'login.php');
+                    ViewsHandler::Login();
 
                 break;
 
@@ -78,7 +79,7 @@ class SessionController
                     $birthday = $currUSer->getBirthday();
                     $currUSer = null;
 
-                    require_once(VIEWS_PATH . 'editUser.php');
+                    ViewsHandler::EditUser($name, $password, $email, $dni, $birthday);
                 }
 
                 break;

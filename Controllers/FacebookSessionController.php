@@ -3,13 +3,12 @@
 namespace Controllers;
 
 use DAO\FacebookDAO;
-use \Models\UserModel as UserModel;
-use \DAO\UsersDAO as UserDAO;
+use \Models\UserModel;
 use Models\Exceptions\AddUserException;
 use Models\PopupAlert;
 use DAO\Session;
 use DAO\UsersDAO;
-use Models\Exceptions\ValidateUserCredentialsException;
+use Models\ViewsHandler;
 
 class FacebookSessionController
 {
@@ -21,10 +20,10 @@ class FacebookSessionController
                 $newformat = date('Y-m-d', $time);
 
                 $newUser = new UserModel($username, $password, CLIENT_ROLE_NAME, $dni, $email, $newformat);
-                $result = UserDAO::addUser($newUser);
+                $result = UsersDAO::addUser($newUser);
 
                 if ($result instanceof UserModel) {
-                    Session::SetSession(UserDAO::getUserByEmail($email));
+                    Session::SetSession(UsersDAO::getUserByEmail($email));
                 }
             }
         } catch (AddUserException $adu) {
@@ -64,7 +63,7 @@ class FacebookSessionController
             return;
         }
 
-        $usr = UserDAO::getUserByEmail($fbUser['email']);
+        $usr = UsersDAO::getUserByEmail($fbUser['email']);
 
         if ($usr instanceof UserModel) {
             Session::SetSession($usr);
@@ -72,7 +71,8 @@ class FacebookSessionController
         } else {
             $fbname = $fbUser['first_name'] . ' ' .  $fbUser['last_name'];
             $fbemail = $fbUser['email'];
-            require_once(VIEWS_PATH . 'facebookLoginAddUser.php');
+            
+            ViewsHandler::FacebookLoginAddUser($fbname, $fbemail);
         }
     }
 }

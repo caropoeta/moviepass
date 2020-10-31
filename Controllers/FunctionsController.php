@@ -8,6 +8,7 @@ use DAO\RoomDBDAO;
 use DAO\Session;
 use Models\Exceptions\ArrayException;
 use Models\PopupAlert;
+use Models\ViewsHandler;
 
 class FunctionsController
 {
@@ -34,7 +35,8 @@ class FunctionsController
         $opt = $cin->getopeningTime();
         $cst = $cin->getclosingTime();
         $functions = FunctionsDAO::getAllFromRoom($roomId);
-        require_once(VIEWS_PATH . 'functionList.php');
+
+        ViewsHandler::FunctionList($opt, $cst, $roomId, $functions);
     }
 
     public static function Delete(int $id, int $roomid)
@@ -49,7 +51,8 @@ class FunctionsController
             $page = 1;
 
         $movies = MovieXGenreDAO::getMovies($page);
-        require_once(VIEWS_PATH . 'movieSelectAddFunction.php');
+
+        ViewsHandler::MovieSelectAddFunction($time, $date, $roomId, $page, $movies);
     }
 
     public static function SelectMovieUpdate(String $time, String $date, int $roomId, int $functionId, int $page = 1)
@@ -58,7 +61,8 @@ class FunctionsController
             $page = 1;
 
         $movies = MovieXGenreDAO::getMovies($page);
-        require_once(VIEWS_PATH . 'movieSelectUpdateFunction.php');
+        
+        ViewsHandler::MovieSelectUpdateFunction($time, $date, $roomId, $functionId, $page, $movies);
     }
 
     public static function Update(String $time, String $date, int $roomId, int $functionId, int $movieId)
