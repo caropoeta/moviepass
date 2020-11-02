@@ -5,38 +5,47 @@
     use Models\UserModel as UserModel;
     use Models\UserRole as UserRole;
     ?>
+
 </section>
-<section class="">
+<section>
     <div>
         <br>
         <!-- user_list-->
         <div class="login-form">
-            <h2 >Search Users</h2>
-            <br>
-            <div class="form-group">
+            <div>
+                <h2>Search Users</h2>
                 <br>
-                <form action="<?php echo FRONT_ROOT ?>Users/List" method="POST">
+                <div class="form-group">
+                    <br>
+                    <form action="<?php echo FRONT_ROOT ?>Users/List" method="POST">
 
-                    <input type="text" class="form-group" name="name" placeholder="Enter user name">
+                        <input type="text" class="form-group" name="name" placeholder="Enter user name">
 
-                    <input type="email" class="form-group" name="email" placeholder="Enter user email">
+                        <input type="email" class="form-group" name="email" placeholder="Enter user email">
 
-                    <input type="text" class="form-group" name="dni" placeholder="Enter user dni">
-                    <select class=" form-group" name="role">
-                        <option default>Anything</option>
-                        <?php
-                        foreach ($roles as $role) {
-                            if ($role instanceof UserRole) {
-                        ?>
-                                <option class="options"><?php echo $role->getName(); ?></option>
-                        <?php }
-                        } ?>
-                    </select>
-                    <button class="botons" type="submit">Search</button>
-                </form>
+                        <input type="text" class="form-group" name="dni" placeholder="Enter user dni">
+                        <select class=" form-group" name="role">
+                            <option default>Anything</option>
+                            <?php
+                            foreach ($roles as $role) {
+                                if ($role instanceof UserRole) {
+                            ?>
+                                    <option class="options"><?php echo $role->getName(); ?></option>
+                            <?php }
+                            } ?>
+                        </select>
+                        <button class="botons" type="submit">Search</button>
+                    </form>
+
+                </div>
+                <button type="button" class="botons" data-toggle="modal" data-target="#addUser">
+                    Add User
+                </button>
             </div>
+
+
+
             <h2>Users</h2>
-            <hr>
             <?php foreach ($users as $user) {
                 if ($user instanceof UserModel) { ?>
                     <div class>
@@ -46,49 +55,84 @@
                             </label>
                             <br>
                             <?php if ($user->getId() != $_SESSION['current_user']->getId()) { ?>
-                                <button type="button" class="botons-chico" data-toggle="modal" data-target="<?php echo '#usuario' . $user->getId(); ?>">
-                                    Editar
+                                <button type="button" class="botons-chico" data-toggle="modal" data-target="#edituser"value="<?php echo '#usuario' . $user->getId(); ?>">
+                                   Edit
                                 </button>
                                 <form method="POST">
-                                    <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Users/Delete" type="submit" name="id" value="<?php echo $user->getId(); ?>">Borrar</button>
+                                    <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Users/Delete" type="submit" id="edituser" value="<?php echo $user->getId(); ?>">Delete</button>
                                 </form>
                                 <br>
+                                <hr>
+                            <?php } ?>
                         </form>
+                    </div>
+            <?php }
+            } ?>
+        </div>
+    </div>
+    <!-- Modal adduser -->
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addUser" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="addUser">Add User</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        <input type="text" name="username" required placeholder="Username" class="form-group" required />
+                        <input type="password" name="password" class="form-group" required placeholder="Password" />
+                        <input type="email" name="email" class="form-group" placeholder="Email" />
+                        <input type="number" name="dni" class="form-group" placeholder="Number" min="5000000" max="99999999" />
+                        <input type="date" name="birthday" class="form-group" required placeholder="Birthday" />
 
-                        <!-- Modal -->
-                        <div class="modal-content" id="<?php echo 'usuario' . $user->getId(); ?>">
-                            <div class="modal">
-                                <form method="POST">
-                                    <div class="modal-header">
-                                        <br>
-                                        <h2>Editar usuario</h2>
-                                        
-                                    </div>
+                        <h2>Rol</h2>
 
-                                    <div class="modal-body">
-                                        <div id="task<?php echo $user->getId() ?>"></div>
-                                        <br>
-                                        <input type="email" name="email" value="<?php echo $user->getEmail() ?>" class="form-control form-control-lg" required placeholder="Update Email" />
-                                        <br>
-                                        <input type="number" name="dni" value="<?php echo $user->getDni() ?>" class="form-control form-control-lg" required placeholder=" Update Id" />
-                                        <br>
-                                        <input type="date" name="birthday" value="<?php echo $user->getBirthday() ?>" class="form-control form-control-lg" required placeholder=" Update Date" />
+                        <select class="form-group">
+                            <?php foreach ($roles as $role) {
+                                if ($role instanceof UserRole) { ?>
+                                    <option class="options"><?php echo $role->getName(); ?></option>
+                            <?php }
+                            } ?>
+                        </select>
+                        <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
+                    <button type="button" class="botons.chico">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="edituser" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edituser">Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <div id="task<?php echo $user->getId() ?>"></div>
+                                        <input type="email" name="email" value="<?php echo $user->getEmail() ?>" class="form-group" required placeholder="Update Email" />
+                                        <input type="number" name="dni" value="<?php echo $user->getDni() ?>" class="form-group" required placeholder=" Update Id" />
+                                        <input type="date" name="birthday" value="<?php echo $user->getBirthday() ?>" class="form-group" required placeholder=" Update Date" />
 
                                         <h2>Rol</h2>
-                                        <br>
-                                        <div class="form-group">
-                                        <select class="options-modal" name="role">
-
-
+                                        <select class="form-group" name="role">
                                             <?php
                                             foreach ($roles as $role) {
                                                 if ($role instanceof UserRole) {
                                                     if ($user->getRole() == $role->getName()) { ?>
-                                                        <option selected="selected" value="available">
+                                                        <option class="options" selected="selected" value="available">
                                                         <?php
                                                     } else {
                                                         ?>
-                                                        <option>
+                                                        <option class="options">
                                                         <?php } ?>
 
                                                         <?php echo $role->getName(); ?></option>
@@ -97,107 +141,17 @@
                                                 }
                                             } ?>
                                         </select>
-                                        </div>
 
-                                        <br>
-
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button formaction="<?php echo FRONT_ROOT ?>Users/Edit" class="botons" type="submit" name="id" value="<?php echo $user->getId() ?>">Editar</button>
-                                        <button type="button" class="botons" data-dismiss="modal">Close</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    <?php
-                            }
-                    ?>
-
-                    </div>
-                    <hr>
-
-            <?php
-                }
-            }
-            ?>
-
-            <br>
-
-            <div class="col-auto">
-                <button type="button" class="botons" data-toggle="modal" data-target="#add">
-                    Add user
-                </button>
-            </div>
-
-            <div class="modal-content" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                   <div class="modal">
-                       <div class="login-form">
-                        <form method="POST">
-                            <div class="modal-header">
-                                <br>
-                                <h2>Add user</h2>
-                            </div>
-                            <div class="modal-body">
-                                <br>
-                                <div >
-                                    <div class="row">
-                                        <div class="col-lg-4 offset-4">
-                                            <input type="text" name="username" required placeholder="Username" class="form-group" required />
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-4 offset-4">
-                                        <input type="password" name="password" class="form-group" required placeholder="Password" />
-                                    </div>
-                                </div>
-
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-4 offset-4">
-                                        <input type="email" name="email" required class="form-group" placeholder="Email" />
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-4 offset-4">
-                                        <input type="number" name="dni" required class="form-group" placeholder="Number" min="5000000" max="99999999" />
-                                        <br>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4 offset-4">
-                                        <input type="date" name="birthday" class="form-group" required placeholder="Birthday" />
-                                        <br>
-                                        <br>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <h2">Rol</h2>
-
-                                </div>
-                                <div class="form-group">
-                                    <select class="options-modal">
-                                        <?php foreach ($roles as $role) {
-                                            if ($role instanceof UserRole) { ?>
-                                                <option><?php echo $role->getName(); ?></option>
-                                        <?php }
-                                        } ?>
-                                    </select>
-                                    <br>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button formaction="<?php echo FRONT_ROOT ?>Users/Add" class="botons" type="submit">Add</button>
-                                <button type="button" class="botons" data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button formaction="<?php echo FRONT_ROOT ?>Users/Edit" type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </section>

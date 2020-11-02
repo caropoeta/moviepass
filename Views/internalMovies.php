@@ -10,63 +10,71 @@
 </section>
 
 <section id="listado" class="mb-5">
-     <div class="container-fluid">
-          <h2 class="title-secondary">Movie List</h2>
-          <br>
-          <div class="user_add_div">
-               <div class="col-auto">
-                    <br>
-                    <br>
-                    <form method="POST">
-                         <div class="">
-                              <div class="form control col-xs-4">
-                                   <input type="text" class="form-control col-xs-4" name="name" placeholder="Enter movie name" value="<?php echo $name ?>">
-                              </div>
-
-                              <div class="form-check">
-                                   <small class="text-muted">
-                                        *Search with genres.
-                                   </small>
-                                   <br>
-                                   <input type='hidden' name='genre-with' value="[]" />
-                                   <?php foreach ($genres as $value) {
-                                        if ($value instanceof Genre) {
-                                             ?>
-                                             <input <?php if (GenreDAO::searchInGeneres($value->getId(), $genreW)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-with[]" value="<?php echo $value->getId() ?>">
-                                             <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
-                                             <?php
-                                        }
-                                   } ?>
-                              </div>
-                              <br>
-                              <div class="form-check">
-                                   <small class="text-muted">
-                                        *Search without genres.
-                                   </small>
-                                   <br>
-                                   <input type='hidden' name='genre-without' value="[]" />
-                                   <?php foreach ($genres as $value) {
-                                        if ($value instanceof Genre) {
-                                             ?>
-                                             <input <?php if (GenreDAO::searchInGeneres($value->getId(), $genreWO)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-without[]" value="<?php echo $value->getId() ?>">
-                                             <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
-                                             <?php
-                                        }
-                                   } ?>
-                              </div>
-
-                              <br>
-                              <div class="form-group">
-                                   <input type="number" min="1582" max="9999" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
-                              </div>
-                              <div class="align-items-center">
-                                   <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/List/" name="page" value="1" type="submit">Search</button>
-                              </div>
-                         </div>
-                    </div>
+     <h2 class="title-secondary">Movie List</h2>
+     <div class="container-movies">
+        
+          <form method="POST">
+               <div class="form-group">
+                    <small style="color:black"class="offset-5">
+                         <br>
+                         *Search either by name or date and genres.
+                    </small>
+                         <input  class="form-group" type="text" name="name" placeholder="Enter movie name" value="<?php echo $name ?>">
+                    
                </div>
-                   <br>
-                   <br>
+               <br><br><br>
+               <div class="form-group" style="margin:auto">
+                    <small style="color:black" class="text-muted">
+                         *Search by year.
+                    </small>
+                    <br>
+                    <input min="1582" max="9999"  type="number" class="form-group" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
+                    <br>
+                    <button class="botons"  formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>
+
+               </div>
+               <br><br>
+               <div class="form-group">
+                    <small style="color:black" class="offset-5">
+                    <br>
+                         *Search with genres.
+                    </small>
+                    <br>
+                         
+                         <input type='hidden' name='genre-with' value="[]" />
+                        
+                         <?php foreach ($genres as $value) {
+                              if ($value instanceof Genre) {
+                         ?>
+                                   
+                                   <input <?php if (GenreDAO::searchInGeneres($value->getId(), $genreW)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-with[]" value="<?php echo $value->getId() ?>">
+                                   <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
+                         <?php
+                              }
+                         } ?>
+                         
+               </div>
+               <div class="form-group">
+                    <br>
+                    <small style="color:black" class="offset-5">
+                         *Search without genres.
+                    </small>
+                    <br>
+                         <input type='hidden' name='genre-without' value="[]" />
+                         <?php foreach ($genres as $value) {
+                              if ($value instanceof Genre) {
+                         ?>
+                                   <input <?php if (GenreDAO::searchInGeneres($value->getId(), $genreWO)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-without[]" value="<?php echo $value->getId() ?>">
+                                   <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
+                         <?php
+                              }
+                         } ?>
+               </div>
+     </div>
+               
+          </form>
+          <br>
+          <hr>
                    <form>
           <div class="p-2">
                <button class="botons-chico" id="izq"formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
@@ -74,9 +82,8 @@
           <div class="p-2">
                <button class="botons-chico"  id="der" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
           </div>
-                    </form>
           </form>
-          <hr>
+          
      </div>
      <div class=col-auto>
           <div class="">
