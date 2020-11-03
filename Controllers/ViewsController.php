@@ -1,11 +1,24 @@
 <?php
 
-namespace Models;
+namespace Controllers;
 
-class ViewsHandler
+abstract class ViewsController
 {
-    private function __construct()
+    public static function Show(array $alerts = [], Bool $usesKey = false)
     {
+        echo '<script>alert("';
+
+        if (!$usesKey) {
+            foreach ($alerts as $value) {
+                echo $value . '\n';
+            }
+        } else {
+            foreach ($alerts as $key => $value) {
+                echo $key . ' ' . $value . '\n';
+            }
+        }
+
+        echo '")</script>';
     }
 
     public static function ApiMovies(
@@ -109,8 +122,8 @@ class ViewsHandler
     }
 
     public static function UsersList(
-        Array $roles,
-        Array $users
+        array $roles,
+        array $users
     ) {
         require_once(VIEWS_PATH . 'usersList.php');
     }

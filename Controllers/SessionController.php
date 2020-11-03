@@ -9,7 +9,8 @@ use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
 use Models\Exceptions\ValidateUserCredentialsException;
 use DAO\Session;
-use Models\ViewsHandler;
+use Controllers\ViewsController as ViewsHandler;
+use Exception;
 
 class SessionController
 {
@@ -40,8 +41,9 @@ class SessionController
                         Session::SetSession($response);
                 }
             } catch (UpdateUserException $uue) {
-                $alert = new PopupAlert($uue->getExceptionArray());
-                $alert->Show();
+                ViewsHandler::Show($uue->getExceptionArray());
+            } catch (Exception $th) {
+                ViewsHandler::Show(array('Error processing request'));
             }
         }
 
@@ -99,8 +101,9 @@ class SessionController
                     Session::SetSession($logUser);
             }
         } catch (ValidateUserCredentialsException $vuce) {
-            $alert = new PopupAlert($vuce->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($vuce->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
         }
 
         HomeController::MainPage();
@@ -128,8 +131,9 @@ class SessionController
                     Session::SetSession(UserDAO::getUserByEmail($email));
             }
         } catch (AddUserException $adu) {
-            $alert = new PopupAlert($adu->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($adu->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
         }
 
         HomeController::MainPage();

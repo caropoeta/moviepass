@@ -2,10 +2,13 @@
 
 namespace DAO;
 
+use Exception;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
 use Models\Exceptions\ValidateUserCredentialsException;
 use Models\UserModel as UserModel;
+use PDO;
+use PDOException;
 
 class UsersDAO
 {
@@ -50,9 +53,13 @@ class UsersDAO
 
     public static function existsEmail(String $obj)
     {
-        $conection = Connection::GetInstance();
-        $query = "select true from users where user_email = :email;";
-        $response = $conection->Execute($query, array('email' => $obj));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "select true from users where user_email = :email;";
+            $response = $conection->Execute($query, array('email' => $obj));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
 
         if ($response != null)
             return (sizeof($response) > 0) ? true : false;
@@ -65,9 +72,13 @@ class UsersDAO
         if (!UsersDAO::isThisUsernameValid($username))
             return false;
 
-        $conection = Connection::GetInstance();
-        $query = "select true from users where user_name = :username;";
-        $response = $conection->Execute($query, array('username' => $username));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "select true from users where user_name = :username;";
+            $response = $conection->Execute($query, array('username' => $username));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
 
         if ($response != null)
             return (sizeof($response) > 0) ? true : false;
@@ -77,22 +88,30 @@ class UsersDAO
 
     public static function existsDni(int $obj)
     {
-        $conection = Connection::GetInstance();
-        $query = "select true from users where user_dni = :dni;";
-        $response = $conection->Execute($query, array('dni' => $obj));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "select true from users where user_dni = :dni;";
+            $response = $conection->Execute($query, array('dni' => $obj));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
 
         if ($response != null)
             return (sizeof($response) > 0) ? true : false;
 
         return false;
     }
-    
+
     public static function isUserDeletedByUsername(String $obj)
     {
-        $conection = Connection::GetInstance();
-        $query = "select true from users where user_name = :user_name and 
-        deleted = 1;";
-        $response = $conection->Execute($query, array('user_name' => $obj));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "select true from users where user_name = :user_name and 
+            deleted = 1;";
+            $response = $conection->Execute($query, array('user_name' => $obj));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
 
         if ($response != null)
             return (sizeof($response) > 0) ? true : false;
@@ -102,10 +121,14 @@ class UsersDAO
 
     public static function isUserDeletedByEmail(String $obj)
     {
-        $conection = Connection::GetInstance();
-        $query = "select true from users where user_email = :user_email and 
-        deleted = 1;";
-        $response = $conection->Execute($query, array('user_email' => $obj));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "select true from users where user_email = :user_email and 
+            deleted = 1;";
+            $response = $conection->Execute($query, array('user_email' => $obj));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
 
         if ($response != null)
             return (sizeof($response) > 0) ? true : false;
@@ -115,7 +138,6 @@ class UsersDAO
 
     public static function getUsers(String $name = "", String $email = "", String $dni = "", String $role = "")
     {
-        $conection = Connection::GetInstance();
         $query = "
         SELECT * 
         FROM users
@@ -150,8 +172,12 @@ class UsersDAO
         else
             $params['dni']      = '%' . $dni . '%';
 
-        $response = $conection->Execute($query, $params);
-
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute($query, $params);
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
 
         $userArray = array_map(function (array $obj) {
             return UserModel::fromArray($obj);
@@ -165,15 +191,19 @@ class UsersDAO
         if (!UsersDAO::existsEmail($email))
             return false;
 
-        $conection = Connection::GetInstance();
-        $query = "
+        try {
+            $conection = Connection::GetInstance();
+            $query = "
             SELECT *
             FROM users 
             INNER JOIN roles
             ON roles.role_id = users.user_role
             WHERE user_email = :email 
             AND deleted = 0";
-        $response = $conection->Execute($query, array('email' => $email));
+            $response = $conection->Execute($query, array('email' => $email));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
 
         $userArray = array_map(function (array $obj) {
             return UserModel::fromArray($obj);
@@ -184,15 +214,19 @@ class UsersDAO
 
     public static function getUserById(int $id)
     {
-        $conection = Connection::GetInstance();
-        $query = "
+        try {
+            $conection = Connection::GetInstance();
+            $query = "
             SELECT user_password,user_name,user_id,user_dni,user_email,user_birthday,role_name
             FROM users 
             INNER JOIN roles
             ON roles.role_id = users.user_role
             WHERE user_id = :id
             AND deleted = 0";
-        $response = $conection->Execute($query, array('id' => $id));
+            $response = $conection->Execute($query, array('id' => $id));
+        } catch (Exception $ex) {
+            throw $ex;
+        }
 
         $userArray = array_map(function (array $obj) {
             return UserModel::fromArray($obj);
@@ -219,22 +253,26 @@ class UsersDAO
             throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
         }
 
-        if(UsersDAO::isUserDeletedByUsername($username)) {
+        if (UsersDAO::isUserDeletedByUsername($username)) {
             array_push($exceptionArray, 'This account is banned');
             throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
         }
 
-        $conection = Connection::GetInstance();
-        $query = "
+        try {
+            $conection = Connection::GetInstance();
+            $query = "
             SELECT * FROM users 
             INNER JOIN roles
             ON roles.role_id=users.user_role
             WHERE user_name = :username";
 
-        $response = $conection->Execute(
-            $query,
-            array('username' => $username)
-        );
+            $response = $conection->Execute(
+                $query,
+                array('username' => $username)
+            );
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
 
         if ($response != null && (sizeof($response) > 0)) {
             $userArray = array_map(function (array $obj) {
@@ -255,9 +293,13 @@ class UsersDAO
 
     public static function deleteUser(int $id)
     {
-        $conection = Connection::GetInstance();
-        $query = "update users set deleted = :deleted where id = :id;";
-        $conection->ExecuteNonQuery($query, array('id' => $id, 'deleted' => 1));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "update users set deleted = :deleted where id = :id;";
+            $conection->ExecuteNonQuery($query, array('id' => $id, 'deleted' => 1));
+        } catch (PDOException $th) {
+            throw $th;
+        }
     }
 
     public static function addUser(UserModel $user)
@@ -281,23 +323,27 @@ class UsersDAO
             throw new AddUserException("Error Processing Request", $exceptionArray, 1);
 
         else {
-            $conection = Connection::GetInstance();
-            $query = "
+            try {
+                $conection = Connection::GetInstance();
+                $query = "
             INSERT INTO users(user_name, user_password, user_role, user_dni, user_email, user_birthday)
             VALUES (:name,:password,:role,:dni,:email,:birthday);";
 
-            $params = [];
-            $params['name']         = $user->getName();
-            $params['password']     = password_hash($user->getPassword(), PASSWORD_DEFAULT);
-            $params['role']         = RolesDAO::getRoleByName($user->getRole())->getId();
-            $params['dni']          = (int) $user->getDni();
-            $params['email']        = $user->getEmail();
-            $params['birthday']     = $user->getBirthday();
+                $params = [];
+                $params['name']         = $user->getName();
+                $params['password']     = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+                $params['role']         = RolesDAO::getRoleByName($user->getRole())->getId();
+                $params['dni']          = (int) $user->getDni();
+                $params['email']        = $user->getEmail();
+                $params['birthday']     = $user->getBirthday();
 
-            $conection->ExecuteNonQuery(
-                $query,
-                $params
-            );
+                $conection->ExecuteNonQuery(
+                    $query,
+                    $params
+                );
+            } catch (Exception $ex) {
+                throw $ex;
+            }
 
             return UsersDAO::getUserByEmail($user->getEmail());
         }
@@ -329,8 +375,9 @@ class UsersDAO
             throw new UpdateUserException("Error Processing Request", $exceptionArray, 1);
 
         else {
-            $conection = Connection::GetInstance();
-            $query = "
+            try {
+                $conection = Connection::GetInstance();
+                $query = "
                 UPDATE users 
                 SET     
                     user_name = :name,
@@ -341,22 +388,25 @@ class UsersDAO
                     user_birthday = :birthday
                 WHERE user_id = :id";
 
-            $params = [];
-            $params['id']           = $userData->getId();
-            $params['name']         = $userData->getName();
-            $params['dni']          = $userData->getDni();
-            $params['email']        = $userData->getEmail();
-            $params['birthday']     = $userData->getBirthday();
-            $params['role']         = RolesDAO::getRoleByName($userData->getRole())->getId();
-            $params['password']     =
-                ($userData->getPassword() == $currUser->getPassword())
-                ? $currUser->getPassword()
-                : password_hash($userData->getPassword(), PASSWORD_DEFAULT);
+                $params = [];
+                $params['id']           = $userData->getId();
+                $params['name']         = $userData->getName();
+                $params['dni']          = $userData->getDni();
+                $params['email']        = $userData->getEmail();
+                $params['birthday']     = $userData->getBirthday();
+                $params['role']         = RolesDAO::getRoleByName($userData->getRole())->getId();
+                $params['password']     =
+                    ($userData->getPassword() == $currUser->getPassword())
+                    ? $currUser->getPassword()
+                    : password_hash($userData->getPassword(), PASSWORD_DEFAULT);
 
-            $conection->ExecuteNonQuery(
-                $query,
-                $params
-            );
+                $conection->ExecuteNonQuery(
+                    $query,
+                    $params
+                );
+            } catch (PDOException $ex) {
+                throw $ex;
+            }
 
             return UsersDAO::getUserById($userData->getId());
         }

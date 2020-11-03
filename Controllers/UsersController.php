@@ -10,7 +10,8 @@ use Models\PopupAlert;
 use DAO\Session;
 
 use Models\UserModel as UserModel;
-use Models\ViewsHandler;
+use Controllers\ViewsController as ViewsHandler;
+use Exception;
 
 class UsersController
 {
@@ -34,8 +35,11 @@ class UsersController
 
             UserDAO::addUser(new UserModel($username, $password, $role, $dni, $email, $newformat));
         } catch (AddUserException $aue) {
-            $alert = new PopupAlert($aue->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($aue->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
         UsersController::List();
@@ -48,9 +52,15 @@ class UsersController
 
     public static function List(String $name = "", String $email = "", String $dni = "", String $role = "")
     {
-        $role = ($role = RolesDAO::getRoleByName($role)) ? $role->getId() : '';
-        $users = UserDAO::getUsers($name, $email, $dni, $role);
-        $roles = RolesDAO::getRoles();
+        try {
+            $role = ($role = RolesDAO::getRoleByName($role)) ? $role->getId() : '';
+            $users = UserDAO::getUsers($name, $email, $dni, $role);
+            $roles = RolesDAO::getRoles();
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
 
         ViewsHandler::UsersList($roles, $users);
     }
@@ -74,8 +84,11 @@ class UsersController
                 }
             }
         } catch (UpdateUserException $uue) {
-            $alert = new PopupAlert($uue->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($uue->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
         UsersController::List();
@@ -83,8 +96,14 @@ class UsersController
 
     public static function Delete(int $id)
     {
-        if (Session::ValidateSession() && $id != Session::GetUserId())
-            UserDAO::deleteUser($id);
+        try {
+            if (Session::ValidateSession() && $id != Session::GetUserId())
+                UserDAO::deleteUser($id);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
 
         UsersController::List();
     }

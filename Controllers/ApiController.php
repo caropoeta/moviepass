@@ -6,7 +6,8 @@ use DAO\ApiGenreDAO;
 use DAO\ApiMovieDAO;
 use DAO\MovieDAO;
 use DAO\Session;
-use Models\ViewsHandler;
+use Controllers\ViewsController as ViewsHandler;
+use Exception;
 
 class ApiController
 {
@@ -38,19 +39,25 @@ class ApiController
         if (!is_array($genreWO))
             $genreWO = [];
 
-        $genres = ApiGenreDAO::getApiGenres();
+        try {
+            $genres = ApiGenreDAO::getApiGenres();
 
-        if ($name == "" && $year == '0000' && empty($genreW) && empty($genreWO)) {
-            $movies = ApiMovieDAO::getApiMoviePage($page);
-        } else if ($name != "")
-            $movies = ApiMovieDAO::getApiMovieSearchByName($page, $name);
+            if ($name == "" && $year == '0000' && empty($genreW) && empty($genreWO)) {
+                $movies = ApiMovieDAO::getApiMoviePage($page);
+            } else if ($name != "")
+                $movies = ApiMovieDAO::getApiMovieSearchByName($page, $name);
 
-        else
-            $movies = ApiMovieDAO::getApiMovieSearchByDateAndGenre($page, (int) $year, $genreW, $genreWO);
+            else
+                $movies = ApiMovieDAO::getApiMovieSearchByDateAndGenre($page, (int) $year, $genreW, $genreWO);
 
-        $currMov = [];
-        foreach ($movies as $movie) {
-            $currMov[$movie->getId()] = MovieDAO::checkMovieById($movie->getId());
+            $currMov = [];
+            foreach ($movies as $movie) {
+                $currMov[$movie->getId()] = MovieDAO::checkMovieById($movie->getId());
+            }
+        } catch (Exception $l) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
         ViewsHandler::ApiMovies($currMov, $movies, $genres, $page, $name, $genreW, $genreWO, $year);

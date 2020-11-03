@@ -3,9 +3,12 @@
 namespace DAO;
 
 use DateTime;
+use Exception;
 use Models\Exceptions\ArrayException;
 use Models\Functions;
 use Models\Movie;
+use PDO;
+use PDOException;
 
 class FunctionsDAO
 {
@@ -142,7 +145,7 @@ class FunctionsDAO
 
         if (
             strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset) ||
-            strtotime($finnishtime_15minOffset) <= strtotime($startimtime_15minOffset)
+            strtotime($finnishtime) <= strtotime($startimtime)
         )
             array_push($exceptionArray, "The end of the function conflicts with the closing time");
 
@@ -168,8 +171,12 @@ class FunctionsDAO
             $param['finishTime'] = $finnishtime;
             $param['day'] = $date;
 
-            $conection = Connection::GetInstance();
-            $response = $conection->ExecuteNonQuery($query, $param);
+            try {
+                $conection = Connection::GetInstance();
+                $response = $conection->ExecuteNonQuery($query, $param);
+            } catch (PDOException $th) {
+                throw $th;
+            }
         }
     }
 
@@ -206,7 +213,10 @@ class FunctionsDAO
         if (strtotime($startimtimeCiin) >= strtotime($startimtime_15minOffset))
             array_push($exceptionArray, "The start of the function is earlier than the opening time");
 
-        if (strtotime($finnishtimeCin) <= strtotime($finnishtime_15minOffset))
+        if (
+            strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset) ||
+            strtotime($finnishtime) <= strtotime($startimtime)
+        )
             array_push($exceptionArray, "The end of the function is later than the closing time");
 
         /*buscar si chocan con los tiempos de funciones*/
@@ -234,8 +244,12 @@ class FunctionsDAO
             $param['day'] = $date;
             $param['funid'] = $functionId;
 
-            $conection = Connection::GetInstance();
-            $response = $conection->ExecuteNonQuery($query, $param);
+            try {
+                $conection = Connection::GetInstance();
+                $response = $conection->ExecuteNonQuery($query, $param);
+            } catch (PDOException $th) {
+                throw $th;
+            }
         }
     }
 
@@ -245,8 +259,12 @@ class FunctionsDAO
         $param = [];
         $param['id'] = $id;
 
-        $conection = Connection::GetInstance();
-        $response = $conection->ExecuteNonQuery($query, $param);
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->ExecuteNonQuery($query, $param);
+        } catch (PDOException $th) {
+            throw $th;
+        }
     }
 
     public static function getAllFromRoom(int $id)
@@ -255,8 +273,12 @@ class FunctionsDAO
         $param = [];
         $param['room'] = $id;
 
-        $conection = Connection::GetInstance();
-        $response = $conection->Execute($query, $param);
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute($query, $param);
+        } catch (PDOException $th) {
+            throw $th;
+        }
 
         $roleArray = array_map(function (array $obj) {
             $funToReturn = new Functions();
