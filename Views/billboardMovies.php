@@ -4,21 +4,21 @@
     use Models\Genre;
     use Models\Movie as Movie;
 
-    if($currRole == GUEST_ROLE_NAME) { ?>
+    if ($currRole == GUEST_ROLE_NAME) { ?>
         <form action="<?php echo FRONT_ROOT ?>Home" method="POST">
-        <button type="submit"></button>
+            <button type="submit"></button>
         </form>
     <?php }
 
-    if($currRole == ADMIN_ROLE_NAME) include('navbaradmin.php');
-    
-    if($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
+    if ($currRole == ADMIN_ROLE_NAME) include('navbaradmin.php');
+
+    if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
     ?>
 </section>
 
 <section id="listado" class="mb-5">
     <div class="container-fluid">
-        <h2 class="fuente4  text-center">Billboard</h2>
+        <h2 class="fuente4 text-center">Billboard</h2>
         <br>
         <div class="col-auto">
             <form method="POST">
@@ -67,8 +67,8 @@
                 </div>
                 <hr>
                 <div class="align-items-center">
-                    <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
-                    <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
+                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
                 </div>
             </form>
         </div>
@@ -97,7 +97,8 @@
                                         ?></td>
                                     <td><?php if ($movie->getPoster() != null) {
                                             echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
-                                        } ?></td>
+                                        }
+                                        ?></td>
                                 </tr>
                         <?php
                             }

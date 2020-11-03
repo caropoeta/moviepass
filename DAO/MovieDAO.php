@@ -4,21 +4,31 @@ namespace DAO;
 
 use Models\Genre;
 use Models\Movie;
+use PDO;
+use PDOException;
 
 class MovieDAO
 {
     public static function deleteById(int $id)
     {
-        $conection = Connection::GetInstance();
-        $query = "update movies set deleted = :deleted where id = :id;";
-        $conection->ExecuteNonQuery($query, array('id' => $id, 'deleted' => 1));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "update movies set deleted = :deleted where id = :id;";
+            $conection->ExecuteNonQuery($query, array('id' => $id, 'deleted' => 1));
+        } catch (PDOException $th) {
+            throw $th;
+        }
     }
 
     public static function checkMovieDeletedById(INT $id)
     {
-        $conection = Connection::GetInstance();
-        $query = "select true from movies where id = :id and deleted = :deleted;";
-        $response = $conection->Execute($query, array('id' => $id, 'deleted' => 1));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "select true from movies where id = :id and deleted = :deleted;";
+            $response = $conection->Execute($query, array('id' => $id, 'deleted' => 1));
+        } catch (PDOException $th) {
+            throw $th;
+        }
 
         if ($response != null)
             return (sizeof($response) > 0) ? true : false;
@@ -28,9 +38,13 @@ class MovieDAO
 
     public static function checkMovieById(int $id)
     {
-        $conection = Connection::GetInstance();
-        $query = "select true from movies where id = :id and deleted = 0;";
-        $response = $conection->Execute($query, array('id' => $id));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "select true from movies where id = :id and deleted = 0;";
+            $response = $conection->Execute($query, array('id' => $id));
+        } catch (PDOException $th) {
+            throw $th;
+        }
 
         if ($response != null)
             return (sizeof($response) > 0) ? true : false;
@@ -56,35 +70,38 @@ class MovieDAO
 
     public static function addMovie(Movie $movie)
     {
-        if (MovieDAO::checkMovieDeletedById($movie->getId())) {
+        try {
             $conection = Connection::GetInstance();
-            $query = "update movies set deleted = :deleted where id = :id;";
-            $conection->ExecuteNonQuery($query, array('id' => $movie->getId(), 'deleted' => 0));
-        }
-        else if (!MovieDAO::checkMovieById($movie->getId())) {
-            $conection = Connection::GetInstance();
-            $query = "
-            INSERT INTO `movies`(`id`, `title`, `release_date`, `vote_average`, `overview`, `poster_path`, runtime) 
-            VALUES (:id, :title, :releaseDate, :points, :movieDescription, :poster, :runtime)";
 
-            $params = [];
-            $params['id']                   = $movie->getId();
-            $params['title']                = $movie->getTitle();
-            $params['releaseDate']          = $movie->getReleaseDate();
-            $params['points']               = $movie->getPoints();
-            $params['movieDescription']     = $movie->getDescription();
-            $params['poster']               = $movie->getPoster();
-            $params['runtime']              = $movie->getRuntime();
+            if (MovieDAO::checkMovieDeletedById($movie->getId())) {
+                $query = "update movies set deleted = :deleted where id = :id;";
+                $conection->ExecuteNonQuery($query, array('id' => $movie->getId(), 'deleted' => 0));
+            } else if (!MovieDAO::checkMovieById($movie->getId())) {
+                $query = "
+                INSERT INTO `movies`(`id`, `title`, `release_date`, `vote_average`, `overview`, `poster_path`, runtime) 
+                VALUES (:id, :title, :releaseDate, :points, :movieDescription, :poster, :runtime)";
 
-            $conection->ExecuteNonQuery(
-                $query,
-                $params
-            );
+                $params = [];
+                $params['id']                   = $movie->getId();
+                $params['title']                = $movie->getTitle();
+                $params['releaseDate']          = $movie->getReleaseDate();
+                $params['points']               = $movie->getPoints();
+                $params['movieDescription']     = $movie->getDescription();
+                $params['poster']               = $movie->getPoster();
+                $params['runtime']              = $movie->getRuntime();
 
-            foreach ($movie->getGenres() as $value) {
-                if ($value instanceof Genre)
-                    MovieXGenreDAO::addGenreIdToMovieId($value->getId(), $movie->getId());
+                $conection->ExecuteNonQuery(
+                    $query,
+                    $params
+                );
+
+                foreach ($movie->getGenres() as $value) {
+                    if ($value instanceof Genre)
+                        MovieXGenreDAO::addGenreIdToMovieId($value->getId(), $movie->getId());
+                }
             }
+        } catch (PDOException $th) {
+            throw $th;
         }
     }
 }

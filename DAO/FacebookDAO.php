@@ -19,7 +19,6 @@ class FacebookDAO
             $this->fb = FacebookDAO::GetFacebookObject();
             $this->helper = FacebookDAO::GetRedirectLoginHelper($this->fb);
         } catch (Exception $ex) {
-
             throw $ex;
         }
     }
@@ -78,12 +77,10 @@ class FacebookDAO
                 $accessToken = $this->helper->getAccessToken();
         } catch (\Facebook\Exceptions\FacebookResponseException $e) {
             // When Graph returns an error
-            echo 'Graph returned an error: ' . $e->getMessage();
-            exit;
+            throw new Exception('Graph returned an error: ' . $e->getMessage(), 1);
         } catch (\Facebook\Exceptions\FacebookSDKException $e) {
             // When validation fails or other local issues
-            echo 'Facebook SDK returned an error: ' . $e->getMessage();
-            exit;
+            throw new Exception('Facebook SDK returned an error: ' . $e->getMessage(), 1);
         }
 
         if (!isset($accessToken)) {

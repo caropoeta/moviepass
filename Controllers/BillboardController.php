@@ -7,7 +7,8 @@ use DAO\GenreDAO;
 use DAO\MoviesXFunctionsDAO;
 
 use DAO\Session;
-use Models\ViewsHandler;
+use Controllers\ViewsController as ViewsHandler;
+use Exception;
 
 class BillboardController
 {
@@ -28,10 +29,16 @@ class BillboardController
             $genreWO = [];
 
         $currPage = $page;
-        $genres = GenreDAO::getGenres();
-        $movies = MoviesXFunctionsDAO::getMoviesFromFunctions($page, $name, $year, $genreW, $genreWO);
+        try {
+            $genres = GenreDAO::getGenres();
+            $movies = MoviesXFunctionsDAO::getMoviesFromFunctions($page, $name, $year, $genreW, $genreWO);
 
-        $currRole = Session::GetUserRole();
+            $currRole = Session::GetUserRole();
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
 
         ViewsHandler::BillboardMovies($currRole, $movies, $genres, $currPage, $name, $genreW, $genreWO, $year);
     }

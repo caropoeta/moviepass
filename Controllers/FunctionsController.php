@@ -7,8 +7,8 @@ use DAO\MovieXGenreDAO;
 use DAO\RoomDBDAO;
 use DAO\Session;
 use Models\Exceptions\ArrayException;
-use Models\PopupAlert;
-use Models\ViewsHandler;
+use Controllers\ViewsController as ViewsHandler;
+use Exception;
 
 class FunctionsController
 {
@@ -34,14 +34,28 @@ class FunctionsController
         $cin = RoomDBDAO::getCinemaByRoomId($roomId);
         $opt = $cin->getopeningTime();
         $cst = $cin->getclosingTime();
-        $functions = FunctionsDAO::getAllFromRoom($roomId);
+
+        try {
+            $functions = FunctionsDAO::getAllFromRoom($roomId);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
 
         ViewsHandler::FunctionList($opt, $cst, $roomId, $functions);
     }
 
     public static function Delete(int $id, int $roomid)
     {
-        FunctionsDAO::delete($id);
+        try {
+            FunctionsDAO::delete($id);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
         FunctionsController::List($roomid);
     }
 
@@ -50,7 +64,13 @@ class FunctionsController
         if ($page <= 0)
             $page = 1;
 
-        $movies = MovieXGenreDAO::getMovies($page);
+        try {
+            $movies = MovieXGenreDAO::getMovies($page);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
 
         ViewsHandler::MovieSelectAddFunction($time, $date, $roomId, $page, $movies);
     }
@@ -60,8 +80,14 @@ class FunctionsController
         if ($page <= 0)
             $page = 1;
 
-        $movies = MovieXGenreDAO::getMovies($page);
-        
+        try {
+            $movies = MovieXGenreDAO::getMovies($page);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
         ViewsHandler::MovieSelectUpdateFunction($time, $date, $roomId, $functionId, $page, $movies);
     }
 
@@ -70,8 +96,11 @@ class FunctionsController
         try {
             FunctionsDAO::update($time, $date, $roomId, $functionId, $movieId);
         } catch (ArrayException $EX) {
-            $alert = new PopupAlert($EX->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($EX->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
         FunctionsController::List($roomId);
@@ -82,8 +111,11 @@ class FunctionsController
         try {
             FunctionsDAO::add($time, $date, $roomId, $movieId);
         } catch (ArrayException $EX) {
-            $alert = new PopupAlert($EX->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($EX->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
         FunctionsController::List($roomId);

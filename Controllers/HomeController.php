@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use DAO\Session;
-use Models\ViewsHandler;
+use Controllers\ViewsController as ViewsHandler;
 
 class HomeController
 {
@@ -14,26 +14,11 @@ class HomeController
 
     public static function MainPage()
     {
-        if (Session::ValidateSession())
-            switch (Session::GetUserRole()) {
-                case ADMIN_ROLE_NAME:
-                    BillboardController::List();
-                    return;
+        if (Session::GetUserRole() == GUEST_ROLE_NAME) {
+            ViewsHandler::Main();
+            return;
+        }
 
-                case CLIENT_ROLE_NAME:
-                    BillboardController::List();
-                    return;
-
-                case GUEST_ROLE_NAME:
-                    BillboardController::List();
-                    return;
-
-                default:
-                    ViewsHandler::Main();
-                    return;
-            }
-
-        ViewsHandler::Main();
-        return;
+        BillboardController::List();
     }
 }
