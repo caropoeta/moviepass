@@ -34,12 +34,17 @@ class BillboardController
             $movies = MoviesXFunctionsDAO::getMoviesFromFunctions($page, $name, $year, $genreW, $genreWO);
 
             $currRole = Session::GetUserRole();
+
+            $movHasFreeSeats = [];
+            foreach ($movies as $value) {
+                $movHasFreeSeats[$value->getId()] = MoviesXFunctionsDAO::checkAviableSeatsForMovie($value->getId());
+            }
         } catch (Exception $th) {
             ViewsHandler::Show(array('Error processing request'));
             HomeController::MainPage();
             exit;
         }
 
-        ViewsHandler::BillboardMovies($currRole, $movies, $genres, $currPage, $name, $genreW, $genreWO, $year);
+        ViewsHandler::BillboardMovies($currRole, $movies, $genres, $currPage, $name, $genreW, $genreWO, $year, $movHasFreeSeats);
     }
 }

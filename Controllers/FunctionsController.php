@@ -8,6 +8,7 @@ use DAO\RoomDBDAO;
 use DAO\Session;
 use Models\Exceptions\ArrayException;
 use Controllers\ViewsController as ViewsHandler;
+use DAO\TicketDAO;
 use Exception;
 
 class FunctionsController
@@ -119,5 +120,14 @@ class FunctionsController
         }
 
         FunctionsController::List($roomId);
+    }
+
+    public static function GetFunctionStatistics(int $id)
+    { 
+        try {
+            echo TicketDAO::getStatisticsFromFunction($id);
+        } catch (Exception $th) {
+            echo 'Error';
+        }
     }
 }
