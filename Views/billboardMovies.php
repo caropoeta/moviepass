@@ -80,30 +80,44 @@
                         <th>Description</th>
                         <th>Genres</th>
                         <th>Movie Photo</th>
-                    </thead>
-                    <tbody>
+                        <?php if ($currRole == CLIENT_ROLE_NAME || $currRole == ADMIN_ROLE_NAME) { ?>
+                            <th></th>
                         <?php
-
-                        foreach ($movies as $movie) {
-                            if ($movie instanceof Movie) { ?>
-                                <tr>
-                                    <td><?php echo $movie->getTitle(); ?></td>
-                                    <td><?php echo $movie->getDescription(); ?></td>
-                                    <td><?php
-                                        foreach ($movie->getGenres() as $value) {
-                                            if ($value instanceof Genre)
-                                                echo $value->getDescription() . '<br>';
-                                        }
-                                        ?></td>
-                                    <td><?php if ($movie->getPoster() != null) {
-                                            echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
-                                        }
-                                        ?></td>
-                                </tr>
-                        <?php
-                            }
                         }
                         ?>
+                    </thead>
+                    <tbody>
+                        <form action="<?php echo FRONT_ROOT ?>Ticket/SelectFunction/" method="POST">
+                            <?php foreach ($movies as $movie) {
+                                if ($movie instanceof Movie) { ?>
+                                    <tr>
+                                        <td><?php echo $movie->getTitle(); ?></td>
+                                        <td><?php echo $movie->getDescription(); ?></td>
+                                        <td><?php
+                                            foreach ($movie->getGenres() as $value) {
+                                                if ($value instanceof Genre)
+                                                    echo $value->getDescription() . '<br>';
+                                            }
+                                            ?></td>
+                                        <td>
+                                            <?php if ($movie->getPoster() != null) {
+                                                echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
+                                            }
+                                            ?>
+                                        </td>
+                                        <?php if ($currRole == CLIENT_ROLE_NAME || $currRole == ADMIN_ROLE_NAME && $movHasFreeSeats[$movie->getId()]) { ?>
+                                            <td>
+                                                <button class="btn btn-primary mb-2" name="movieId" value="<?php echo $movie->getId(); ?>" type="submit">Buy a ticket</button>
+                                            </td>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tr>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </form>
                     </tbody>
                 </table>
             </div>
