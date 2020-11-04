@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use DAO\CinemaDBDAO;
+use DAO\GoogleQRDAO;
 use DAO\MovieDAO;
 use DAO\MoviesXFunctionsDAO;
 use DAO\Session;
@@ -65,6 +66,8 @@ class TicketController
 
             for ($i = 0; $i < $numberOfTickets; $i++)
                 TicketDAO::addTicket($functionId, Session::GetUserId());
+
+
         } catch (Exception $th) {
             ViewsController::Show(array('Error processing request'));
             HomeController::MainPage();
@@ -74,5 +77,11 @@ class TicketController
 
         $total = $data['price'] * $numberOfTickets;
         ViewsController::BuyResume($numberOfTickets, $data, $total, $mov->getId(), $mov->getTitle(), Session::GetUserRole());
+    }
+
+    public static function List ()
+    {
+        GoogleQRDAO::GetQrImgUrl('a');
+        # code...
     }
 }

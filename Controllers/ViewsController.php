@@ -61,7 +61,8 @@ abstract class ViewsController
         String $opt,
         string $cst,
         int $roomId,
-        array $functions
+        array $functions,
+        array $statistics
     ) {
         require_once(VIEWS_PATH . 'functionList.php');
     }
