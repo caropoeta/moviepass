@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Roxy",
+        "adress": "Santa Fe 1880",
+        "openingTime": "19",
+        "closingTime": "00",
+        "ticketValue": "300",
+        "capacity": "400",
+        "id": "1",
+        "delete": false
+    },
+    {
+        "name": "Tronador",
+        "adress": "San Martin 2020",
+        "openingTime": "19",
+        "closingTime": "23",
+        "ticketValue": "500",
+        "capacity": "400",
+        "id": "2",
+        "delete": false
+    },
+    {
+        "name": "Avenida",
+        "adress": "Entre Rios 1044",
+        "openingTime": "18",
+        "closingTime": "22.30",
+        "ticketValue": "280",
+        "capacity": "400",
+        "id": "3",
+        "delete": false
+    },
+    {
+        "name": "aaaaa",
+        "adress": "Belgrano1248",
+        "openingTime": "22.30",
+        "closingTime": "00.30",
+        "ticketValue": "200",
+        "capacity": "200",
+        "id": "9",
+        "delete": true
+    },
+    {
+        "name": "Atlas",
+        "adress": "Entre Rios 1044",
+        "openingTime": "22.30",
+        "closingTime": "00.30",
+        "ticketValue": "200",
+        "capacity": "200",
+        "id": "4",
+        "delete": true
+    },
+    {
+        "name": "Atlas1",
+        "adress": "San Martin 2028",
+        "openingTime": "22.30",
+        "closingTime": "00.30",
+        "ticketValue": "200",
+        "capacity": "200",
+        "id": "8",
+        "delete": false
+    },
+    {
+        "name": "Roxy11",
+        "adress": "AAAA",
+        "openingTime": "22",
+        "closingTime": "23",
+        "ticketValue": "222",
+        "capacity": "212",
+        "id": "42",
+        "delete": true
+    },
+    {
+        "name": "victoria",
+        "adress": "aa",
+        "openingTime": "20",
+        "closingTime": "22",
+        "ticketValue": "22",
+        "capacity": "22",
+        "id": "111",
+        "delete": true
+    },
+    {
+        "name": "lucas",
+        "adress": "aaaa",
+        "openingTime": "dd",
+        "closingTime": "11",
+        "ticketValue": "233",
+        "capacity": "2222",
+        "id": "44",
+        "delete": true
+    }
+]
