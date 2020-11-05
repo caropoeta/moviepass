@@ -3,6 +3,8 @@
 namespace Controllers;
 
 use DAO\CinemaDBDAO;
+use DAO\DiscountDAO;
+use DAO\GoogleQRDAO;
 use DAO\MovieDAO;
 use DAO\MoviesXFunctionsDAO;
 use DAO\Session;
@@ -44,15 +46,32 @@ class TicketController
         try {
             $data = TicketDAO::getFunctionRoomAndCinemaDataFromFunctionId($functionId);
             $maxTickets = TicketDAO::getMaxAviableTicketsFromFunction($functionId);
+            $datDisArray = DiscountDAO::GetDiscountAndMinTicketsFromToday();
+            $mov = MovieDAO::getMovieById($data['idMovie']);
         } catch (Exception $th) {
             ViewsController::Show(array('Error processing request'));
             HomeController::MainPage();
             exit;
         }
-        $mov = MovieDAO::getMovieById($data['idMovie']);
+
+        $discountMinTickets = $datDisArray['minTickets'];
+        $discountPercentaje = $datDisArray['percentage'];
 
         if ($mov != null)
-            ViewsController::ConfirmDetails($data, $mov->getId(), $mov->getTitle(), Session::GetUserRole(), $maxTickets);
+            ViewsController::ConfirmDetails(
+                $data,
+                $mov->getId(),
+                $mov->getTitle(),
+                Session::GetUserRole(),
+                $maxTickets,
+                $discountMinTickets,
+                $discountPercentaje
+            );
+    }
+
+    public static function SelectCreditCard(int $numberOfTickets, int $functionId)
+    {
+        # code...
     }
 
     public static function Buy(int $numberOfTickets, int $functionId)
@@ -74,5 +93,10 @@ class TicketController
 
         $total = $data['price'] * $numberOfTickets;
         ViewsController::BuyResume($numberOfTickets, $data, $total, $mov->getId(), $mov->getTitle(), Session::GetUserRole());
+    }
+
+    public static function List()
+    {
+        var_dump(TicketDAO::getTicketsFromUser(Session::GetUserId()));
     }
 }

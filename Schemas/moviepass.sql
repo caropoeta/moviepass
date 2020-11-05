@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2020 a las 02:12:19
+-- Tiempo de generación: 05-11-2020 a las 21:49:23
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -43,9 +43,50 @@ CREATE TABLE `cinemas` (
 --
 
 INSERT INTO `cinemas` (`idCinema`, `cinemaName`, `openingTime`, `closingTime`, `ticket_value`, `capacity`, `Cinemadelete`, `address`) VALUES
-(1, 'a', '03:00:00', '23:00:00', 150, 150, 0, 'a'),
+(1, 'Almendra', '03:00:00', '23:00:00', 150, 150, 0, 'a'),
 (2, 'Avenida 4', '01:22:00', '22:22:00', 150, 150, 0, 'Mdp'),
 (3, 'Avenida', '13:00:00', '19:57:00', 150, 150, 0, 'Mdp');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `creditcardinfo`
+--
+
+CREATE TABLE `creditcardinfo` (
+  `securityCode` int(11) NOT NULL,
+  `company` varchar(50) NOT NULL,
+  `expirationDate` date NOT NULL,
+  `fullName` varchar(50) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `discountpolicy`
+--
+
+CREATE TABLE `discountpolicy` (
+  `dayOfTheWeek` varchar(50) NOT NULL,
+  `percentage` float NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `minTickets` int(11) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `discountpolicy`
+--
+
+INSERT INTO `discountpolicy` (`dayOfTheWeek`, `percentage`, `name`, `minTickets`, `id`) VALUES
+('Saturday', 0, 'discountSaturday', 0, 1),
+('Sunday', 0, 'discountSunday', 0, 2),
+('Monday', 0, 'discountMonday', 0, 3),
+('Tuesday', 0.25, 'discountTuesday', 2, 4),
+('Wednesday', 0.25, 'discountWednesday', 2, 5),
+('Thursday', 0, 'discountThursday', 0, 6),
+('Friday', 0, 'discountFriday', 0, 7);
 
 -- --------------------------------------------------------
 
@@ -70,17 +111,17 @@ CREATE TABLE `functions` (
 
 INSERT INTO `functions` (`id`, `time`, `asistencia`, `idMovie`, `idRoom`, `deleted`, `finishTime`, `day`) VALUES
 (6, '07:48:00', 0, 635302, 1, 1, '09:45:54', '2020-10-29'),
-(7, '06:16:00', 0, 528085, 1, 0, '08:10:08', '2020-10-27'),
-(8, '04:49:00', 0, 413518, 1, 1, '06:49:55', '2020-09-30'),
+(7, '06:16:00', 0, 528085, 1, 0, '08:10:08', '2020-11-27'),
+(8, '04:49:00', 0, 413518, 1, 0, '06:49:55', '2020-09-30'),
 (9, '03:42:00', 0, 413518, 1, 1, '05:42:55', '2020-10-28'),
-(10, '02:31:00', 0, 556984, 4, 1, '04:41:55', '2020-10-27'),
+(10, '02:31:00', 0, 556984, 4, 0, '04:41:55', '2020-10-27'),
 (11, '15:37:00', 0, 413518, 1, 1, '17:37:55', '2020-10-29'),
 (12, '05:40:00', 0, 590223, 1, 1, '07:29:55', '2020-10-29'),
 (13, '07:26:00', 0, 556984, 1, 1, '09:36:55', '2020-10-27'),
-(14, '05:39:00', 0, 556984, 1, 0, '07:49:55', '2020-10-29'),
+(14, '05:39:00', 0, 556984, 1, 0, '07:49:55', '2020-10-31'),
 (15, '22:01:00', 0, 635302, 1, 1, '23:58:54', '2020-10-29'),
 (16, '22:58:00', 0, 635302, 1, 1, '00:55:54', '2020-10-29'),
-(17, '08:09:00', 0, 337401, 1, 0, '10:04:39', '2020-10-30');
+(17, '12:09:00', 0, 413518, 1, 0, '14:09:55', '2020-11-30');
 
 -- --------------------------------------------------------
 
@@ -196,6 +237,18 @@ INSERT INTO `movies` (`id`, `title`, `release_date`, `vote_average`, `overview`,
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `purchase`
+--
+
+CREATE TABLE `purchase` (
+  `amount` float NOT NULL,
+  `id` int(11) NOT NULL,
+  `numberOfTickets` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `roles`
 --
 
@@ -241,6 +294,20 @@ INSERT INTO `rooms` (`idRoom`, `roomName`, `capacity`, `idCinema`, `price`, `del
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tickets`
+--
+
+CREATE TABLE `tickets` (
+  `id` int(11) NOT NULL,
+  `idFunction` int(11) DEFAULT NULL,
+  `idUser` int(11) DEFAULT NULL,
+  `idPayment` int(11) DEFAULT NULL,
+  `seatNumber` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -260,8 +327,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_dni`, `user_email`, `user_birthday`, `user_role`, `deleted`) VALUES
-(1, 'admin', '$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 88888888, 'admin@localhost', '2020-10-15', 2, 1),
-(10, 'Graciela Astudillo', '$2y$10$JpI5UnPMxdd1GTVMyviEb.Ul/5GwtDec6f3DpMjwTYK3cikqnu8ES', 99999999999, 'astudillograciela@hotmail.com', '2020-10-29', 1, 0);
+(1, 'admin', '$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 9999999, 'admin@localhost', '2020-10-15', 2, 0),
+(12, 'Graciela Astudillo', '$2y$10$Dg0jp5OeJzzgex.RzNFXW.eJoryWNBZ.TgR5YcCpHEI7JIpbTDtwW', 9999998, 'astudillograciela@hotmail.com', '2020-10-31', 1, 0);
 
 --
 -- Índices para tablas volcadas
@@ -272,6 +339,18 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_dni`, `user_
 --
 ALTER TABLE `cinemas`
   ADD PRIMARY KEY (`idCinema`);
+
+--
+-- Indices de la tabla `creditcardinfo`
+--
+ALTER TABLE `creditcardinfo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `discountpolicy`
+--
+ALTER TABLE `discountpolicy`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `functions`
@@ -301,6 +380,12 @@ ALTER TABLE `movies`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `purchase`
+--
+ALTER TABLE `purchase`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
@@ -314,6 +399,15 @@ ALTER TABLE `rooms`
   ADD PRIMARY KEY (`idRoom`),
   ADD UNIQUE KEY `roomName` (`roomName`,`idCinema`) USING BTREE,
   ADD KEY `fk_idcinema` (`idCinema`);
+
+--
+-- Indices de la tabla `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tickets_idFunction` (`idFunction`),
+  ADD KEY `fk_tickets_idUser` (`idUser`),
+  ADD KEY `fk_tickets_idPayment` (`idPayment`);
 
 --
 -- Indices de la tabla `users`
@@ -336,6 +430,18 @@ ALTER TABLE `cinemas`
   MODIFY `idCinema` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de la tabla `creditcardinfo`
+--
+ALTER TABLE `creditcardinfo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `discountpolicy`
+--
+ALTER TABLE `discountpolicy`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de la tabla `functions`
 --
 ALTER TABLE `functions`
@@ -346,6 +452,12 @@ ALTER TABLE `functions`
 --
 ALTER TABLE `genres`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10771;
+
+--
+-- AUTO_INCREMENT de la tabla `purchase`
+--
+ALTER TABLE `purchase`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -360,10 +472,16 @@ ALTER TABLE `rooms`
   MODIFY `idRoom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
@@ -388,6 +506,14 @@ ALTER TABLE `genresxmovies`
 --
 ALTER TABLE `rooms`
   ADD CONSTRAINT `fk_idcinema` FOREIGN KEY (`idCinema`) REFERENCES `cinemas` (`idCinema`);
+
+--
+-- Filtros para la tabla `tickets`
+--
+ALTER TABLE `tickets`
+  ADD CONSTRAINT `fk_tickets_idFunction` FOREIGN KEY (`idFunction`) REFERENCES `functions` (`id`),
+  ADD CONSTRAINT `fk_tickets_idPayment` FOREIGN KEY (`idPayment`) REFERENCES `purchase` (`id`),
+  ADD CONSTRAINT `fk_tickets_idUser` FOREIGN KEY (`idUser`) REFERENCES `users` (`user_id`);
 
 --
 -- Filtros para la tabla `users`

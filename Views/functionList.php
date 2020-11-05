@@ -33,6 +33,7 @@ include('navbaradmin.php');
                 <th>Starting time</th>
                 <th>Finish time</th>
                 <th>Movie</th>
+                <th>Statistics</th>
                 <th>Delete</th>
                 <th>Update</th>
             </tr>
@@ -47,6 +48,14 @@ include('navbaradmin.php');
                         <td><?php echo $function->getTime() ?></td>
                         <td><?php echo $function->getfinishTime() ?></td>
                         <td><?php echo $function->getMovie()->getTitle() ?></td>
+                        <td>
+                            <div class="col-auto">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#statistics<?php echo $function->getidFunction() ?>">
+                                    Statistics
+                                </button>
+                            </div>
+                        </td>
                         <td>
                             <form action=<?php echo FRONT_ROOT . 'Functions/Delete' ?> method="POST">
                                 <input type="hidden" name="id" value=<?php echo $function->getidFunction() ?>>
@@ -64,7 +73,7 @@ include('navbaradmin.php');
                         </td>
                     </tr>
 
-                    <!-- Modal -->
+                    <!-- Modal Update -->
                     <div class="modal fade bd-example-modal-lg" id="update<?php echo $function->getidFunction() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -87,6 +96,31 @@ include('navbaradmin.php');
                                         <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="botons-chico" type="submit" name="funid" value="<?php echo $function->getidFunction() ?>">Update</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal statistics -->
+                    <div class="modal fade bd-example-modal-lg" id="statistics<?php echo $function->getidFunction() ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Function statistics</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label> Tickets sold: </label>
+                                    <label> <?php echo $statistics[$function->getidFunction()]['asists'] ?> /</label>
+                                    <label> <?php echo $statistics[$function->getidFunction()]['capacity'] ?> </label>
+                                    <br>
+                                    <label> Money recolected: </label>
+                                    <label> <?php echo '$' . $statistics[$function->getidFunction()]['moneyRecolected'] ?> </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>

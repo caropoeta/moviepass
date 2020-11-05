@@ -9,14 +9,14 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
     <table class="table">
         <thead>
             <tr>
-                <th>Cinema's name</th>
-                <th>Cinema's address</th>
-                <th>Movie's name</th>
+                <th>Cinema name</th>
+                <th>Cinema adress</th>
+                <th>Movie name</th>
                 <th>Function day</th>
-                <th>Starting time</th>
-                <th>Finish time</th>
-                <th>Room's name</th>
-                <th>Price</th>
+                <th>Function starting time</th>
+                <th>Function finish time</th>
+                <th>Room name</th>
+                <th>Room price</th>
             </tr>
         </thead>
         <tbody>
@@ -33,21 +33,31 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
         </tbody>
     </table>
 
-    <script>
-        function getPrice() {
-            var n1 = Number(document.getElementById('price').value);
-            var n2 = Number(document.getElementById('numberOfTickets').value);
-            document.getElementById('priceHolder').value = n1 * n2;
-        }
-    </script>
-    <div class="login-form">
     <input id="price" type="hidden" value="<?php echo $data['price'] ?>">
-    <label>Total price: $</label><input type="number" readonly id="priceHolder" value="<?php echo $data['price'] ?>"></input>
+    <input id="discountMinTickets" type="hidden" value="<?php echo $discountMinTickets ?>">
+    <input id="discountPercentaje" type="hidden" value="<?php echo $discountPercentaje ?>">
+
+    <label>Total price: $</label><input type="number" readonly id="priceHolder"></input>
     <br>
-    <form action="<?php echo FRONT_ROOT ?>Ticket/Buy" method="POST">
+    <form action="<?php echo FRONT_ROOT ?>Ticket/SelectCreditCard" method="POST">
         <label>Tickets to buy: </label><input id="numberOfTickets" type="number" min="1" max="<?php echo $maxTickets ?>" value="1" name="TicketsToBuy" onchange="getPrice()">
         <br>
-        <button class="botons-chico"type="submit" name="funid" value="<?php echo $data['id'] ?>">Buy</button>
+        <button type="submit" name="funid" value="<?php echo $data['id'] ?>">Select credit card</button>
     </form>
-    </div>
+
+    <script>
+        function getPrice() {
+            var price = Number(document.getElementById('price').value);
+            var numberOfTickets = Number(document.getElementById('numberOfTickets').value);
+            var discountMinTickets = Number(document.getElementById('discountMinTickets').value);
+            var discountPercentaje = Number(document.getElementById('discountPercentaje').value);
+
+            if (numberOfTickets >= discountMinTickets)
+                price *= 1 - discountPercentaje;
+
+            document.getElementById('priceHolder').value = price * numberOfTickets;
+        }
+
+        getPrice();
+    </script>
 </div>

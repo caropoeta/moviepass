@@ -2,20 +2,18 @@
 
 namespace DAO;
 
+use Models\Ticket;
 use PDOException;
 
 class TicketDAO
 {
     public static function getStatisticsFromMovie(int $idMov, String $strPeriod, String $endPeriod)
     {
-    }
-
-    public static function getStatisticsFromFunction(int $idFun)
-    {
         $query = "
-        select capacity, asists, asists * price as moneyRecolected
+        select sum(capacity) as totCapacity, sum(moneyRecolected) as totMoneyRecolected, sum(asists) as totAsists from
+        (select capacity, ifnull(asists, 0) as asists, ifnull(asists, 0) * price as moneyRecolected, functions.day
         from functions 
-        inner join (
+        left join (
 	    select idFunction , count(*) as asists from tickets group by tickets.idFunction
         ) as asistsPerFunction
         on asistsPerFunction.idFunction = functions.id
@@ -23,14 +21,15 @@ class TicketDAO
 	    select idRoom, price, capacity from rooms group by idRoom
         ) as SeatsPerFunction
         on SeatsPerFunction.idRoom = functions.idRoom
-        where (capacity - asists) > 0
-        and deleted = 0
-        and day > CAST(CURRENT_TIMESTAMP AS DATE)
-        and functions.id = :idfunctions
+        where functions.idMovie = :idMov" .
+        (($strPeriod != null) && ($endPeriod != null)) ? " and functions.day between :strPeriod and :endPeriod" : ''
+        . ") as moviedata
         ";
 
         $params = [];
-        $params['idfunctions'] = $idFun;
+        $params['idMov'] = $idMov;
+        $params['strPeriod'] = $strPeriod;
+        $params['endPeriod'] = $endPeriod;
 
         try {
             $conection = Connection::GetInstance();
@@ -42,11 +41,70 @@ class TicketDAO
             throw $ex;
         }
 
-        var_dump($response);
+        if ($response != null && isset($response[0]))
+            return $response[0];
+    }
+
+    public static function getStatisticsFromFunction(int $idFun)
+    {
+        $query = "
+        select capacity, ifnull(asists, 0) as asists, ifnull(asists, 0) * price as moneyRecolected
+        from functions 
+        left join (
+	    select idFunction , count(*) as asists from tickets group by tickets.idFunction
+        ) as asistsPerFunction
+        on asistsPerFunction.idFunction = functions.id
+        inner join (
+	    select idRoom, price, capacity from rooms group by idRoom
+        ) as SeatsPerFunction
+        on SeatsPerFunction.idRoom = functions.idRoom
+        where functions.id = :idfunction
+        ";
+
+        $params = [];
+        $params['idfunction'] = $idFun;
+
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute(
+                $query,
+                $params
+            );
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
+
+        if ($response != null && isset($response[0]))
+            return $response[0];
     }
 
     public static function getTicketsFromUser(int $idUser)
     {
+        $query = " 
+        select * 
+        from tickets
+        where idUser = :idUser";
+        $params = [];
+        $params['idUser'] = $idUser;
+
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute(
+                $query,
+                $params
+            );
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
+
+        return array_map(function(Array $obj){
+            $tickToReturn = new Ticket();
+            $tickToReturn->setQr(GoogleQRDAO::GetQrImgUrl($obj['id']));
+            $tickToReturn->setId($obj['id']);
+            $tickToReturn->setFunctionId($obj['idFunction']);
+            $tickToReturn->setSeat($obj['seatNumber']);
+            return $tickToReturn;
+        }, $response);
     }
 
     public static function addTicket(int $idFunction, int $idUser)

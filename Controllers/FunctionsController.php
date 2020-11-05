@@ -38,13 +38,19 @@ class FunctionsController
 
         try {
             $functions = FunctionsDAO::getAllFromRoom($roomId);
+
+            $statistics = [];
+            foreach ($functions as $value) {
+                $statistics[$value->getidFunction()] = TicketDAO::getStatisticsFromFunction($value->getidFunction());
+            }
+
         } catch (Exception $th) {
             ViewsHandler::Show(array('Error processing request'));
             HomeController::MainPage();
             exit;
         }
 
-        ViewsHandler::FunctionList($opt, $cst, $roomId, $functions);
+        ViewsHandler::FunctionList($opt, $cst, $roomId, $functions, $statistics);
     }
 
     public static function Delete(int $id, int $roomid)
@@ -120,14 +126,5 @@ class FunctionsController
         }
 
         FunctionsController::List($roomId);
-    }
-
-    public static function GetFunctionStatistics(int $id)
-    { 
-        try {
-            echo TicketDAO::getStatisticsFromFunction($id);
-        } catch (Exception $th) {
-            echo 'Error';
-        }
     }
 }
