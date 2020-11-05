@@ -7,34 +7,18 @@
       <li><a href="<?php echo FRONT_ROOT ?>Billboard/List"> Billboard </a></li>
       <li><a href="<?php echo FRONT_ROOT ?>Users/List">Users</a></li>
       <li><a href="<?php echo FRONT_ROOT ?>Cinema">Cinemas</a></li>
-      
-      <form method="POST">
-      <li>
-      <button 
-              formaction="<?php echo FRONT_ROOT ?>Session/Index" 
-              type="submit" 
-              name="action" 
-              value="edit"
-              > Edit account information </button>
-      </li>
-      <li>
-      <button 
-              formaction="<?php echo FRONT_ROOT ?>Ticket/List" 
-              type="submit"
-              >Ticket List</button>
-      </li>
-      </form>
-       
-      <li><a href="<?php echo FRONT_ROOT ?>Session/Index">Edit </a></li>
       <li class="nav-item dropdown">
         <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Movies
-        </a>
+          Movies </a>
         <div class="dropdown-menu" style="background-color: #a5a4a4" aria-labelledby="navbarDropdown">
           <a class="dropdown-item"href="<?php echo FRONT_ROOT ?>Api/List">API</a>
           <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Movies/List">Saved Movies</a>
         </div>
       </li>
       <li><a href="<?php echo FRONT_ROOT ?>Session/Logout">Logout</a></li>
+      <form method="POST">
+      <li><button formaction="<?php echo FRONT_ROOT ?>Session/Index" type="submit" name="action" value="edit"> Edit</button></li>
+      <li><button formaction="<?php echo FRONT_ROOT ?>Ticket/List" type="submit">Ticket List</button></li>
+      </form>
     </ul>
   </nav>
