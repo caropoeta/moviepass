@@ -10,79 +10,68 @@
 
 
 <section id="listado" class="mb-5">
-     <h2 class="title-secondary">Movie List From Api</h2>
      <div class="container-fluid">
-
+          <h2 class="fuente4  text-center">Movie List From Api</h2>
           <br>
-          <div>
-               <div class="form-group-movies">
-                    <h3>Choose an option to filter</h3>
-                    <br>
-                    <div class="container-movies">
-                         <small style="color:black;">
-                              *Search either by name or date and genres.
-                         </small>
+          <div class="col-auto">
+               <small class="text-muted">
+                    *Search either by name or date and genres.
+               </small>
 
-                         <form method="POST">
-                              <div>
-                                   <div class="form-group">
-                                        <input type="text" class="form-control" name="name" placeholder="Enter movie name" value="<?php echo $name ?>">
-                                   </div>
-
-                                   <div class="form-check">
-                                        <small style="color:black">
-                                             *Search with genres.
-                                        </small>
-                                        <br>
-                                        <input type='hidden' name='genre-with' value="[]" />
-                                        <?php foreach ($genres as $value) {
-                                             if ($value instanceof Genre) {
-                                        ?>
-                                                  <input <?php if (in_array($value->getId(), $genreW)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-with[]" value="<?php echo $value->getId() ?>">
-                                                  <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
-                                        <?php
-                                             }
-                                        } ?>
-                                   </div>
-                                   <br>
-                                   <div class="form-check">
-                                        <small style="color:black">
-                                        *Search without genres.
-                                   </small>
-                                        <br>
-                                        <input type='hidden' name='genre-without' value="[]" />
-                                        <?php foreach ($genres as $value) {
-                                             if ($value instanceof Genre) {
-                                        ?>
-                                                  <input <?php if (in_array($value->getId(), $genreWO)) echo 'checked' ?> type="checkbox" id="gnrO<?php echo $value->getId() ?>" name="genre-without[]" value="<?php echo $value->getId() ?>">
-                                                  <label for="gnrO<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
-                                        <?php
-                                             }
-                                        } ?>
-                                   </div>
-                                   <br>
-                                   <div class="form-group">
-                                        <small style="color:black">
-                                             *Search by year.
-                                        </small style="color:black">
-                                        <input min="0000" max="9999" type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
-                                   </div>
-
-                                   <button class="botons" formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>
-                              </div>
-                              <hr>
-                    </div>
-               </div>
-               <div>
-                    <br>
-                    
+               <form method="POST">
                     <div>
-                         <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+                         <div class="form-group">
+                              <input style="width:25%" type="text" class="form-control" name="name" placeholder="Enter movie name" value="<?php echo $name ?>">
+                         </div>
+
+                         <div class="form-check">
+                              <small class="text-muted">
+                                   *Search with genres.
+                              </small>
+                              <br>
+                              <input type='hidden' name='genre-with' value="[]" />
+                              <?php foreach ($genres as $value) {
+                                   if ($value instanceof Genre) {
+                              ?>
+                                        <input <?php if (in_array($value->getId(), $genreW)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnr<?php echo $value->getId() ?>" name="genre-with[]" value="<?php echo $value->getId() ?>">
+                                        <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
+                              <?php
+                                   }
+                              } ?>
+                         </div>
+                         <br>
+                         <div class="form-check">
+                              <small class="text-muted">
+
+                                   *Search without genres.
+
+                              </small>
+                              <br>
+                              <input type='hidden' name='genre-without' value="[]" />
+                              <?php foreach ($genres as $value) {
+                                   if ($value instanceof Genre) {
+                              ?>
+                                        <input <?php if (in_array($value->getId(), $genreWO)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnrO<?php echo $value->getId() ?>" name="genre-without[]" value="<?php echo $value->getId() ?>">
+                                        <label class="form-check-label" for="gnrO<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
+                              <?php
+                                   }
+                              } ?>
+                         </div>
+                         <br>
+                         <div class="form-group">
+                              <small class="text-muted">
+                                   *Search by year.
+                              </small>
+                              <input min="0000" max="9999" style="width:10%" type="number" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
+                         </div>
+
+                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Api/List/" name="page" value="1" type="submit">Search</button>
                     </div>
-                    <div>
-                         <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
+                    <hr>
+                    <div class="align-items-center">
+                         <button class="btn btn-primary mb-2 " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
+                         <button class="btn btn-primary mb-2  " formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
                     </div>
-               </div>
                </form>
           </div>
           <div class=col-auto>
@@ -111,7 +100,7 @@
                                                        }
                                                        ?></td>
                                                   <td><?php if ($movie->getPoster() != null) {
-                                                            echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="100" height="147">';
+                                                            echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
                                                        } ?></td>
                                                   <td>
                                                        <div class="col-auto">
@@ -129,7 +118,7 @@
                               </tbody>
                          </table>
 
-                         <button class="botons-chico-gris" formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
+                         <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/Add" type="submit">Add</button>
                     </form>
                </div>
           </div>

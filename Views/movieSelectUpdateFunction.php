@@ -1,7 +1,6 @@
 <?php
 include('navbaradmin.php');
 
-use DAO\MovieDAO;
 use Models\Genre;
 use Models\Movie;
 ?>
@@ -13,8 +12,8 @@ use Models\Movie;
             <input type="hidden" name="day" value="<?php echo $date ?>">
             <input type="hidden" name="room" value="<?php echo $roomId ?>">
             <input type="hidden" name="function" value="<?php echo $functionId ?>">
-            <button class="botons" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" type="submit" name="page" value="<?php echo $page - 1 ?>">Back Page</button>
-            <button class="botons" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" type="submit" name="page" value="<?php echo $page + 1 ?>">Next Page</button>
+            <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" type="submit" name="page" value="<?php echo $page - 1 ?>">Back Page</button>
+            <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" type="submit" name="page" value="<?php echo $page + 1 ?>">Next Page</button>
         </div>
     </form>
 
@@ -52,9 +51,7 @@ use Models\Movie;
                                         } ?></td>
                                     <td>
                                         <div class="col-auto">
-                                            <?php if (!MovieDAO::checkMovieDeletedById($movie->getId())) { ?>
-                                                <button type="submit" class="btn btn-primary mb-2" id="mov<?php echo $movie->getId() ?>" name="mov" value="<?php echo $movie->getId() ?>">
-                                                <?php } ?>
+                                            <button type="submit" class="btn btn-primary mb-2" id="mov<?php echo $movie->getId() ?>" name="mov" value="<?php echo $movie->getId() ?>">
                                         </div>
                                     </td>
                                 </tr>

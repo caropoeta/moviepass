@@ -6,7 +6,7 @@ use Models\UserRole; ?>
 <br>
 <br>
 <br>
-<h2 class="title-secondary">Edit Account Information</h2>
+<h2 class=" text-center fuente4">Edit Account Information</h2>
 <div class="user_add_div">
     <div class="container-fluid">
         <form action="<?php echo FRONT_ROOT ?>Session/Edit" method="POST">
@@ -50,6 +50,9 @@ use Models\UserRole; ?>
                 <button class="btn btn-primary offset-6 btn-md active" type="submit">Enviar</button>
             </div>
             <br>
+        </form>
+        <form action="<?php echo FRONT_ROOT ?>Home" method="POST">
+                <button class="btn btn-primary offset-6 btn-md active" type="submit">Home</button>
         </form>
     </div>
 </div>

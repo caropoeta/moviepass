@@ -1,44 +1,37 @@
 <main class="d-flex  justify-content-center ">
    <div class="content">
     <header class="text-center">
-        <h2 class="title-secondary">Cinema to modify</h2>
+        <h2 class="fuente4 text-center">Cinema to modify</h2>
     </header>
-    <div class="login-form">
+    <div class="login-form bg-dark-alpha p-5 bg-light">
         <section>
             <br>
             <div class="form-group">
 
                 <form action="<?php echo FRONT_ROOT ?>Cinema/UpdateCinema" method="POST">
-                    
+                    <div class="form-group">
                         <br>
-                        <label>ID:</label>
-                        <input type="text" name="id"  value="<?php echo $cinemaFound->getidCinema() ?>"  required class="form-group"readonly="readonly">
+                        <input type="text" name="id"  value="<?php echo $cinemaFound->getidCinema() ?>"  required class="form-control"readonly="readonly">
                         <br>
-                        <label>Name:</label>
-                        <input type="text" name="name" value="<?php echo $cinemaFound->getnameCinema() ?>" required class="form-group">
+                        <input type="text" name="name" value="<?php echo $cinemaFound->getnameCinema() ?>" required class="form-control">
                         <br>
-                        <label>Address:</label>
-                        <input type="text" name="adress" value="<?php echo $cinemaFound->getaddress() ?>" required class="form-group">
+                        <input type="text" name="adress" value="<?php echo $cinemaFound->getaddress() ?>" required class="form-control">
                         <br>
-                        <label>Opening Time:</label>
-                        <input type="text" name="openingTime" value="<?php echo $cinemaFound->getopeningTime() ?>"  required class="form-group">
+                        <input type="text" name="openingTime" value="<?php echo $cinemaFound->getopeningTime() ?>"  required class="form-control">
                         <br>
-                        <label>Closing Time:</label>
-                        <input type="text" name="closingTime" value="<?php echo $cinemaFound->getclosingTime()?>" required class="form-group">
+                        <input type="text" name="closingTime" value="<?php echo $cinemaFound->getclosingTime()?>" required class="form-control">
                         <br>
-                        <label>Ticket Value:</label>
-                        <input type="text" name="ticketValue" value="<?php echo $cinemaFound->getticketValue() ?>" required class="form-group">
+                        <input type="text" name="ticketValue" value="<?php echo $cinemaFound->getticketValue() ?>" required class="form-control">
                         <br>
-                        <label>Capacity:</label>
-                        <input type="text" name="capacity" value="<?php echo $cinemaFound->getcapacity() ?>" required class="form-group">
+                        <input type="text" name="capacity" value="<?php echo $cinemaFound->getcapacity() ?>" required class="form-control">
                         <br>
-                        <button type="submit" class="botons">Modify Cinema</button>  
-                    
+                        <button type="submit" class="btn btn-primary offset-4">Modify Cinema</button>  
+                    </div>
                 </form>
 
                 <form method="POST">
                   <div class="fuente4 text-center">
-                      <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="botons" type="submit">Back</button>
+                      <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-secondary" type="submit">Back</button>
                   </div>
               </form>
           </div>
