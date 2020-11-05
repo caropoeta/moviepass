@@ -185,6 +185,20 @@ body{
   font-size: 16px;
   cursor: pointer;
 }
+.botons-nav{
+  width: 100%;
+  background-color: #a5a4a4;
+  border: none;
+  padding: 20px;
+  color:rgb(226,226,226);
+  margin: 3px 0;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing:4px;
+  margin-left: -28px;
+ 
+}
 
 .options{
   width: 100%;
