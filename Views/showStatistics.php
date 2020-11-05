@@ -25,6 +25,7 @@ include ('navbaradmin.php');
 
 <main class="d-flex  justify-content-center ">
 	<div class="content">
+		<h2 class="title-secondary">Statistics </h2>
 		<header class="text-center">
 			<div class="p-2 text-center">
 				<form method="POST">
@@ -48,59 +49,56 @@ if ($stats == false) {
 } else {
     ?>
   
-			<h2 class="fuente4 text-center">Statistics </h2>
+			
 			<h3 class="p-3 mb-2 bg-dark text-white">from <?php echo $stats->getStartDate(); ?> to   <?php echo $stats->getFinishDate(); ?>  </h3>
 			<br>
 		</header>
 		<div class="table-responsive">
 			<table class="table">
-				<tbody class="table-hover">
+				<thead>
+					<th>Cinema</th>
+					<th>Sold Tickets</th>
+					<th>Unsold Tickets</th>
+					<th>Cash Register</th>
+				</thead>
+				<tbody>
 					<tr>
 						<td>
-							<div class="card text-white  bg-info mb-3"
-								style="max-width: 18rem;">
-								<div class="card-header">Cinema</div>
+							<div class="card text-white  bg-info mb-3">
+								
 								<div class="card-body">
-									<h1 class="card-text"><?php echo $stats->getCinemaName();?></h1>
+									<h1><?php echo $stats->getCinemaName();?></h1>
 								</div>
 							</div>
 
 						</td>
 
 						<td>
-							<div class="card text-white bg-success mb-3"
-								style="max-width: 18rem;">
-								<div class="card-header">Sold tickets</div>
+							<div class="card text-white bg-success mb-3">
+								
 								<div class="card-body">
-									<h1 class="card-text"><?php echo $stats->getTicketsSold();?></h1>
+									<h1><?php echo $stats->getTicketsSold();?></h1>
 								</div>
 							</div>
 
 						</td>
 
 						<td>
-							<div class="card text-white bg-danger mb-3"
-								style="max-width: 18rem;">
-								<div class="card-header">Unsold tickets</div>
+							<div class="card text-white bg-danger mb-3">
+								
 								<div class="card-body">
-									<h1 class="card-text"><?php echo $stats->getUnsoldTickets();?></h1>
+									<h1><?php echo $stats->getUnsoldTickets();?></h1>
 								</div>
 							</div>
 
 						</td>
-					</tr>
-					<tr>
-						<td></td>
 						<td>
-							<div class="card text-white bg-primary mb-3"
-								style="max-width: 18rem;">
-								<div class="card-header">Revenue</div>
+							<div class="card text-white bg-primary mb-3">
 								<div class="card-body">
-									<h1 class="card-text">$<?php echo $stats->getRevenue();?></h1>
+									<h1 >$<?php echo $stats->getRevenue();?></h1>
 								</div>
 							</div>
 						</td>
-						<td></td>
 					</tr>
 				</tbody>
 			</table>
