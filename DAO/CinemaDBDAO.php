@@ -199,7 +199,7 @@ class CinemaDBDAO
         }
     }
 
-    public function getTicketsSoldByCinemaId($startDate, $finishDate, $idCinema)  
+    public function getStatisticsByCinemaId($startDate, $finishDate, $idCinema)  
     {
        
         $sql = "SELECT c.cinemaName,SUM(f.asistencia) as soldTickets, " .

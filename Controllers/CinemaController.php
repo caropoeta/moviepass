@@ -157,7 +157,7 @@ class CinemaController
     public function ShowStatistics($cinemaId, $startDate, $finishDate)
     {
         $CinemaDBDAO = new CinemaDBDAO();
-        $stats = $CinemaDBDAO->getTicketsSoldByCinemaId($cinemaId, $startDate, $finishDate);
+        $stats = $CinemaDBDAO->getStatisticsByCinemaId($cinemaId, $startDate, $finishDate);
         require_once (VIEWS_PATH . 'showStatistics.php');
     }
 }
