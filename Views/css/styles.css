@@ -392,7 +392,7 @@ td .descriptions{
 .container-movies{
   column-rule-style: solid;
   column-count: 4;
-  width: 60%;
+  width: 90%;
   margin:auto; 
 }
 

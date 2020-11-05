@@ -51,6 +51,9 @@ use Models\UserRole; ?>
             </div>
             <br>
         </form>
+        <form action="<?php echo FRONT_ROOT ?>Home" method="POST">
+                <button class="btn btn-primary offset-6 btn-md active" type="submit">Home</button>
+        </form>
     </div>
 </div>
 
