@@ -51,7 +51,7 @@ use Models\Movie;
                                     <td>
                                         <div class="col-auto">
                                             <?php if (!MovieDAO::checkMovieDeletedById($movie->getId())) { ?>
-                                                <button type="submit" class="btn btn-primary mb-2" id="mov<?php echo $movie->getId() ?>" name="mov" value="<?php echo $movie->getId() ?>">
+                                                <button type="submit" class="botons" id="mov<?php echo $movie->getId() ?>" name="mov" value="<?php echo $movie->getId() ?>">
                                                 <?php } ?>
                                         </div>
                                     </td>

@@ -15,10 +15,10 @@
             <div>
                 <h2>Search Users</h2>
                 <br>
-                <div class="form-group">
+                <div class="form-group" style="margin:auto">
                     <br>
                     <form action="<?php echo FRONT_ROOT ?>Users/List" method="POST">
-
+                        
                         <input type="text" class="form-group" name="name" placeholder="Enter user name">
 
                         <input type="email" class="form-group" name="email" placeholder="Enter user email">
@@ -43,23 +43,26 @@
                 </button>
             </div>
 
-
+            <hr>
 
             <h2>Users</h2>
             <?php foreach ($users as $user) {
                 if ($user instanceof UserModel) { ?>
                     <div class>
                         <br>
+
                         <form>
                             <label><?php echo $user->getName(); ?>
                             </label>
                             <br>
+                            
                             <?php if ($user->getId() != $_SESSION['current_user']->getId()) { ?>
-                                <button type="button" class="botons-chico" data-toggle="modal" data-target="#edituser"value="<?php echo '#usuario' . $user->getId(); ?>">
-                                   Edit
-                                </button>
-                                <form method="POST">
-                                    <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Users/Delete" type="submit" id="edituser" value="<?php echo $user->getId(); ?>">Delete</button>
+                                <button type="button" class="botons-chico" data-toggle="modal" data-target="<?php echo '#usuario' . $user->getId(); ?>">
+                                        Edit
+                                    </button>
+                                    <form method="POST">
+                                        <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Users/Delete" type="submit" name="id" value="<?php echo $user->getId(); ?>">Delete</button>
+                                    <hr>
                                 </form>
                                 <br>
                                 <hr>
@@ -101,13 +104,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
-                    <button type="button" class="botons.chico">Save changes</button>
+                    <button formaction="<?php echo FRONT_ROOT ?>Users/Add" class="botons-chico" type="submit">Add</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="edituser" aria-hidden="true">
+    <div class="modal fade" id="<?php echo 'usuario' . $user->getId(); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">>
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,14 +147,12 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button formaction="<?php echo FRONT_ROOT ?>Users/Edit" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
+                    <button formaction="<?php echo FRONT_ROOT ?>Users/Edit" class="botons-chico" type="submit" name="id" value="<?php echo $user->getId() ?>">Edit</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
 
 </section>

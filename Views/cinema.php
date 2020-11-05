@@ -9,7 +9,7 @@
             <div class="form-group">
 
                 <form action="<?php echo FRONT_ROOT ?>Cinema/UpdateCinema" method="POST">
-                    <div class="form-group">
+                    
                         <br>
                         <label>ID:</label>
                         <input type="text" name="id"  value="<?php echo $cinemaFound->getidCinema() ?>"  required class="form-group"readonly="readonly">
@@ -33,7 +33,7 @@
                         <input type="text" name="capacity" value="<?php echo $cinemaFound->getcapacity() ?>" required class="form-group">
                         <br>
                         <button type="submit" class="botons">Modify Cinema</button>  
-                    </div>
+                    
                 </form>
 
                 <form method="POST">

@@ -9,14 +9,14 @@ include('navbaradmin.php');
 <div class="p-2 text-center">
   <table class="table">
     <thead>
-      <tr>
+      
         <th>Name</th>
         <th>Capacity</th>
         <th>Price</th>
         <th>Functions</th>
         <th>Update</th>
         <th>Delete</th>
-      </tr>
+      
     </thead>
     <tbody>
       <?php

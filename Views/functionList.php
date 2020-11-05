@@ -83,8 +83,8 @@ include('navbaradmin.php');
                                         <input type="hidden" name="roomid" value="<?php echo $roomId ?>">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="btn btn-primary offset-6 btn-md active" type="submit" name="funid" value="<?php echo $function->getidFunction() ?>">Update</button>
+                                        <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
+                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="botons-chico" type="submit" name="funid" value="<?php echo $function->getidFunction() ?>">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -123,8 +123,8 @@ include('navbaradmin.php');
                     <br>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $roomId ?>">Add</button>
+                    <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
+                    <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" class="botons-chico" type="submit" name="id" value="<?php echo $roomId ?>">Add</button>
                 </div>
             </form>
         </div>

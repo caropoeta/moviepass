@@ -17,12 +17,9 @@ include('navbaradmin.php');
   <div>
     <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="botons-chico" id="back-button" type="submit" name="action" value="register"> Back </button>
   </div>
-  <div class="table-responsive">
-    <table id="table-cinemas">
+  <div class="p-2 text-center" >
+    <table class="table">
       <thead>
-
-
-        <tr>
           <th>Id</th>
           <th>Name</th>
           <th>Address</th>
@@ -34,7 +31,7 @@ include('navbaradmin.php');
           <th>Modify</th>
           <th>Delete</th>
 
-        </tr>
+        
       </thead>
       <tbody class="table-hover">
 

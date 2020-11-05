@@ -1,5 +1,5 @@
 *{
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Josefin Sans', sans-serif !important;
   margin:0px;
   padding:0px;
   box-sizing: border-box;
@@ -43,10 +43,11 @@ a {
 }
 
 a:hover, a:active, a:focus {
-  color: #db5555;
-  outline: none;
-  text-decoration: none;
+  color: #db5555 !important;
+  outline: none !important;
+  text-decoration: none !important;
 }
+
 body{
   background-image: url("../img/fondo.jpg");
   background-size: 100%;
@@ -143,7 +144,8 @@ body{
 }
 
 .form-group{
-  width: 100%;
+  width: 90%;
+  margin-bottom: auto;
   background: white;
   padding: 10px;
   border-radius: 4px;
@@ -152,6 +154,22 @@ body{
   font-size: 18px;
 }
 
+.form-group-movies{
+  width: 80%;
+  color:black;
+  margin:auto;
+  background: white;
+  background-size: auto;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 5px solid black;
+  font-size: 18px;
+}
+
+.form-group-movies label{
+  color: grey;
+}
 .form-group input{
   background: white;
 
@@ -189,22 +207,18 @@ body{
   cursor: pointer;
 }
 
-
-.modal{
-  justify-content: center;
-  align-items: center;
-  position:absolute;
-  top:0;
-  left:0;
-  display: none;
-  background-color: white;
-  transition: all 500ms ease;
-  opacity: 0;
-  visibility: hidden;
-}
-#boton-edit :checked ~ .modal{
-  opacity: 1;
-  visibility: visible;
+.botons-chico-gris{
+  width: 25%;
+  background-color: #a5a4a4;
+  border: none;
+  padding: 12px;
+  color: #fff;
+  margin: 16px 0;
+  float:right;
+  margin: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid white;
 }
 
 .contenedor{
@@ -271,10 +285,10 @@ body{
 .table th{
   font-size: 20px;
   font-style: inherit;
-  background-color: #db5555;
+  background-color: #a5a4a4;
   height: 40px;
   
-  border: 1px solid #db5555;
+  border: 1px solid #727070;
 }
 th, td {
   width: 25%;
@@ -288,22 +302,24 @@ td .descriptions{
   text-align: justify;
 }
 
-#izq{
-  float: left;
+#izq-boton{
+  float: left !important;
   width: 10%;
   margin-left: 40px;
   color: #db5555;
   background-color: #ccc;
   border: 1px solid white;
+  cursor: pointer;
 }
 
-#der{
-  float: right;
+ #der-boton{
+  float: right !important;
   width: 10%;
   margin-right: 40px;
   color: #db5555;
   background-color: #ccc;
   border: 1px solid white;
+  cursor: pointer;
 }
 
  .title-secondary{
@@ -374,7 +390,21 @@ td .descriptions{
 }
 
 .container-movies{
-  column-count: 3;
-  width: 80%;
-  margin:auto;
+  column-rule-style: solid;
+  column-count: 4;
+  width: 60%;
+  margin:auto; 
+}
+
+.botones-alineados-izq{
+  float: left;
+}
+
+.botones-alineados-der{
+  display: right;
+}
+
+.container-movies small{
+  font-size: large;
+  font-
 }
