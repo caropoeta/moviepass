@@ -2,7 +2,11 @@
 
 namespace DAO;
 
+use Exception;
+use Models\Functions;
 use Models\Movie;
+use PDO;
+use PDOException;
 
 class MoviesXFunctionsDAO
 {
@@ -104,6 +108,52 @@ class MoviesXFunctionsDAO
         return $roleArray;
     }
 
+    public static function checkAviableSeatsForMovie(int $idMovie)
+    {
+        $query = "
+        select capacity.tmCapacity - ifnull(ticketsSold, 0) as freeSeats, fMovie
+        from (
+            select functions.idMovie as fMovie, sum(capacity.capacity) as tmCapacity
+            from functions 
+            inner join (
+                select capacity, idRoom from rooms
+            ) as capacity
+            on capacity.idRoom = functions.idRoom
+            where functions.deleted = 0
+            and day > CAST(CURRENT_TIMESTAMP AS DATE)
+            group by fMovie
+        ) as capacity
+        left join (
+            select fun.idMovie, fun.idRoom, sum(1) as ticketsSold
+            from tickets
+            inner join (
+            select * from functions
+                where functions.deleted = 0
+            ) as fun
+            on tickets.idFunction = fun.id
+            group by fun.idMovie
+        ) as ticketsSold
+        on ticketsSold.idMovie = capacity.fMovie
+        where fMovie = :idMov";
+        $param = [];
+        $param['idMov'] = $idMovie;
+
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute($query, $param);
+        } catch (PDOException $th) {
+            throw $th;
+        }
+
+        $roleArray = array_map(function (array $obj) {
+            return $obj['freeSeats'];
+        }, $response);
+
+        if ($roleArray != null)
+            if ((sizeof($roleArray) > 0) ? true : false)
+                return (((int) $roleArray[0]) > 0) ? true : false;
+    }
+
     public static function getMoviesFromFunctions(int $page, String $title = "", int $year = 0, array $genresW = [], array $genresWO = [])
     {
         $query = "select * from movies";
@@ -170,9 +220,14 @@ class MoviesXFunctionsDAO
                 select * from (
                     select functions.idMovie as id 
                     from functions 
-                    where functions.deleted = 0";
+                    where functions.deleted = 0
+                    and functions.day > :date";
         $subQ = $subQ . ") as x where x.id = movies.id
             )";
+
+        $param['date'] = (string) date('Y/m/d', time());
+
+
         array_push($addToQuerry, $subQ);
         /** filtrado de funcion */
 

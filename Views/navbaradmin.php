@@ -10,7 +10,7 @@
       <li><a href="<?php echo FRONT_ROOT ?>Cinema">Cinemas</a></li>
 
       <li><a href="<?php echo FRONT_ROOT ?>Movies/List">Current Movies</a></li>
-      <li><a href="<?php echo FRONT_ROOT ?>Session/Index">Edit </a></li>
+      <li><a href="<?php echo FRONT_ROOT ?>Session/Edit">Edit </a></li>
       <li><a href="<?php echo FRONT_ROOT ?>Session/Logout">Logout</a></li>
     </ul>
   </nav>

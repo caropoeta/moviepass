@@ -3,9 +3,12 @@
 namespace DAO;
 
 use DateTime;
+use Exception;
 use Models\Exceptions\ArrayException;
 use Models\Functions;
 use Models\Movie;
+use PDO;
+use PDOException;
 
 class FunctionsDAO
 {
@@ -27,7 +30,7 @@ class FunctionsDAO
 
         $param = array('idMovie' => $idMov, 'day' => $day);
 
-        if($functionId != NULL) {
+        if ($functionId != NULL) {
             $query = $query . 'and functions.id != :funid';
             $param['funid'] = $functionId;
         }
@@ -59,7 +62,7 @@ class FunctionsDAO
 
         $param = array('start' => $start, 'end' => $end, 'idRoom' => $idRoom, 'day' => $date);
 
-        if($functionId != NULL) {
+        if ($functionId != NULL) {
             $query = $query . 'and functions.id != :funid';
             $param['funid'] = $functionId;
         }
@@ -94,7 +97,7 @@ class FunctionsDAO
 
         $param = array('start' => $start, 'end' => $end, 'idRoom' => $idRoom, 'day' => $date);
 
-        if($functionId != NULL) {
+        if ($functionId != NULL) {
             $query = $query . 'and functions.id != :funid';
             $param['funid'] = $functionId;
         }
@@ -138,10 +141,13 @@ class FunctionsDAO
 
         /*buscar si chocan con los tiempos de cine*/
         if (strtotime($cin->getopeningTime()) >= strtotime($startimtime_15minOffset))
-            array_push($exceptionArray, "The start of the function is earlier than the opening time");
+            array_push($exceptionArray, "The start of the function conflicts with the opening time");
 
-        if (strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset))
-            array_push($exceptionArray, "The end of the function is later than the closing time");
+        if (
+            strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset) ||
+            strtotime($finnishtime) <= strtotime($startimtime)
+        )
+            array_push($exceptionArray, "The end of the function conflicts with the closing time");
 
         /*buscar si chocan con los tiempos de funciones*/
         if (FunctionsDAO::checkIfStartCollideWithFunctionInRoom($startimtime_15minOffset, $finnishtime_15minOffset, $roomId, $date))
@@ -165,8 +171,12 @@ class FunctionsDAO
             $param['finishTime'] = $finnishtime;
             $param['day'] = $date;
 
-            $conection = Connection::GetInstance();
-            $response = $conection->ExecuteNonQuery($query, $param);
+            try {
+                $conection = Connection::GetInstance();
+                $response = $conection->ExecuteNonQuery($query, $param);
+            } catch (PDOException $th) {
+                throw $th;
+            }
         }
     }
 
@@ -196,11 +206,17 @@ class FunctionsDAO
         $startimtime_15minOffset = date('H:i:s', strtotime('-15 minute',  strtotime($startimtime)));
         $finnishtime_15minOffset = date('H:i:s', strtotime('+15 minute',  strtotime($finnishtime)));
 
+        $startimtimeCiin = date('H:i:s', strtotime($cin->getopeningTime()));
+        $finnishtimeCin = date('H:i:s', strtotime($cin->getclosingTime()));
+
         /*buscar si chocan con los tiempos de cine*/
-        if (strtotime($cin->getopeningTime()) >= strtotime($startimtime_15minOffset))
+        if (strtotime($startimtimeCiin) >= strtotime($startimtime_15minOffset))
             array_push($exceptionArray, "The start of the function is earlier than the opening time");
 
-        if (strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset))
+        if (
+            strtotime($cin->getclosingTime()) <= strtotime($finnishtime_15minOffset) ||
+            strtotime($finnishtime) <= strtotime($startimtime)
+        )
             array_push($exceptionArray, "The end of the function is later than the closing time");
 
         /*buscar si chocan con los tiempos de funciones*/
@@ -228,8 +244,12 @@ class FunctionsDAO
             $param['day'] = $date;
             $param['funid'] = $functionId;
 
-            $conection = Connection::GetInstance();
-            $response = $conection->ExecuteNonQuery($query, $param);
+            try {
+                $conection = Connection::GetInstance();
+                $response = $conection->ExecuteNonQuery($query, $param);
+            } catch (PDOException $th) {
+                throw $th;
+            }
         }
     }
 
@@ -239,8 +259,12 @@ class FunctionsDAO
         $param = [];
         $param['id'] = $id;
 
-        $conection = Connection::GetInstance();
-        $response = $conection->ExecuteNonQuery($query, $param);
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->ExecuteNonQuery($query, $param);
+        } catch (PDOException $th) {
+            throw $th;
+        }
     }
 
     public static function getAllFromRoom(int $id)
@@ -249,14 +273,18 @@ class FunctionsDAO
         $param = [];
         $param['room'] = $id;
 
-        $conection = Connection::GetInstance();
-        $response = $conection->Execute($query, $param);
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute($query, $param);
+        } catch (PDOException $th) {
+            throw $th;
+        }
 
         $roleArray = array_map(function (array $obj) {
             $funToReturn = new Functions();
             $funToReturn->setidFunction($obj['id']);
-            $funToReturn->setTime((string) date('h:i:s', strtotime($obj['time'])));
-            $funToReturn->setfinishTime((string) date('h:i:s', strtotime($obj['finishTime'])));
+            $funToReturn->setTime((string) date('H:i:s', strtotime($obj['time'])));
+            $funToReturn->setfinishTime((string) date('H:i:s', strtotime($obj['finishTime'])));
             $funToReturn->setDay((string) date('Y-m-d', strtotime($obj['day'])));
             $funToReturn->setMovie(MovieDAO::getMovieById($obj['idMovie']));
             $funToReturn->setidRoom($obj['idRoom']);

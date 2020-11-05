@@ -3,6 +3,7 @@
 namespace DAO;
 
 use Models\Movie;
+use PDOException;
 
 class MovieXGenreDAO
 {
@@ -65,7 +66,7 @@ class MovieXGenreDAO
 
             array_push($addToQuerry, $subQ);
         }
-        
+
         array_push($addToQuerry, "deleted = 0");
 
         if (!empty($addToQuerry))
@@ -78,8 +79,12 @@ class MovieXGenreDAO
 
         $query = $query . " limit " . $page . ", " . $movXpage . ";";
 
-        $conection = Connection::GetInstance();
-        $response = $conection->Execute($query, $param);
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute($query, $param);
+        } catch (PDOException $th) {
+            throw $th;
+        }
 
         $roleArray = array_map(function (array $obj) {
             $movie = Movie::fromArray($obj);
@@ -103,10 +108,14 @@ class MovieXGenreDAO
 
     public static function getGenresByMovieId(int $id)
     {
-        $conection = Connection::GetInstance();
-        $query = "
-        select idGenre from genresxmovies where idMovie = :id;";
-        $response = $conection->Execute($query, array('id' => $id));
+        try {
+            $conection = Connection::GetInstance();
+            $query = "
+            select idGenre from genresxmovies where idMovie = :id;";
+            $response = $conection->Execute($query, array('id' => $id));
+        } catch (PDOException $th) {
+            throw $th;
+        }
 
         $roleArray = array_map(function (array $obj) {
             return GenreDAO::getGenreById($obj['idGenre']);
@@ -119,18 +128,22 @@ class MovieXGenreDAO
     {
         GenreDAO::addGenre(ApiGenreDAO::getApiGenreById($genreId));
 
-        $conection = Connection::GetInstance();
-        $query = "
+        try {
+            $conection = Connection::GetInstance();
+            $query = "
         INSERT INTO `genresxmovies`(`idMovie`, `idGenre`) 
         VALUES (:movieId, :genreId)";
 
-        $params = [];
-        $params['movieId']  = $movieId;
-        $params['genreId']  = $genreId;
+            $params = [];
+            $params['movieId']  = $movieId;
+            $params['genreId']  = $genreId;
 
-        $conection->ExecuteNonQuery(
-            $query,
-            $params
-        );
+            $conection->ExecuteNonQuery(
+                $query,
+                $params
+            );
+        } catch (PDOException $th) {
+            throw $th;
+        }
     }
 }

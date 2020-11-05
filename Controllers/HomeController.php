@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use DAO\Session;
-use DAO\UsersDAO as UsersDAO;
+use Controllers\ViewsController as ViewsHandler;
 
 class HomeController
 {
@@ -14,22 +14,11 @@ class HomeController
 
     public static function MainPage()
     {
-        if (Session::ValidateSession())
-            switch (Session::GetUserRole()) {
-                case 'Admin':
-                    require_once(VIEWS_PATH . 'adminMenu.php');
-                    return;
+        if (Session::GetUserRole() == GUEST_ROLE_NAME) {
+            ViewsHandler::Main();
+            return;
+        }
 
-                case 'Client':
-                    require_once(VIEWS_PATH . 'clientMenu.php');
-                    return;
-
-                default:
-                    require_once(VIEWS_PATH . 'main.php');
-                    return;
-            }
-
-        require_once(VIEWS_PATH . 'main.php');
-        return;
+        BillboardController::List();
     }
 }

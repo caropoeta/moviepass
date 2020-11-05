@@ -2,16 +2,23 @@
 
 namespace DAO;
 
+use Exception;
 use Models\UserRole as UserRole;
+use PDO;
+use PDOException;
 
 class RolesDAO
 {
     public static function getRoles()
     {
-        $conection = Connection::GetInstance();
-        $query = "
-        select * from roles;";
-        $response = $conection->Execute($query);
+        try {
+            $conection = Connection::GetInstance();
+            $query = "
+            select * from roles;";
+            $response = $conection->Execute($query);
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
 
         $roleArray = array_map(function (array $obj) {
             return UserRole::fromArray($obj);

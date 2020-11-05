@@ -6,10 +6,11 @@ use DAO\RolesDAO as RolesDAO;
 use DAO\UsersDAO as UserDAO;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
-use Models\PopupAlert;
 use DAO\Session;
 
 use Models\UserModel as UserModel;
+use Controllers\ViewsController as ViewsHandler;
+use Exception;
 
 class UsersController
 {
@@ -19,13 +20,13 @@ class UsersController
             HomeController::MainPage();
             exit();
         }
-        if (!Session::IsUserThisRole('Admin')) {
+        if (!Session::IsUserThisRole(ADMIN_ROLE_NAME)) {
             HomeController::MainPage();
             exit();
         }
     }
 
-    public function Add(String $username, String $password, String $email, int $dni, String $birthday, String $role)
+    public static function Add(String $username, String $password, String $email, int $dni, String $birthday, String $role)
     {
         try {
             $time = strtotime($birthday);
@@ -33,31 +34,37 @@ class UsersController
 
             UserDAO::addUser(new UserModel($username, $password, $role, $dni, $email, $newformat));
         } catch (AddUserException $aue) {
-            $alert = new PopupAlert($aue->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($aue->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
-        $roles = RolesDAO::getRoles();
-        $users = UserDAO::getUsers();
-        require_once(VIEWS_PATH . 'usersList.php');
+        UsersController::List();
     }
 
-    public function Index()
+    public static function Index()
     {
-        $this->List();
+        UsersController::List();
     }
 
+    public static function List(String $name = "", String $email = "", String $dni = "", String $role = "")
+    {
+        try {
+            $role = ($role = RolesDAO::getRoleByName($role)) ? $role->getId() : '';
+            $users = UserDAO::getUsers($name, $email, $dni, $role);
+            $roles = RolesDAO::getRoles();
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
 
-    public function List(String $name = "", String $email = "", String $dni = "", String $role = "")
-    {   
-        $role = ($role = RolesDAO::getRoleByName($role)) ? $role->getId() : '';
-        $users = UserDAO::getUsers($name, $email, $dni, $role);
-        $roles = RolesDAO::getRoles();
-
-        require_once(VIEWS_PATH . 'usersList.php');
+        ViewsHandler::UsersList($roles, $users);
     }
 
-    public function Edit(String $email, int $dni, String $birthday, String $role, int $id)
+    public static function Edit(String $email, int $dni, String $birthday, String $role, int $id)
     {
         try {
             if (Session::ValidateSession() && $id != Session::GetUserId()) {
@@ -76,22 +83,27 @@ class UsersController
                 }
             }
         } catch (UpdateUserException $uue) {
-            $alert = new PopupAlert($uue->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($uue->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
-        $roles = RolesDAO::getRoles();
-        $users = UserDAO::getUsers();
-        require_once(VIEWS_PATH . 'usersList.php');
+        UsersController::List();
     }
 
-    public function Delete(int $id)
+    public static function Delete(int $id)
     {
-        if (Session::ValidateSession() && $id != Session::GetUserId())
-            UserDAO::deleteUser($id);
+        try {
+            if (Session::ValidateSession() && $id != Session::GetUserId())
+                UserDAO::deleteUser($id);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
 
-        $roles = RolesDAO::getRoles();
-        $users = UserDAO::getUsers();
-        require_once(VIEWS_PATH . 'usersList.php');
+        UsersController::List();
     }
 }

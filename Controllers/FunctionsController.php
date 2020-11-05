@@ -7,7 +7,9 @@ use DAO\MovieXGenreDAO;
 use DAO\RoomDBDAO;
 use DAO\Session;
 use Models\Exceptions\ArrayException;
-use Models\PopupAlert;
+use Controllers\ViewsController as ViewsHandler;
+use DAO\TicketDAO;
+use Exception;
 
 class FunctionsController
 {
@@ -17,7 +19,7 @@ class FunctionsController
             HomeController::MainPage();
             exit();
         }
-        if (!Session::IsUserThisRole('Admin')) {
+        if (!Session::IsUserThisRole(ADMIN_ROLE_NAME)) {
             HomeController::MainPage();
             exit();
         }
@@ -33,13 +35,28 @@ class FunctionsController
         $cin = RoomDBDAO::getCinemaByRoomId($roomId);
         $opt = $cin->getopeningTime();
         $cst = $cin->getclosingTime();
-        $functions = FunctionsDAO::getAllFromRoom($roomId);
-        require_once(VIEWS_PATH . 'functionList.php');
+
+        try {
+            $functions = FunctionsDAO::getAllFromRoom($roomId);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
+        ViewsHandler::FunctionList($opt, $cst, $roomId, $functions);
     }
 
     public static function Delete(int $id, int $roomid)
     {
-        FunctionsDAO::delete($id);
+        try {
+            FunctionsDAO::delete($id);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
         FunctionsController::List($roomid);
     }
 
@@ -48,8 +65,15 @@ class FunctionsController
         if ($page <= 0)
             $page = 1;
 
-        $movies = MovieXGenreDAO::getMovies($page);
-        require_once(VIEWS_PATH . 'movieSelectAddFunction.php');
+        try {
+            $movies = MovieXGenreDAO::getMovies($page);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
+        ViewsHandler::MovieSelectAddFunction($time, $date, $roomId, $page, $movies);
     }
 
     public static function SelectMovieUpdate(String $time, String $date, int $roomId, int $functionId, int $page = 1)
@@ -57,8 +81,15 @@ class FunctionsController
         if ($page <= 0)
             $page = 1;
 
-        $movies = MovieXGenreDAO::getMovies($page);
-        require_once(VIEWS_PATH . 'movieSelectUpdateFunction.php');
+        try {
+            $movies = MovieXGenreDAO::getMovies($page);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
+        ViewsHandler::MovieSelectUpdateFunction($time, $date, $roomId, $functionId, $page, $movies);
     }
 
     public static function Update(String $time, String $date, int $roomId, int $functionId, int $movieId)
@@ -66,8 +97,11 @@ class FunctionsController
         try {
             FunctionsDAO::update($time, $date, $roomId, $functionId, $movieId);
         } catch (ArrayException $EX) {
-            $alert = new PopupAlert($EX->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($EX->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
         FunctionsController::List($roomId);
@@ -78,10 +112,22 @@ class FunctionsController
         try {
             FunctionsDAO::add($time, $date, $roomId, $movieId);
         } catch (ArrayException $EX) {
-            $alert = new PopupAlert($EX->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($EX->getExceptionArray());
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
         }
 
         FunctionsController::List($roomId);
+    }
+
+    public static function GetFunctionStatistics(int $id)
+    { 
+        try {
+            echo TicketDAO::getStatisticsFromFunction($id);
+        } catch (Exception $th) {
+            echo 'Error';
+        }
     }
 }

@@ -3,12 +3,12 @@
 namespace Controllers;
 
 use DAO\FacebookDAO;
-use \Models\UserModel as UserModel;
-use \DAO\UsersDAO as UserDAO;
+use \Models\UserModel;
 use Models\Exceptions\AddUserException;
-use Models\PopupAlert;
 use DAO\Session;
-
+use DAO\UsersDAO;
+use Controllers\ViewsController as ViewsHandler;
+use Exception;
 
 class FacebookSessionController
 {
@@ -19,16 +19,17 @@ class FacebookSessionController
                 $time = strtotime($birthday);
                 $newformat = date('Y-m-d', $time);
 
-                $newUser = new UserModel($username, $password, 'Client', $dni, $email, $newformat);
-                $result = UserDAO::addUser($newUser);
+                $newUser = new UserModel($username, $password, CLIENT_ROLE_NAME, $dni, $email, $newformat);
+                $result = UsersDAO::addUser($newUser);
 
                 if ($result instanceof UserModel) {
-                    Session::SetSession(UserDAO::getUserByEmail($email));
+                    Session::SetSession(UsersDAO::getUserByEmail($email));
                 }
             }
         } catch (AddUserException $adu) {
-            $alert = new PopupAlert($adu->getExceptionArray());
-            $alert->Show();
+            ViewsHandler::Show($adu->getExceptionArray());
+        } catch (Exception $l) {
+            ViewsHandler::Show(array('Error processing request'));
         }
 
         HomeController::MainPage();
@@ -41,9 +42,15 @@ class FacebookSessionController
             exit;
         }
 
-        header('Location: ' . FacebookDAO::GetInstance()->GetLoginUrl(
-            'http://' . $_SERVER['HTTP_HOST'] . '/personal/moviepass/FacebookSession/Login/'
-        ));
+        try {
+            header('Location: ' . FacebookDAO::GetInstance()->GetLoginUrl(
+                'http://' . $_SERVER['HTTP_HOST'] . '/personal/moviepass/FacebookSession/Login/'
+            ));
+        } catch (Exception $l) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
     }
 
     public function Login()
@@ -52,17 +59,32 @@ class FacebookSessionController
             HomeController::MainPage();
             exit;
         }
-    
-        $fbUser = FacebookDAO::GetInstance()->GetUserData();
 
-        $usr = UserDAO::getUserByEmail($fbUser['email']);
+        try {
+            $fbUser = FacebookDAO::GetInstance()->GetUserData();
+
+            if (UsersDAO::isUserDeletedByEmail($fbUser['email'])) {
+                ViewsHandler::Show(array('This account is banned'));
+
+                HomeController::MainPage();
+                return;
+            }
+
+            $usr = UsersDAO::getUserByEmail($fbUser['email']);
+        } catch (Exception $l) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
         if ($usr instanceof UserModel) {
             Session::SetSession($usr);
             HomeController::MainPage();
         } else {
             $fbname = $fbUser['first_name'] . ' ' .  $fbUser['last_name'];
             $fbemail = $fbUser['email'];
-            require_once(VIEWS_PATH . 'facebookLoginAddUser.php');
+
+            ViewsHandler::FacebookLoginAddUser($fbname, $fbemail);
         }
     }
 }

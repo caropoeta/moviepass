@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-10-2020 a las 23:50:38
+-- Tiempo de generación: 30-10-2020 a las 02:12:19
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -69,9 +69,18 @@ CREATE TABLE `functions` (
 --
 
 INSERT INTO `functions` (`id`, `time`, `asistencia`, `idMovie`, `idRoom`, `deleted`, `finishTime`, `day`) VALUES
-(6, '08:16:00', 0, 413518, 1, 0, '10:16:55', '2020-10-27'),
-(7, '05:16:00', 0, 528085, 1, 0, '07:10:08', '2020-10-27'),
-(8, '04:49:00', 0, 413518, 1, 0, '06:49:55', '2020-09-30');
+(6, '07:48:00', 0, 635302, 1, 1, '09:45:54', '2020-10-29'),
+(7, '06:16:00', 0, 528085, 1, 0, '08:10:08', '2020-10-27'),
+(8, '04:49:00', 0, 413518, 1, 1, '06:49:55', '2020-09-30'),
+(9, '03:42:00', 0, 413518, 1, 1, '05:42:55', '2020-10-28'),
+(10, '02:31:00', 0, 556984, 4, 1, '04:41:55', '2020-10-27'),
+(11, '15:37:00', 0, 413518, 1, 1, '17:37:55', '2020-10-29'),
+(12, '05:40:00', 0, 590223, 1, 1, '07:29:55', '2020-10-29'),
+(13, '07:26:00', 0, 556984, 1, 1, '09:36:55', '2020-10-27'),
+(14, '05:39:00', 0, 556984, 1, 0, '07:49:55', '2020-10-29'),
+(15, '22:01:00', 0, 635302, 1, 1, '23:58:54', '2020-10-29'),
+(16, '22:58:00', 0, 635302, 1, 1, '00:55:54', '2020-10-29'),
+(17, '08:09:00', 0, 337401, 1, 0, '10:04:39', '2020-10-30');
 
 -- --------------------------------------------------------
 
@@ -145,7 +154,13 @@ INSERT INTO `genresxmovies` (`idMovie`, `idGenre`) VALUES
 (539885, 28),
 (539885, 80),
 (539885, 18),
-(539885, 53);
+(539885, 53),
+(724989, 28),
+(724989, 53),
+(337401, 28),
+(337401, 12),
+(337401, 18),
+(337401, 14);
 
 -- --------------------------------------------------------
 
@@ -169,12 +184,14 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`id`, `title`, `release_date`, `vote_average`, `overview`, `poster_path`, `deleted`, `runtime`) VALUES
+(337401, 'Mulan', '2020-09-04', 7, 'When the Emperor of China issues a decree that one man per family must serve in the Imperial Chinese Army to defend the country from Huns, Hua Mulan, the eldest daughter of an honored warrior, steps in to take the place of her ailing father. She is spirited, determined and quick on her feet. Disguised as a man by the name of Hua Jun, she is tested every step of the way and must harness her innermost strength and embrace her true potential.', '/aKx1ARwG55zZ0GpRvU2WrGrCG9o.jpg', 0, '01:55:39'),
 (413518, 'Pinocchio', '2019-12-19', 6, 'In this live-action adaptation of the beloved fairytale, old woodcarver Geppetto fashions a wooden puppet, Pinocchio, who magically comes to life. Pinocchio longs for adventure and is easily led astray, encountering magical beasts, fantastical spectacles, while making friends and foes along his journey. However, his dream is to become a real boy, which can only come true if he finally changes his ways.', '/4w1ItwCJCTtSi9nPfJC1vU6NIVg.jpg', 0, '02:00:55'),
 (528085, '2067', '2020-10-01', 5, 'A lowly utility worker is called to the future by a mysterious radio signal, he must leave his dying wife to embark on a journey that will force him to face his deepest fears in an attempt to change the fabric of reality and save humankind from its greatest environmental crisis yet.', '/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg', 0, '01:54:08'),
 (539885, 'Ava', '2020-07-02', 5, 'A black ops assassin is forced to fight for her own survival after a job goes dangerously wrong.', '/qzA87Wf4jo1h8JMk9GilyIYvwsA.jpg', 1, '01:36:16'),
 (556984, 'The Trial of the Chicago 7', '2020-09-25', 7, 'What was intended to be a peaceful protest at the 1968 Democratic National Convention turned into a violent clash with police and the National Guard. The organizers of the protest — including Abbie Hoffman, Jerry Rubin, Tom Hayden and Bobby Seale — were charged with conspiracy to incite a riot and the trial that followed was one of the most notorious in history.', '/ahf5cVdooMAlDRiJOZQNuLqa1Is.jpg', 0, '02:10:55'),
 (590223, 'Love and Monsters', '2020-10-16', 7, 'Seven years after the Monsterpocalypse, Joel Dawson, along with the rest of humanity, has been living underground ever since giant creatures took control of the land. After reconnecting over radio with his high school girlfriend Aimee, who is now 80 miles away at a coastal colony, Joel begins to fall for her again. As Joel realizes that there’s nothing left for him underground, he decides against all logic to venture out to Aimee, despite all the dangerous monsters that stand in his way.', '/r4Lm1XKP0VsTgHX4LG4syAwYA2I.jpg', 0, '01:49:55'),
-(635302, 'Demon Slayer: Kimetsu no Yaiba - The Movie: Mugen Train', '2020-10-16', 7, 'Tanjirō Kamado, joined with Inosuke Hashibira, a boy raised by boars who wears a boar\'s head, and Zenitsu Agatsuma, a scared boy who reveals his true power when he sleeps, boards the Infinity Train on a new mission with the Fire Hashira, Kyōjurō Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!', '/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg', 0, '01:57:54');
+(635302, 'Demon Slayer: Kimetsu no Yaiba - The Movie: Mugen Train', '2020-10-16', 7, 'Tanjirō Kamado, joined with Inosuke Hashibira, a boy raised by boars who wears a boar\'s head, and Zenitsu Agatsuma, a scared boy who reveals his true power when he sleeps, boards the Infinity Train on a new mission with the Fire Hashira, Kyōjurō Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!', '/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg', 0, '01:57:54'),
+(724989, 'Hard Kill', '2020-10-23', 4, 'The work of billionaire tech CEO Donovan Chalmers is so valuable that he hires mercenaries to protect it, and a terrorist group kidnaps his daughter just to get it.', '/ugZW8ocsrfgI95pnQ7wrmKDxIe.jpg', 0, '01:38:38');
 
 -- --------------------------------------------------------
 
@@ -216,7 +233,10 @@ CREATE TABLE `rooms` (
 
 INSERT INTO `rooms` (`idRoom`, `roomName`, `capacity`, `idCinema`, `price`, `deleted`) VALUES
 (1, 'Mulan', 200, 1, 300, 0),
-(2, 'a', 150, 1, 150, 1);
+(2, 'a', 150, 1, 150, 0),
+(4, 'Avenida', 150, 2, 150, 0),
+(5, 'Mulan', 150, 3, 150, 0),
+(6, '    ', 300, 1, 50, 0);
 
 -- --------------------------------------------------------
 
@@ -228,19 +248,20 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `user_password` varchar(255) NOT NULL,
-  `user_dni` int(11) NOT NULL,
+  `user_dni` bigint(11) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_birthday` date NOT NULL,
-  `user_role` int(11) NOT NULL
+  `user_role` int(11) NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_dni`, `user_email`, `user_birthday`, `user_role`) VALUES
-(1, 'admin', '$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 88888888, 'admin@localhost', '2020-10-15', 2),
-(2, 'Graciela Astudillo', '$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 99999999, 'astudillograciela@hotmail.com', '2020-10-29', 1);
+INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_dni`, `user_email`, `user_birthday`, `user_role`, `deleted`) VALUES
+(1, 'admin', '$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 88888888, 'admin@localhost', '2020-10-15', 2, 1),
+(10, 'Graciela Astudillo', '$2y$10$JpI5UnPMxdd1GTVMyviEb.Ul/5GwtDec6f3DpMjwTYK3cikqnu8ES', 99999999999, 'astudillograciela@hotmail.com', '2020-10-29', 1, 0);
 
 --
 -- Índices para tablas volcadas
@@ -291,7 +312,7 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `rooms`
   ADD PRIMARY KEY (`idRoom`),
-  ADD UNIQUE KEY `roomName` (`roomName`),
+  ADD UNIQUE KEY `roomName` (`roomName`,`idCinema`) USING BTREE,
   ADD KEY `fk_idcinema` (`idCinema`);
 
 --
@@ -318,7 +339,7 @@ ALTER TABLE `cinemas`
 -- AUTO_INCREMENT de la tabla `functions`
 --
 ALTER TABLE `functions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `genres`
@@ -336,13 +357,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `idRoom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idRoom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
