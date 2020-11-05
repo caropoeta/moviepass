@@ -81,7 +81,7 @@ class TicketController
 
     public static function List ()
     {
-        GoogleQRDAO::GetQrImgUrl('a');
+        var_dump(TicketDAO::getTicketsFromUser(Session::GetUserId()));
         # code...
     }
 }

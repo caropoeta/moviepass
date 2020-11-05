@@ -13,7 +13,7 @@
           <form method="POST">
             <button formaction="<?php echo FRONT_ROOT ?>Session/Logout" class="btn btn-secondary" type="submit"> Log-Out </button>
             <button formaction="<?php echo FRONT_ROOT ?>Session/Index" class="btn btn-secondary" type="submit" name="action" value="edit"> Edit account information </button>
-
+            <button formaction="<?php echo FRONT_ROOT ?>Ticket/List" class="btn btn-outline-success" type="submit">Ticket List</button>
             <button formaction="<?php echo FRONT_ROOT ?>Billboard/List" class="btn btn-secondary" type="submit"> Billboard </button>
 
           </form>

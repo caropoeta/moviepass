@@ -2,8 +2,6 @@
 
 namespace Controllers;
 
-use Models\Exceptions\ArrayException;
-
 abstract class ViewsController
 {
     public static function Show(array $alerts = [], Bool $usesKey = false)

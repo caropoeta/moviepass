@@ -11,11 +11,9 @@
           <div class="p-2">
             <button formaction="<?php echo FRONT_ROOT ?>Session/Logout" class="btn btn-outline-success" type="submit" name="action" value="register"> Log Out </button>
           </div>
-
       </li>
 
       <li class="nav-item">
-
         <div class="p-2">
           <button formaction="<?php echo FRONT_ROOT ?>Users/List" class="btn btn-outline-success" type="submit">UsersList</button>
         </div>
@@ -42,6 +40,12 @@
       <li class="nav-item">
         <div class="p-2">
           <button formaction="<?php echo FRONT_ROOT ?>Billboard/List" class="btn btn-secondary" type="submit"> Billboard </button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Ticket/List" class="btn btn-outline-success" type="submit">Ticket List</button>
         </div>
       </li>
 

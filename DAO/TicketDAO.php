@@ -2,6 +2,7 @@
 
 namespace DAO;
 
+use Models\Ticket;
 use PDOException;
 
 class TicketDAO
@@ -79,6 +80,31 @@ class TicketDAO
 
     public static function getTicketsFromUser(int $idUser)
     {
+        $query = " 
+        select * 
+        from tickets
+        where idUser = :idUser";
+        $params = [];
+        $params['idUser'] = $idUser;
+
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute(
+                $query,
+                $params
+            );
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
+
+        return array_map(function(Array $obj){
+            $tickToReturn = new Ticket();
+            $tickToReturn->setQr(GoogleQRDAO::GetQrImgUrl($obj['id']));
+            $tickToReturn->setId($obj['id']);
+            $tickToReturn->setFunctionId($obj['idFunction']);
+            $tickToReturn->setSeat($obj['seatNumber']);
+            return $tickToReturn;
+        }, $response);
     }
 
     public static function addTicket(int $idFunction, int $idUser)
