@@ -9,14 +9,14 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
     <table class="table">
         <thead>
             <tr>
-                <th>Cinema name</th>
-                <th>Cinema adress</th>
-                <th>Movie name</th>
+                <th>Cinema's name</th>
+                <th>Cinema's address</th>
+                <th>Movie's name</th>
                 <th>Function day</th>
-                <th>Function starting time</th>
-                <th>Function finish time</th>
-                <th>Room name</th>
-                <th>Room price</th>
+                <th>Starting time</th>
+                <th>Finish time</th>
+                <th>Room's name</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
@@ -40,13 +40,14 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
             document.getElementById('priceHolder').value = n1 * n2;
         }
     </script>
-
+    <div class="login-form">
     <input id="price" type="hidden" value="<?php echo $data['price'] ?>">
     <label>Total price: $</label><input type="number" readonly id="priceHolder" value="<?php echo $data['price'] ?>"></input>
     <br>
     <form action="<?php echo FRONT_ROOT ?>Ticket/Buy" method="POST">
         <label>Tickets to buy: </label><input id="numberOfTickets" type="number" min="1" max="<?php echo $maxTickets ?>" value="1" name="TicketsToBuy" onchange="getPrice()">
         <br>
-        <button type="submit" name="funid" value="<?php echo $data['id'] ?>">Buy</button>
+        <button class="botons-chico"type="submit" name="funid" value="<?php echo $data['id'] ?>">Buy</button>
     </form>
+    </div>
 </div>

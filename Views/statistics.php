@@ -3,7 +3,9 @@ use Models\PopupAlert;
 include ('navbaradmin.php');
 ?>
 <main class="d-flex  justify-content-center ">
+	
 	<div class="content">
+		<h2 class="title-secondary">Statistics</h2>
 		<header class="text-center">
 			<div class="p-2 text-center">
 				<form method="POST">
@@ -15,7 +17,7 @@ include ('navbaradmin.php');
 				</form>
 			</div>
 			<br>
-			<h2 class="fuente4 text-center">Statistics</h2>
+			
 
 		</header>
 		<div class="table-responsive">
@@ -42,7 +44,7 @@ include ('navbaradmin.php');
 		</div>
 		<div class="text-center">
 			<button formaction="<?php echo FRONT_ROOT ?>Cinema/ShowStatistics"
-				class="btn btn-warning" type="submit" name="cinemaId"
+				class="botons-chico" type="submit" name="cinemaId"
 				value="<?php echo $cinemaId; ?>">Search</button>
 			</form>
 		</div>
