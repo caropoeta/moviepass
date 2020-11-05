@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-11-2020 a las 19:04:40
+-- Tiempo de generación: 05-11-2020 a las 21:49:23
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -70,8 +70,23 @@ CREATE TABLE `creditcardinfo` (
 CREATE TABLE `discountpolicy` (
   `dayOfTheWeek` varchar(50) NOT NULL,
   `percentage` float NOT NULL,
-  `name` varchar(50) NOT NULL
+  `name` varchar(50) NOT NULL,
+  `minTickets` int(11) NOT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `discountpolicy`
+--
+
+INSERT INTO `discountpolicy` (`dayOfTheWeek`, `percentage`, `name`, `minTickets`, `id`) VALUES
+('Saturday', 0, 'discountSaturday', 0, 1),
+('Sunday', 0, 'discountSunday', 0, 2),
+('Monday', 0, 'discountMonday', 0, 3),
+('Tuesday', 0.25, 'discountTuesday', 2, 4),
+('Wednesday', 0.25, 'discountWednesday', 2, 5),
+('Thursday', 0, 'discountThursday', 0, 6),
+('Friday', 0, 'discountFriday', 0, 7);
 
 -- --------------------------------------------------------
 
@@ -332,6 +347,12 @@ ALTER TABLE `creditcardinfo`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `discountpolicy`
+--
+ALTER TABLE `discountpolicy`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `functions`
 --
 ALTER TABLE `functions`
@@ -413,6 +434,12 @@ ALTER TABLE `cinemas`
 --
 ALTER TABLE `creditcardinfo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `discountpolicy`
+--
+ALTER TABLE `discountpolicy`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `functions`
