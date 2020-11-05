@@ -6,7 +6,6 @@ use DAO\RolesDAO as RolesDAO;
 use DAO\UsersDAO as UserDAO;
 use Models\Exceptions\AddUserException;
 use Models\Exceptions\UpdateUserException;
-use Models\PopupAlert;
 use DAO\Session;
 
 use Models\UserModel as UserModel;

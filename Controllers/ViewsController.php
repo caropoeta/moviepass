@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Models\Exceptions\ArrayException;
+
 abstract class ViewsController
 {
     public static function Show(array $alerts = [], Bool $usesKey = false)
@@ -42,7 +44,8 @@ abstract class ViewsController
         String $name,
         array $genreW,
         array $genreWO,
-        string $year
+        string $year, 
+        Array $movHasFreeSeats
     ) {
         require_once(VIEWS_PATH . 'billboardMovies.php');
     }
@@ -126,5 +129,20 @@ abstract class ViewsController
         array $users
     ) {
         require_once(VIEWS_PATH . 'usersList.php');
+    }
+
+    public static function SelectFunction(Array $data, int $movieId, String $movieName, String $currRole)
+    {
+        require_once(VIEWS_PATH . 'selectFunction.php');
+    }
+
+    public static function ConfirmDetails(Array $data, int $movieId, String $movieName, String $currRole, int $maxTickets)
+    {
+        require_once(VIEWS_PATH . 'confirmDetails.php');
+    }
+
+    public static function BuyResume(int $numberOfTickets, array $data, float $price, int $movId, String $movTitle, String $currRole)
+    {
+        require_once(VIEWS_PATH . 'buyResume.php');
     }
 }

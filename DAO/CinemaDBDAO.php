@@ -20,6 +20,44 @@ class CinemaDBDAO
     $this->connection = null;
   }
 
+  public static function getCinemasFromMovie(int $idMov)
+  {
+    $query = "
+    select idCinema from (
+      select functions.idRoom, functions.idMovie
+      from functions 
+      inner join (
+        select idFunction , count(*) as asists from tickets group by tickets.idFunction
+      ) as asistsPerFunction
+      on asistsPerFunction.idFunction = functions.id
+      inner join (
+        select idRoom, capacity from rooms group by idRoom
+      ) as SeatsPerFunction
+      on SeatsPerFunction.idRoom = functions.idRoom
+      where (capacity - asists) > 0
+      and functions.deleted = 0
+      ) as idRoomWithSeats
+      inner join (
+        select rooms.idCinema, rooms.idRoom from rooms
+      ) as roomAndCinema
+      on idRoomWithSeats.idRoom = roomAndCinema.idRoom
+      where idMovie = :idMov
+      group by idCinema
+      ";
+    $param = [];
+    $param['idMov'] = $idMov;
+
+    try {
+      $conection = Connection::GetInstance();
+      $response = $conection->Execute($query, $param);
+    } catch (PDOException $th) {
+      throw $th;
+    }
+
+    return $roleArray = array_map(function (array $obj) {
+      return CinemaDBDAO::Read($obj['idCinema']); 
+    }, $response);
+  }
 
   public function ReadAll()
   {
@@ -60,6 +98,8 @@ class CinemaDBDAO
             return false;
     }
 
+
+ 
     public function Add($cinema)
     {
         // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada
