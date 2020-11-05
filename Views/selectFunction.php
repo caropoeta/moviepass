@@ -11,14 +11,14 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
     <table class="table">
         <thead>
             <tr>
-                <th>Cinema name</th>
-                <th>Cinema adress</th>
+                <th>Cinema's name</th>
+                <th>Cinema's address</th>
                 <th>Movie name</th>
                 <th>Function day</th>
-                <th>Function starting time</th>
-                <th>Function finish time</th>
-                <th>Room name</th>
-                <th>Room price</th>
+                <th>Starting time</th>
+                <th>Finish time</th>
+                <th>Room's name</th>
+                <th>Price</th>
                 <th></th>
             </tr>
         </thead>
@@ -35,7 +35,7 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
                         <td><?php echo $dat['roomName'] ?></td>
                         <td><?php echo '$' . $dat['price'] ?></td>
                         <td>
-                            <button type="submit" name="funid" value="<?php echo $dat['id'] ?>">Select function</button>
+                            <button class="botons" type="submit" name="funid" value="<?php echo $dat['id'] ?>">Select function</button>
                         </td>
                     </tr>
                 <?php

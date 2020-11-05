@@ -76,10 +76,8 @@
                <div>
                     <br>
                     
-                    <div>
-                         <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
-                    </div>
-                    <div>
+                    <div class="align-items-center">
+                         <button class="botons-chico" style="margin-left: 25%" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
                          <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Api/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
                     </div>
                </div>
