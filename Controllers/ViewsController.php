@@ -147,6 +147,16 @@ abstract class ViewsController
         require_once(VIEWS_PATH . 'confirmDetails.php');
     }
 
+    public static function SelectCreditCard(
+        int $numberOfTickets,
+        int $functionId,
+        array $creditCards,
+        float $totalPrice,
+        String $currRole
+    ) {
+        require_once(VIEWS_PATH . 'selectCreditCard.php');
+    }
+
     public static function BuyResume(int $numberOfTickets, array $data, float $price, int $movId, String $movTitle, String $currRole)
     {
         require_once(VIEWS_PATH . 'buyResume.php');

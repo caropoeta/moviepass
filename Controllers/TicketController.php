@@ -2,14 +2,14 @@
 
 namespace Controllers;
 
-use DAO\CinemaDBDAO;
+use DAO\CreditCardDAO;
 use DAO\DiscountDAO;
-use DAO\GoogleQRDAO;
 use DAO\MovieDAO;
-use DAO\MoviesXFunctionsDAO;
 use DAO\Session;
 use DAO\TicketDAO;
+use DAO\UserXCreditCardDAO;
 use Exception;
+use Models\Exceptions\ArrayException;
 
 class TicketController
 {
@@ -46,8 +46,8 @@ class TicketController
         try {
             $data = TicketDAO::getFunctionRoomAndCinemaDataFromFunctionId($functionId);
             $maxTickets = TicketDAO::getMaxAviableTicketsFromFunction($functionId);
-            $datDisArray = DiscountDAO::GetDiscountAndMinTicketsFromToday();
             $mov = MovieDAO::getMovieById($data['idMovie']);
+            $datDisArray = DiscountDAO::GetDiscountAndMinTicketsFromToday();
         } catch (Exception $th) {
             ViewsController::Show(array('Error processing request'));
             HomeController::MainPage();
@@ -69,13 +69,73 @@ class TicketController
             );
     }
 
-    public static function SelectCreditCard(int $numberOfTickets, int $functionId)
-    {
-        # code...
+    public static function DeleteCreditCard(
+        int $numberOfTickets,
+        int $functionId,
+        int $creditCardNumber
+    ) {
+        try {
+            UserXCreditCardDAO::delete($creditCardNumber, Session::GetUserId());
+        } catch (Exception $th) {
+            ViewsController::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
+        TicketController::SelectCreditCard($numberOfTickets, $functionId);
     }
 
-    public static function Buy(int $numberOfTickets, int $functionId)
+    public static function SelectCreditCard(int $numberOfTickets, int $functionId)
     {
+        try {
+            $data = TicketDAO::getFunctionRoomAndCinemaDataFromFunctionId($functionId);
+            $datDisArray = DiscountDAO::GetDiscountAndMinTicketsFromToday();
+            $ccs = UserXCreditCardDAO::getCreditCardsFromUser(Session::GetUserId());
+        } catch (Exception $th) {
+            
+            throw $th;
+            ViewsController::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
+        $discountMinTickets = $datDisArray['minTickets'];
+        $discountPercentaje = $datDisArray['percentage'];
+        $price = $data['price'];
+
+        if ($discountMinTickets <= $numberOfTickets)
+            $price *= (1 - $discountPercentaje);
+
+        $totalPrice = $price * $numberOfTickets;
+
+        ViewsController::SelectCreditCard($numberOfTickets, $functionId, $ccs, $totalPrice, Session::GetUserRole());
+    }
+
+    public static function AddCreditCard(
+        int $numberOfTickets,
+        int $functionId,
+        int $creditCardNumber,
+        String $monthAndYear
+    ) {     
+        try {
+            UserXCreditCardDAO::addCreditCardToUser(Session::GetUserId(), $creditCardNumber, $monthAndYear);
+        } catch (ArrayException $aex) {
+            ViewsController::Show($aex->getExceptionArray());
+        }
+        catch (Exception $th) {
+            throw $th;
+            ViewsController::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+
+        TicketController::SelectCreditCard($numberOfTickets, $functionId);
+    }
+
+    public static function Buy(int $numberOfTickets, int $functionId, int $securityCode, int $creditCardId)
+    {
+        HomeController::MainPage();
+        /*
         try {
             $data = TicketDAO::getFunctionRoomAndCinemaDataFromFunctionId($functionId);
             $maxTickets = TicketDAO::getMaxAviableTicketsFromFunction($functionId);
@@ -93,10 +153,10 @@ class TicketController
 
         $total = $data['price'] * $numberOfTickets;
         ViewsController::BuyResume($numberOfTickets, $data, $total, $mov->getId(), $mov->getTitle(), Session::GetUserRole());
-    }
+    */}
 
     public static function List()
     {
-        var_dump(TicketDAO::getTicketsFromUser(Session::GetUserId()));
+        //var_dump(TicketDAO::getTicketsFromUser(Session::GetUserId()));
     }
 }

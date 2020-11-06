@@ -2,7 +2,6 @@
 
 namespace DAO;
 
-use Models\Ticket;
 use PDOException;
 
 class DiscountDAO
