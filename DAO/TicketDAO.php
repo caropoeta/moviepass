@@ -22,8 +22,8 @@ class TicketDAO
         ) as SeatsPerFunction
         on SeatsPerFunction.idRoom = functions.idRoom
         where functions.idMovie = :idMov" .
-        (($strPeriod != null) && ($endPeriod != null)) ? " and functions.day between :strPeriod and :endPeriod" : ''
-        . ") as moviedata
+            (($strPeriod != null) && ($endPeriod != null)) ? " and functions.day between :strPeriod and :endPeriod" : ''
+            . ") as moviedata
         ";
 
         $params = [];
@@ -48,16 +48,25 @@ class TicketDAO
     public static function getStatisticsFromFunction(int $idFun)
     {
         $query = "
-        select capacity, ifnull(asists, 0) as asists, ifnull(asists, 0) * price as moneyRecolected
+        select capacity, ifnull(asists, 0) as asists, ifnull(amount, 0) as moneyRecolected
+
         from functions 
+        
         left join (
-	    select idFunction , count(*) as asists from tickets group by tickets.idFunction
+			select idFunction , count(*) as asists from tickets group by tickets.idFunction
         ) as asistsPerFunction
         on asistsPerFunction.idFunction = functions.id
-        inner join (
-	    select idRoom, price, capacity from rooms group by idRoom
-        ) as SeatsPerFunction
-        on SeatsPerFunction.idRoom = functions.idRoom
+        
+        inner join rooms
+        on rooms.idRoom = functions.idRoom
+        
+        left join (
+			select idFunction, sum(amount) as amount from tickets #where tickets.idFunction
+            inner join purchase
+            on purchase.id = tickets.idPayment
+            group by tickets.idFunction
+        ) as moneyRecolected
+        on moneyRecolected.idFunction = functions.id
         where functions.id = :idfunction
         ";
 
@@ -78,14 +87,32 @@ class TicketDAO
             return $response[0];
     }
 
-    public static function getTicketsFromUser(int $idUser)
+    public static function getTicketsFromUser(int $idUser, String $movieName = "", String $date = "")
     {
         $query = " 
-        select * 
+        select tickets.*, functions.day, movies.title, rooms.roomName
         from tickets
-        where idUser = :idUser";
+        inner join functions
+        on functions.id = tickets.idFunction
+        inner join movies
+        on movies.id = functions.idMovie
+        inner join rooms
+        on rooms.idRoom = functions.idRoom
+        where idUser = :idUser
+        ";
+
         $params = [];
         $params['idUser'] = $idUser;
+
+        if ($movieName != "") {
+            $query = $query . 'and movies.title like :title';
+            $params['title'] = '%' . $movieName . '%';
+        }
+
+        if ($date != "") {
+            $query = $query . 'and functions.day = :day';
+            $params['day'] = $date;
+        }
 
         try {
             $conection = Connection::GetInstance();
@@ -97,26 +124,39 @@ class TicketDAO
             throw $ex;
         }
 
-        return array_map(function(Array $obj){
+        return array_map(function (array $obj) {
             $tickToReturn = new Ticket();
-            $tickToReturn->setQr(GoogleQRDAO::GetQrImgUrl($obj['id']));
             $tickToReturn->setId($obj['id']);
-            $tickToReturn->setFunctionId($obj['idFunction']);
+            $tickToReturn->setFunctionName($obj['roomName']);
             $tickToReturn->setSeat($obj['seatNumber']);
+            $tickToReturn->setMovieTitle($obj['title']);
+            $tickToReturn->setDate($obj['day']);
+
+            $qr =
+                "Ticket id: " . $obj['id'] .
+                ", Room name: " . $obj['roomName'] .
+                ", Seat number: " . $obj['seatNumber'] .
+                ", Movie title: " . $obj['title'] .
+                ", Function date: " . $obj['day'];
+
+            $tickToReturn->setQr(GoogleQRDAO::GetQrImgUrl($qr));
+
+
             return $tickToReturn;
         }, $response);
     }
 
-    public static function addTicket(int $idFunction, int $idUser)
+    public static function addTicket(int $idFunction, int $idUser, int $purchaseId)
     {
         $query = " 
-        INSERT INTO tickets(idUser, idFunction, seatNumber)
-        select :idUser,:idFunction, ifnull(max(seatNumber), 0) + 1
+        INSERT INTO tickets(idUser, idFunction, idPayment, seatNumber)
+        select :idUser,:idFunction, :idPayment, ifnull(max(seatNumber), 0) + 1
         from tickets
         where idFunction = :idFunction";
         $params = [];
         $params['idUser'] = $idUser;
         $params['idFunction'] = $idFunction;
+        $params['idPayment'] = $purchaseId;
 
         try {
             $conection = Connection::GetInstance();

@@ -5,44 +5,45 @@ include('navbaradmin.php');
 <br>
 <br>
 <br>
-<h2 class="title-secondary">Search and Add a cinema</h2>
+<h2 class=" text-center fuente4">Search and Add a cinema</h2>
 
-<main >
+<main class="d-flex  justify-content-center ">
     <div class="content">
         <header class="text-center">
         </header>
-        <div class="login-form " >
+        <div class="login-form bg-dark-alpha p-5 bg-light rounded back ">
             <section>
-                <br><h2>CINEMAS</h2>
-                <div class="form-group" style="margin:auto">
+                <br>
+                <div class="form-group">
                     <form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinemas" method="POST">
-                            
+                        <div class="form-group align-items-center">
+                            <h2 class="fuente5white text-center">CINEMAS</h2>
                             <br>
-                            <button type="submit" class="botons">Show Cinemas</button>
+                            <button type="submit" class="btn btn-primary offset-4">Show Cinemas</button>
+                        </div>
                     </form>
                 </div>
                 <br>
                 <br>
                 <form action="<?php echo FRONT_ROOT ?>Cinema/ShowCinema" method="POST">
-                    <div class="form-group" style="margin:auto">
-                        <label> Insert Cinema name</label>
-                        
-                        <input type="text" name="wantedCinema" placeholder="Search Cinema" required class="form-group">
+                    <div class="form-group">
+
+                        <input type="text" name="wantedCinema" placeholder="Search Cinema" required class="form-control">
                         <br>
-                        <button type="submit" class="botons">Search Cinema</button>
+                        <button type="submit" class="btn btn-primary offset-4">Search Cinema</button>
                     </div>
                 </form>
 
-                <div class="container">
+                <div class="col-auto">
                     <!-- Button trigger modal -->
-                    <button type="button" class="botons" data-toggle="modal" data-target="#addcinema">
+                    <button type="button" class="btn btn-primary offset-4" data-toggle="modal" data-target="#add">
                         Add cinema
                     </button>
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade " id="addcinema" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal fade bd-example-modal-lg" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <form method="POST">
                                 <div class="modal-header">
@@ -68,8 +69,8 @@ include('navbaradmin.php');
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
-                                    <button formaction="<?php echo FRONT_ROOT ?>Cinema/AddCinema" class="botons-chico" type="submit">Add</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button formaction="<?php echo FRONT_ROOT ?>Cinema/AddCinema" class="btn btn-primary offset-6 btn-md active" type="submit">Add</button>
                                 </div>
                             </form>
                         </div>
@@ -78,9 +79,6 @@ include('navbaradmin.php');
             </section>
         </div>
     </div>
-    <script>$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})</script>
 </main>
 <br>
 <br>
