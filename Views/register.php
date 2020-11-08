@@ -1,19 +1,39 @@
-<main class="main">
 
+<main class="main ">
      <div class="login-form">
-          <form action="<?php echo FRONT_ROOT ?>Session/Register" method="post">
-               <h2>Register Form</h2>
 
-               <input type="text" name="username" class="form-group" placeholder="Enter your user" required>
-               <input type="password" name="password" class="form-group" placeholder="Enter your password" required>
-               <input type="number" name="dni" class="form-group" placeholder="Enter your DNI" required minlength="7" maxlength="8">
-               <input type="email" name="email" class="form-group" placeholder="Enter your email" required>
-               <input type="date" name="birthday" class="form-group" placeholder="Enter your birthDay" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
-          </form>
-     <button class="botons" type="submit">Register</button>
-     <br>
-     <form method="post">
-          <button formaction="<?php echo FRONT_ROOT ?>home/MainPage" class="botons" type="submit">Return to Index</button>
-     </form>
-</div>
+          <header class="text-center">
+               <h2>Register</h2>
+          </header>
+               <form action="<?php echo FRONT_ROOT ?>Session/Register" method="post">
+
+                    <div class="form-group">
+                         <label for="">User</label>
+                         <input type="text" name="username" class="form-control " placeholder="User" required>
+                    </div>
+                    <div class="form-group">
+                         <label for="">Password</label>
+                         <input type="password" name="password" class="form-control " placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                         <label for="">DNI</label>
+                         <input type="number" name="dni" class="form-control " placeholder="DNI" required minlength="7" maxlength="8">
+                    </div>
+                    <div class="form-group">
+                         <label for="">Email</label>
+                         <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                         <label for="">BirthDay</label>
+                         <input type="date" name="birthday" class="form-control" placeholder="BirthDay" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+                    </div>
+                    <button class="botons" type="submit">Send Register</button>
+                    <br>
+
+               </form>
+               <form method="post">
+                    <button formaction="<?php echo FRONT_ROOT ?>home/MainPage" class="botons" type="submit">Return to Index</button>
+               </form>
+          
+     </div>
 </main>

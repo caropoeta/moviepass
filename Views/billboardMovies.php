@@ -19,6 +19,11 @@
 <section id="listado" class="mb-5">
     <div class="container-fluid">
         <h2 class="title-secondary">Billboard</h2>
+        <form method="POST">
+                  <div class="fuente4 text-center">
+                      <button formaction="<?php echo FRONT_ROOT ?>home/MainPage" class="btn btn-secondary" type="submit">Back</button>
+                  </div>
+              </form>
         <br>
         <div>
             <div class="form-group-movies">

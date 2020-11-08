@@ -135,7 +135,7 @@
                          </tbody>
                     </table>
                     <div class="align-content-center">
-                    <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
+                    <button class="botons-chico-gris" formaction="<?php echo FRONT_ROOT ?>Movies/Delete" type="submit">Delete</button>
                     </div>
                </form>
           
