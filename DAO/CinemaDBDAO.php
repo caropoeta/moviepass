@@ -1,9 +1,12 @@
 <?php
-
 namespace DAO;
 
 use DAO\Connection;
+use PDO as PDO;
+use Exception as Exception;
+use DAO\QueryType as QueryType;
 use Models\Cinema as Cinema;
+use Models\Statistics as Statistics;
 use PDOException;
 
 class CinemaDBDAO
@@ -59,11 +62,7 @@ class CinemaDBDAO
   public function ReadAll()
   {
 
-    $sql = "SELECT * FROM cinemas 
-
-  where Cinemadelete=0";
-
-
+    $sql = "SELECT * FROM cinemas where Cinemadelete=0";
 
     try {
       $this->connection = Connection::getInstance();
@@ -77,79 +76,73 @@ class CinemaDBDAO
     }
   }
 
-  protected static function Mapear($value)
-  {
-    $cinemaList = array();
-    foreach ($value as $v) {
-      $cinema = new Cinema();
+    protected function Mapear($value)
+    {
+        $cinemaList = array();
+        foreach ($value as $v) {
+            $cinema = new Cinema();
 
+            $cinema->setnameCinema($v['cinemaName']);
+            $cinema->setAddress($v['address']);
+            $cinema->setOpeningTime($v['openingTime']);
+            $cinema->setClosingTime($v['closingTime']);
+            $cinema->setTicketValue($v['ticket_value']);
+            $cinema->setCapacity($v['capacity']);
+            $cinema->setidCinema($v['idCinema']);
 
-      $cinema->setnameCinema($v['cinemaName']);
-      $cinema->setAddress($v['address']);
-      $cinema->setOpeningTime($v['openingTime']);
-      $cinema->setClosingTime($v['closingTime']);
-      $cinema->setTicketValue($v['ticket_value']);
-      $cinema->setCapacity($v['capacity']);
-      $cinema->setidCinema($v['idCinema']);
-
-      array_push($cinemaList, $cinema);
+            array_push($cinemaList, $cinema);
+        }
+        if (count($cinemaList) > 0)
+            return $cinemaList;
+        else
+            return false;
     }
-    if (count($cinemaList) > 0)
-      return $cinemaList;
-    else
-      return false;
-  }
 
 
-  public function Add($cinema)
-  {
-    // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada 
+ 
+    public function Add($cinema)
+    {
+        // Guardo como string la consulta sql utilizando como value, marcadores de parámetros con name (:name) o signos de interrogación (?) por los cuales los valores reales serán sustituidCinemaos cuando la sentencia sea ejecutada
+        $sql = "INSERT INTO cinemas (cinemaName,address,openingTime,closingTime,ticket_value,capacity,Cinemadelete)VALUES (:cinemaName, :address,:openingTime,:closingTime,:ticket_value,:capacity,:Cinemadelete );";
 
-    $sql = "INSERT INTO cinemas (cinemaName,address,openingTime,closingTime,ticket_value,capacity,Cinemadelete)VALUES (:cinemaName, :address,:openingTime,:closingTime,:ticket_value,:capacity,:Cinemadelete );";
+        $parameters['cinemaName'] = $cinema->getnameCinema();
+        $parameters['address'] = $cinema->getaddress();
+        $parameters['openingTime'] = $cinema->getopeningTime();
+        $parameters['closingTime'] = $cinema->getclosingTime();
+        $parameters['ticket_value'] = $cinema->getticketValue();
+        $parameters['capacity'] = $cinema->getcapacity();
+        $parameters['Cinemadelete'] = 0;
 
+        try {
+            $this->connection = Connection::getInstance();
 
-    $parameters['cinemaName'] = $cinema->getnameCinema();
-    $parameters['address'] = $cinema->getaddress();
-    $parameters['openingTime'] = $cinema->getopeningTime();
-    $parameters['closingTime'] = $cinema->getclosingTime();
-    $parameters['ticket_value'] = $cinema->getticketValue();
-    $parameters['capacity'] = $cinema->getcapacity();
-    $parameters['Cinemadelete'] = 0;
-
-    try {
-      $this->connection = Connection::getInstance();
-
-
-      $this->connection->ExecuteNonQuery($sql, $parameters);
-    } catch (PDOException $e) {
-      echo $e;
+            $this->connection->ExecuteNonQuery($sql, $parameters);
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
-  }
 
-  public function Remove($idCinema)
-  {
-
-    $sql = "update cinemas
+    public function Remove($idCinema)
+    {
+        $sql = "update cinemas
   set cinemaDelete= 1
 
   WHERE idCinema= :idCinema";
 
-    $parameters['idCinema'] = $idCinema;
+        $parameters['idCinema'] = $idCinema;
 
-    try {
-      $this->connection = Connection::getInstance();
-      return $this->connection->ExecuteNonQuery($sql, $parameters);
-    } catch (PDOException $e) {
+        try {
+            $this->connection = Connection::getInstance();
+            return $this->connection->ExecuteNonQuery($sql, $parameters);
+        } catch (PDOException $e) {
 
-      echo $e;
+            echo $e;
+        }
     }
-  }
 
-  public function Update(Cinema $cinemaToUpdate)
-  {
-
-    $sql = "UPDATE cinemas 
-s
+    public function Update(Cinema $cinemaToUpdate)
+    {
+        $sql = "UPDATE cinemas 
   SET cinemaName= :cineName,
   address= :address,
   openingTime=:openingTime,
@@ -160,49 +153,85 @@ s
 
   WHERE idCinema = :idCinema ";
 
-    $parameters = [];
-    $parameters['idCinema'] = $cinemaToUpdate->getidCinema();
-    $parameters['cinemaName'] = $cinemaToUpdate->getnameCinema();
-    $parameters['address'] = $cinemaToUpdate->getaddress();
-    $parameters['openingTime'] = $cinemaToUpdate->getopeningTime();
-    $parameters['closingTime'] = $cinemaToUpdate->getclosingTime();
-    $parameters['ticket_value'] = $cinemaToUpdate->getticketValue();
-    $parameters['capacity'] = $cinemaToUpdate->getcapacity();
+        $parameters = [];
+        $parameters['idCinema'] = $cinemaToUpdate->getidCinema();
+        $parameters['cinemaName'] = $cinemaToUpdate->getnameCinema();
+        $parameters['address'] = $cinemaToUpdate->getaddress();
+        $parameters['openingTime'] = $cinemaToUpdate->getopeningTime();
+        $parameters['closingTime'] = $cinemaToUpdate->getclosingTime();
+        $parameters['ticket_value'] = $cinemaToUpdate->getticketValue();
+        $parameters['capacity'] = $cinemaToUpdate->getcapacity();
 
+        try {
+            $this->connection = Connection::getInstance();
+            return $this->connection->ExecuteNonQuery($sql, $parameters);
+        } catch (PDOException $e) {
 
-    try {
-      $this->connection = Connection::getInstance();
-      return $this->connection->ExecuteNonQuery($sql, $parameters);
-    } catch (PDOException $e) {
-
-      echo $e;
+            echo $e;
+        }
     }
-  }
-  public static function Read($idCinema)
-  {
-    $sql = "SELECT 
+
+    public function Read($idCinema)
+    {
+        $sql = "SELECT 
   * FROM cinemas
   where idCinema = :idCinema";
-    $parameters['idCinema'] = $idCinema;
-    try {
-      $connection = Connection::getInstance();
-      $resultSet = $connection->execute($sql, $parameters);
-      if (!empty($resultSet)) {
-        $result = CinemaDBDAO::mapear($resultSet);
-        $cinema = new Cinema();
-        $cinema->setnameCinema($result[0]->getnameCinema());
-        $cinema->setaddress($result[0]->getaddress());
-        $cinema->setopeningTime($result[0]->getopeningTime());
-        $cinema->setclosingTime($result[0]->getclosingTime());
-        $cinema->setticketValue($result[0]->getticketValue());
-        $cinema->setcapacity($result[0]->getcapacity());
-        $cinema->setidCinema($result[0]->getidCinema());
-        $cinema->setdeleteCinema($result[0] = 0);
-        return $cinema;
-      } else
-        return false;
-    } catch (PDOException $e) {
-      echo $e;
+        $parameters['idCinema'] = $idCinema;
+        try {
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($sql, $parameters);
+            if (! empty($resultSet)) {
+                $result = $this->mapear($resultSet);
+                $cinema = new Cinema();
+                $cinema->setnameCinema($result[0]->getnameCinema());
+                $cinema->setaddress($result[0]->getaddress());
+                $cinema->setopeningTime($result[0]->getopeningTime());
+                $cinema->setclosingTime($result[0]->getclosingTime());
+                $cinema->setticketValue($result[0]->getticketValue());
+                $cinema->setcapacity($result[0]->getcapacity());
+                $cinema->setidCinema($result[0]->getidCinema());
+                $cinema->setdeleteCinema($result[0] = 0);
+                return $cinema;
+            } else
+                return false;
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
-  }
+
+    public function getStatisticsByCinemaId($startDate, $finishDate, $idCinema)  
+    {
+       
+        $sql = "SELECT c.cinemaName,SUM(f.asistencia) as soldTickets, " .
+            "c.ticket_value * SUM(f.asistencia)as revenue, " .
+            "SUM(r.capacity) - SUM(f.asistencia) as unSoldTickets " .
+            "FROM functions f " .
+            "JOIN rooms r on f.idRoom=r.idRoom " .
+            "JOIN cinemas c " .
+            "on r.idCinema = c.idCinema " .
+            "where f.day >=:startDate AND f.day<=:finishDate and r.idCinema=:idCinema and c.CinemaDelete=0 ".
+            "group BY c.idCinema";
+        $parameters = [];
+        $parameters['idCinema'] = $idCinema;
+        $parameters['startDate'] = $startDate;
+        $parameters['finishDate'] = $finishDate;
+        try {
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($sql, $parameters);
+            if (! empty($resultSet)) {
+                $stats = new Statistics();
+                $stats->setCinemaName($resultSet[0]['cinemaName']);
+                $stats->setTicketsSold($resultSet[0]['soldTickets']);
+                $stats->setRevenue($resultSet[0]['revenue']);
+                $stats->setUnsoldTickets($resultSet[0]['unSoldTickets']);
+                $stats->setStartDate($startDate);
+                $stats->setFinishDate($finishDate);
+                
+                return $stats;
+            } else
+                return false;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
 }

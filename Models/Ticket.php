@@ -8,46 +8,13 @@ class Ticket
 	private $seat;
     private $qr;
     private $functionId;
-    private $movTitl;
-    private $date;
-    private $cinnam;
-
+    
     public function setId(int $var)
     {
         $this->idv = $var;
     }
 
-    public function setCinemaName(String $var)
-    {
-        $this->cinnam = $var;
-    }
-
-    public function getCinemaName()
-    {
-        return $this->cinnam;
-    }
-
-    public function setDate(String $var)
-    {
-        $this->date = $var;
-    }
-
-    public function setMovieTitle(String $var)
-    {
-        $this->movTitl = $var;
-    }
-
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    public function getMovieTitle()
-    {
-        return $this->movTitl;
-    }
-
-    public function setFunctionName(String $var)
+    public function setFunctionId(int $var)
     {
         $this->functionId = $var;
     }
@@ -62,22 +29,22 @@ class Ticket
         $this->qr = $var;
     }
 
-    public function getId()
+    public function getId(int $var)
     {
         return $this->id;
     }
 
-    public function getSeat()
+    public function getSeat(int $var)
     {
         return $this->seat;
     }
 
-    public function getQr()
+    public function getQr(String $var)
     {
         return $this->qr;
     }
     
-    public function getFunctionName()
+    public function getFunctionId()
     {
         return $this->functionId;
     }

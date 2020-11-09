@@ -56,7 +56,8 @@
                                         if ($value instanceof Genre) {
                                              ?>
                                               <input <?php if (in_array($value->getId(), $genreWO)) echo 'checked' ?> type="checkbox" class="form-check-input" id="gnrO<?php echo $value->getId() ?>" name="genre-without[]" value="<?php echo $value->getId() ?>">
-                                             <label class="form-check-label" for="gnrO<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
+                                              
+                                             <label class="form-check-label" for="gnr<?php echo $value->getId() ?>"> <?php echo $value->getDescription() ?></label><br>
                                              <?php
                                         }
                                    } ?>
@@ -67,7 +68,7 @@
                               <small style="color:black" >
                          *Search by year.
                     </small>
-                                   <input type="number" min="0000" max="9999" class="form-group" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?> required>
+                                   <input type="number" min="1582" max="9999" class="form-group" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
                               </div>
                               <div class="align-items-center">
                                    <button class="botons" formaction="<?php echo FRONT_ROOT ?>Movies/List/" name="page" value="1" type="submit">Search</button>
@@ -75,11 +76,7 @@
                          </div>
                     </div>
                </div>
-          <br>
-          <div class="row justify-content-center offset-1">
-               <button class="botons-chico" style="margin-left: 25%" formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
-               <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
-          </div>
+               </div>
                    
                </form>
          
@@ -102,7 +99,6 @@
                               <th>Genres</th>
                               <th>Movie Photo</th>
                               <th></th>
-                              <th>Statistics</th>
                          </thead>
                          <tbody>
                               <?php
@@ -130,11 +126,6 @@
                                                        <?php } ?>
                                                   </div>
                                              </div>
-                                             </td>
-                                           <td>
-                                                  <form method="POST">
-                                                       <button name="movid" value="<?php echo $movie->getId() ?>" formaction="<?php echo FRONT_ROOT ?>Movies/GetMovieStatisics" class="btn btn-primary offset-6 btn-md active" type="submit">Get statistics</button>
-                                                  </form>
                                              </td>
                                         </tr>
                                         <?php
