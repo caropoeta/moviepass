@@ -1,29 +1,60 @@
-<nav>
-  <div class="logo">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <h4 style="float:right; margin-top:20px; margin-right: 600px">MOVIE PASS ADMIN</h4>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item">
+        <form method="POST">
+          <div class="p-2">
+            <button formaction="<?php echo FRONT_ROOT ?>Session/Logout" class="btn btn-outline-success" type="submit" name="action" value="register"> Log Out </button>
+          </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Users/List" class="btn btn-outline-success" type="submit">UsersList</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Api/List" class="btn btn-outline-success" type="submit">ApiList</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Cinema" class="btn btn-outline-success" type="submit">Cinema</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Movies/List" class="btn btn-outline-success" type="submit">List Current Movies</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Billboard/List" class="btn btn-secondary" type="submit"> Billboard </button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Ticket/List" class="btn btn-outline-success" type="submit">Ticket List</button>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="p-2">
+          <button formaction="<?php echo FRONT_ROOT ?>Session/Index" class="btn btn-outline-success" type="submit" name="action" value="edit"> Edit account information </button>
+        </div>
+        </form>
+      </li>
+    </ul>
   </div>
-  <ul class="nav-links">
-    <li><a href="<?php echo FRONT_ROOT ?>Billboard/List"> Billboard </a></li>
-    <li><a href="<?php echo FRONT_ROOT ?>Users/List">Users</a></li>
-    <li><a href="<?php echo FRONT_ROOT ?>Cinema">Cinemas</a></li>
-    <li class="nav-item dropdown">
-      <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Movies </a>
-      <div class="dropdown-menu" style="background-color: #a5a4a4" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Api/List">API</a>
-        <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Movies/List">Saved Movies</a>
-      </div>
-    </li>
-    <li><a href="<?php echo FRONT_ROOT ?>Session/Logout">Logout</a></li>
-    
-    <form method="POST">
-      <li><button class="btn btn-secondary" style="margin-top: 13px;margin-left: 720px" formaction="<?php echo FRONT_ROOT ?>Session/Index" type="submit" name="action" value="edit"> Edit</button></li>
-    </form>
-    <form method="POST">
-      <li><button   class="btn btn-secondary" style="margin-top: 13px;" formaction="<?php echo FRONT_ROOT ?>Ticket/List" type="submit">Ticket List</button></li>
-      </form> 
-    
-    
-</ul>
 </nav>
