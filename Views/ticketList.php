@@ -28,6 +28,17 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
                         <br>
                         <label for="date">Date:</label>
                         <input id="date" type="date" name="date" value="<?php echo $date ?>">
+                        <br>
+                        <input type="radio" id="mta" name="orderby" value="mta" <?php if($orderby == 'mta') echo 'checked' ?>>
+                        <label for="mta">Movie title asc</label><br>
+                        <input type="radio" id="mtd" name="orderby" value="mtd" <?php if($orderby == 'mtd') echo 'checked' ?>>
+                        <label for="mtd">Movie title dsc</label><br>
+                        <input type="radio" id="cna" name="orderby" value="cna" <?php if($orderby == 'cna') echo 'checked' ?>>
+                        <label for="cna">Cinema name asc</label><br>
+                        <input type="radio" id="cnd" name="orderby" value="cnd" <?php if($orderby == 'cnd') echo 'checked' ?>>
+                        <label for="cnd">Cinema name dsc</label><br>
+                        <input type="radio" id="non" name="orderby" value="none" <?php if($orderby == 'none') echo 'checked' ?>>
+                        <label for="non">None</label>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -47,6 +58,7 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
         <thead class="bg-dark text-white">
             <th>Title</th>
             <th>Seat Number</th>
+            <th>Cinema name</th>
             <th>Room name</th>
             <th>Date</th>
             <th>QR</th>
@@ -57,6 +69,7 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
                     <tr>
                         <td><?php echo $ticket->getMovieTitle() ?></td>
                         <td><?php echo $ticket->getSeat() ?></td>
+                        <td><?php echo $ticket->getCinemaName() ?></td>
                         <td><?php echo $ticket->getFunctionName() ?></td>
                         <td><?php echo $ticket->getDate() ?></td>
                         <td><img src="<?php echo $ticket->getQr() ?>" width="100" height="100"></td>

@@ -162,15 +162,14 @@ class TicketController
         HomeController::MainPage();
     }
 
-    public static function List(String $movieName = "", String $date = "")
+    public static function List(String $movieName = "", String $date = "", String $orderby = "none")
     {
         try {
-            $tickets = TicketDAO::getTicketsFromUser(Session::GetUserId(), $movieName, $date);
+            $tickets = TicketDAO::getTicketsFromUser(Session::GetUserId(), $movieName, $date, $orderby);
         } catch (Exception $th) {
-            throw $th;
             ViewsController::Show(array('Error processing request'));
         }
 
-        ViewsController::TicketList($tickets, $movieName, $date, Session::GetUserRole());
+        ViewsController::TicketList($tickets, $movieName, $date, Session::GetUserRole(), $orderby);
     }
 }

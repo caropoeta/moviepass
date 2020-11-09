@@ -8,6 +8,7 @@ use DAO\MovieDAO;
 use DAO\MovieXGenreDAO;
 use DAO\Session;
 use Controllers\ViewsController as ViewsHandler;
+use DAO\TicketDAO;
 use Exception;
 
 class MoviesController
@@ -27,6 +28,19 @@ class MoviesController
     public static function Index()
     {
         HomeController::MainPage();
+    }
+
+    public static function GetMovieStatisics(int $idMov, String $strtPeriod = "", String $endPeriod = "")
+    {
+        try {
+            $stats = TicketDAO::getStatisticsFromMovie($idMov, $strtPeriod, $endPeriod);
+        } catch (Exception $th) {
+            ViewsHandler::Show(array('Error processing request'));
+            HomeController::MainPage();
+            exit;
+        }
+        
+        ViewsHandler::MovieStatistics($stats, $strtPeriod, $endPeriod, $idMov);
     }
 
     public static function List(String $name = "", $genreW = [], $genreWO = [], $year = '0000', int $page = 1)

@@ -10,10 +10,21 @@ class Ticket
     private $functionId;
     private $movTitl;
     private $date;
-    
+    private $cinnam;
+
     public function setId(int $var)
     {
         $this->idv = $var;
+    }
+
+    public function setCinemaName(String $var)
+    {
+        $this->cinnam = $var;
+    }
+
+    public function getCinemaName()
+    {
+        return $this->cinnam;
     }
 
     public function setDate(String $var)

@@ -161,8 +161,17 @@ abstract class ViewsController
         require_once(VIEWS_PATH . 'selectCreditCard.php');
     }
 
-    public static function TicketList(array $tickets, String $movieName, String $date, String $currRole)
-    {
+    public static function TicketList(
+        array $tickets,
+        String $movieName,
+        String $date,
+        String $currRole,
+        String $orderby
+    ) {
         require_once(VIEWS_PATH . 'ticketList.php');
+    }
+
+    public static function MovieStatistics($movStatics, String $strtPeriod, String $endPeriod, int $idMov) {
+        require_once(VIEWS_PATH . 'movieStatistics.php');
     }
 }
