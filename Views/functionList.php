@@ -51,7 +51,7 @@ include('navbaradmin.php');
                         <td>
                             <div class="col-auto">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#statistics<?php echo $function->getidFunction() ?>">
+                                <button type="button" class="botons" data-toggle="modal" data-target="#statistics<?php echo $function->getidFunction() ?>">
                                     Statistics
                                 </button>
                             </div>
