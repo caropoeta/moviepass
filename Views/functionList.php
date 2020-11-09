@@ -5,11 +5,11 @@ use Models\Functions;
 include('navbaradmin.php');
 
 ?>
-<h2 class="fuente text-center"> Functions Admin</h2>
+<h2 class="title-secondary"> Functions Admin</h2>
 <br>
 
-<div class="p-2 text-center">
-    <table>
+<div >
+    <table class="openingcinema">
         <thead>
             <tr>
                 <th>Opening time</th>
@@ -60,13 +60,13 @@ include('navbaradmin.php');
                             <form action=<?php echo FRONT_ROOT . 'Functions/Delete' ?> method="POST">
                                 <input type="hidden" name="id" value=<?php echo $function->getidFunction() ?>>
                                 <input type="hidden" name="fni" value=<?php echo $roomId ?>>
-                                <button type=submit>Delete </button>
+                                <button class="botons"type=submit>Delete </button>
                             </form>
                         </td>
                         <td>
                             <div class="col-auto">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#update<?php echo $function->getidFunction() ?>">
+                                <button type="button" class="botons" data-toggle="modal" data-target="#update<?php echo $function->getidFunction() ?>">
                                     Update
                                 </button>
                             </div>
@@ -92,8 +92,8 @@ include('navbaradmin.php');
                                         <input type="hidden" name="roomid" value="<?php echo $roomId ?>">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="btn btn-primary offset-6 btn-md active" type="submit" name="funid" value="<?php echo $function->getidFunction() ?>">Update</button>
+                                        <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
+                                        <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieUpdate" class="botons-chico" type="submit" name="funid" value="<?php echo $function->getidFunction() ?>">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -134,7 +134,7 @@ include('navbaradmin.php');
 
 <div class="col-auto">
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#add">
+    <button type="button" class="botons-chico" id="der" data-toggle="modal" data-target="#add">
         Add function
     </button>
 </div>
@@ -157,8 +157,8 @@ include('navbaradmin.php');
                     <br>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" class="btn btn-primary offset-6 btn-md active" type="submit" name="id" value="<?php echo $roomId ?>">Add</button>
+                    <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
+                    <button formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" class="botons-chico" type="submit" name="id" value="<?php echo $roomId ?>">Add</button>
                 </div>
             </form>
         </div>

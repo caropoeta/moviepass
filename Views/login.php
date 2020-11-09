@@ -1,32 +1,26 @@
+<main class="main">
+     <h1 class="title-principal">Welcome to MOVIE PASS</h1>
+     <div class="login-form">
 
-<main class="d-flex align-items-center justify-content-center height-100">
-     <div class="content">
-          <header class="text-center">
-               <h2 class="fuente4">Movie Pass Log-in</h2>
-          </header>
-          <div class="login-form bg-dark-alpha p-5 bg-light rounded back">
-               <form method="post">
+          <h2>Log-in</h2>
 
-                    <div class="form-group">
-                         
-                         <input type="text" name="username" class="form-control form-control-lg" placeholder="Enter User" required>
-                    </div>
-                    <div class="form-group">
-                       
-                         <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter Password" required>
-                    </div>
+          <form method="post">
 
-                    <button formaction="<?php echo FRONT_ROOT ?>Session/Login" class="btn btn-primary btn-block btn-lg" type="submit">Log-In</button>
-                    <button formaction="<?php echo FRONT_ROOT ?>FacebookSession/Index" class="fblogin social btn btn-primary btn-block btn-lg" type="submit">
-                         <span>Login with Facebook</span>
-                    </button>
-               </form>
+               <input type="text" name="username" class="form-group" placeholder="Enter User" required>
+               <input type="password" name="password" class="form-group" placeholder="Enter Password" required>
 
-               <form method="post">
-                    <button name="action" value="register" formaction="<?php echo FRONT_ROOT ?>Session" class="register-btn bts-a" type="submit">
-                         Don't have an account? Sign up!
-                    </button>
-               </form>
-          </div>
+
+               <button formaction="<?php echo FRONT_ROOT ?>Session/Login" class="botons" type="submit">Log-In</button>
+               <button formaction="<?php echo FRONT_ROOT ?>FacebookSession/Index" class="botons" type="submit">
+                    <span>Login with Facebook</span>
+               </button>
+          </form>
+
+          <form method="post">
+               <button name="action" value="register" formaction="<?php echo FRONT_ROOT ?>Session" class="register-btn bts-a" type="submit">
+                    Don't have an account? Sign up!
+               </button>
+          </form>
+     </div>
      </div>
 </main>

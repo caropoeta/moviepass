@@ -130,12 +130,8 @@ abstract class ViewsController
         require_once(VIEWS_PATH . 'usersList.php');
     }
 
-    public static function SelectFunction(
-        array $data,
-        int $movieId,
-        String $movieName,
-        String $currRole
-    ) {
+    public static function SelectFunction(array $data, int $movieId, String $movieName, String $currRole)
+    {
         require_once(VIEWS_PATH . 'selectFunction.php');
     }
 
@@ -151,27 +147,8 @@ abstract class ViewsController
         require_once(VIEWS_PATH . 'confirmDetails.php');
     }
 
-    public static function SelectCreditCard(
-        int $numberOfTickets,
-        int $functionId,
-        array $creditCards,
-        float $totalPrice,
-        String $currRole
-    ) {
-        require_once(VIEWS_PATH . 'selectCreditCard.php');
-    }
-
-    public static function TicketList(
-        array $tickets,
-        String $movieName,
-        String $date,
-        String $currRole,
-        String $orderby
-    ) {
-        require_once(VIEWS_PATH . 'ticketList.php');
-    }
-
-    public static function MovieStatistics($movStatics, String $strtPeriod, String $endPeriod, int $idMov) {
-        require_once(VIEWS_PATH . 'movieStatistics.php');
+    public static function BuyResume(int $numberOfTickets, array $data, float $price, int $movId, String $movTitle, String $currRole)
+    {
+        require_once(VIEWS_PATH . 'buyResume.php');
     }
 }
