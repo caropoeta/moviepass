@@ -6,7 +6,7 @@ include('navbaradmin.php');
 <main class="d-flex  justify-content-center ">
 	<div class="content">
 		<header class="text-center">
-			<h2 class="title-secondary">Cinema: </h2>
+			<h2 class="fuente4 text-center">Cinema: </h2>
 
 			<form method="POST">
 				<div class="p-2">
