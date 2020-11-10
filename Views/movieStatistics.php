@@ -3,7 +3,7 @@
 include('navbaradmin.php');
 ?>
 <div>
-    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#ccAdd">
+    <button type="button" class="botons-chico" data-toggle="modal" data-target="#ccAdd">
         Set filters
     </button>
 
@@ -28,15 +28,15 @@ include('navbaradmin.php');
                         <input id="end" type="date" name="end" value="<?php echo $endPeriod ?>" required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button formaction="<?php echo FRONT_ROOT ?>Movies/GetMovieStatisics" class="btn btn-primary offset-6 btn-md active" type="submit">Set filters</button>
+                        
+                        <button formaction="<?php echo FRONT_ROOT ?>Movies/GetMovieStatisics" class="botons-chico" type="submit">Set filters</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <table>
+    <table class="table">
         <thead>
             <th> Title </th>
             <th> Total capacity </th>
@@ -55,6 +55,6 @@ include('navbaradmin.php');
         </tbody>
     </table>
     <form action="<?php echo FRONT_ROOT ?>Movies/List" method="POST">
-        <button class="btn btn-primary offset-6 btn-md active" type="submit">Home</button>
+        <button class="botons-chico" style="margin:auto" type="submit">Home</button>
     </form>
 </div>

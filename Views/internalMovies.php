@@ -70,7 +70,7 @@
                     </div>
                </div>
           </div>
-          <div class="row justify-content-center offset-1">
+          <div class="align-items-center">
                <button class="botons-chico" style="margin-left: 25%" formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
                <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Movies/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
           </div>
@@ -118,7 +118,7 @@
                                              </td>
                                              <td>
                                                   <form method="POST">
-                                                       <button name="movid" value="<?php echo $movie->getId() ?>" formaction="<?php echo FRONT_ROOT ?>Movies/GetMovieStatisics" class="btn btn-primary offset-6 btn-md active" type="submit">Get statistics</button>
+                                                       <button name="movid" value="<?php echo $movie->getId() ?>" formaction="<?php echo FRONT_ROOT ?>Movies/GetMovieStatisics" class="botons" type="submit">Get statistics</button>
                                                   </form>
                                              </td>
                                         </tr>
