@@ -81,8 +81,8 @@ from
         functions.id
     ) as functionsStatistics on functionsStatistics.idCinema = cinemas.idCinema
 ) as cinStatistics
-#where
-#idCinema = :idCinema
+where
+idCinema = :idCinema
 group by
 cinStatistics.idCinema
         ";
