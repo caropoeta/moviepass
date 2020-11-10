@@ -198,40 +198,4 @@ class CinemaDBDAO
             echo $e;
         }
     }
-
-    public function getStatisticsByCinemaId($startDate, $finishDate, $idCinema)  
-    {
-       
-        $sql = "SELECT c.cinemaName,SUM(f.asistencia) as soldTickets, " .
-            "c.ticket_value * SUM(f.asistencia)as revenue, " .
-            "SUM(r.capacity) - SUM(f.asistencia) as unSoldTickets " .
-            "FROM functions f " .
-            "JOIN rooms r on f.idRoom=r.idRoom " .
-            "JOIN cinemas c " .
-            "on r.idCinema = c.idCinema " .
-            "where f.day >=:startDate AND f.day<=:finishDate and r.idCinema=:idCinema and c.CinemaDelete=0 ".
-            "group BY c.idCinema";
-        $parameters = [];
-        $parameters['idCinema'] = $idCinema;
-        $parameters['startDate'] = $startDate;
-        $parameters['finishDate'] = $finishDate;
-        try {
-            $this->connection = Connection::getInstance();
-            $resultSet = $this->connection->execute($sql, $parameters);
-            if (! empty($resultSet)) {
-                $stats = new Statistics();
-                $stats->setCinemaName($resultSet[0]['cinemaName']);
-                $stats->setTicketsSold($resultSet[0]['soldTickets']);
-                $stats->setRevenue($resultSet[0]['revenue']);
-                $stats->setUnsoldTickets($resultSet[0]['unSoldTickets']);
-                $stats->setStartDate($startDate);
-                $stats->setFinishDate($finishDate);
-                
-                return $stats;
-            } else
-                return false;
-        } catch (PDOException $e) {
-            echo $e;
-        }
-    }
 }

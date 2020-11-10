@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-11-2020 a las 21:49:23
+-- Tiempo de generación: 10-11-2020 a las 05:22:34
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.10
 
@@ -54,12 +54,23 @@ INSERT INTO `cinemas` (`idCinema`, `cinemaName`, `openingTime`, `closingTime`, `
 --
 
 CREATE TABLE `creditcardinfo` (
-  `securityCode` int(11) NOT NULL,
   `company` varchar(50) NOT NULL,
   `expirationDate` date NOT NULL,
-  `fullName` varchar(50) NOT NULL,
+  `number` bigint(11) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `creditcardinfo`
+--
+
+INSERT INTO `creditcardinfo` (`company`, `expirationDate`, `number`, `id`) VALUES
+('Visa', '2020-11-01', 4716527179241111, 3),
+('Mastercard', '2020-11-01', 5406376698813857, 4),
+('Visa', '2020-11-01', 4929083578568533, 5),
+('Mastercard', '2020-11-01', 5109883386773699, 6),
+('Visa', '2020-11-01', 4807567293760901, 7),
+('Visa', '2020-11-01', 4539521693384916, 8);
 
 -- --------------------------------------------------------
 
@@ -86,7 +97,8 @@ INSERT INTO `discountpolicy` (`dayOfTheWeek`, `percentage`, `name`, `minTickets`
 ('Tuesday', 0.25, 'discountTuesday', 2, 4),
 ('Wednesday', 0.25, 'discountWednesday', 2, 5),
 ('Thursday', 0, 'discountThursday', 0, 6),
-('Friday', 0, 'discountFriday', 0, 7);
+('Friday', 0, 'discountFriday', 0, 7),
+('None', 0, 'discountNone', 0, 9);
 
 -- --------------------------------------------------------
 
@@ -112,7 +124,7 @@ CREATE TABLE `functions` (
 INSERT INTO `functions` (`id`, `time`, `asistencia`, `idMovie`, `idRoom`, `deleted`, `finishTime`, `day`) VALUES
 (6, '07:48:00', 0, 635302, 1, 1, '09:45:54', '2020-10-29'),
 (7, '06:16:00', 0, 528085, 1, 0, '08:10:08', '2020-11-27'),
-(8, '04:49:00', 0, 413518, 1, 0, '06:49:55', '2020-09-30'),
+(8, '04:49:00', 0, 413518, 1, 1, '06:49:55', '2020-09-30'),
 (9, '03:42:00', 0, 413518, 1, 1, '05:42:55', '2020-10-28'),
 (10, '02:31:00', 0, 556984, 4, 0, '04:41:55', '2020-10-27'),
 (11, '15:37:00', 0, 413518, 1, 1, '17:37:55', '2020-10-29'),
@@ -121,7 +133,9 @@ INSERT INTO `functions` (`id`, `time`, `asistencia`, `idMovie`, `idRoom`, `delet
 (14, '05:39:00', 0, 556984, 1, 0, '07:49:55', '2020-10-31'),
 (15, '22:01:00', 0, 635302, 1, 1, '23:58:54', '2020-10-29'),
 (16, '22:58:00', 0, 635302, 1, 1, '00:55:54', '2020-10-29'),
-(17, '12:09:00', 0, 413518, 1, 0, '14:09:55', '2020-11-30');
+(17, '12:09:00', 0, 413518, 1, 0, '14:09:55', '2020-11-30'),
+(18, '14:30:00', 0, 556984, 5, 0, '16:40:55', '2020-11-30'),
+(19, '04:31:00', 0, 413518, 1, 0, '06:31:55', '2020-11-29');
 
 -- --------------------------------------------------------
 
@@ -243,8 +257,22 @@ INSERT INTO `movies` (`id`, `title`, `release_date`, `vote_average`, `overview`,
 CREATE TABLE `purchase` (
   `amount` float NOT NULL,
   `id` int(11) NOT NULL,
-  `numberOfTickets` int(11) NOT NULL
+  `creditCardId` int(11) NOT NULL,
+  `numberOfTickets` int(11) NOT NULL,
+  `transactionDate` date NOT NULL DEFAULT current_timestamp(),
+  `discountId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `purchase`
+--
+
+INSERT INTO `purchase` (`amount`, `id`, `creditCardId`, `numberOfTickets`, `transactionDate`, `discountId`) VALUES
+(300, 51, 2, 1, '2020-11-09', 9),
+(2250, 52, 6, 10, '2020-11-10', 4),
+(2250, 53, 6, 10, '2020-11-10', 4),
+(2250, 54, 6, 10, '2020-11-10', 4),
+(2250, 55, 6, 10, '2020-11-10', 4);
 
 -- --------------------------------------------------------
 
@@ -289,7 +317,7 @@ INSERT INTO `rooms` (`idRoom`, `roomName`, `capacity`, `idCinema`, `price`, `del
 (2, 'a', 150, 1, 150, 0),
 (4, 'Avenida', 150, 2, 150, 0),
 (5, 'Mulan', 150, 3, 150, 0),
-(6, '    ', 300, 1, 50, 0);
+(6, '    ', 300, 1, 50, 1);
 
 -- --------------------------------------------------------
 
@@ -304,6 +332,53 @@ CREATE TABLE `tickets` (
   `idPayment` int(11) DEFAULT NULL,
   `seatNumber` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `idFunction`, `idUser`, `idPayment`, `seatNumber`) VALUES
+(1, 17, 1, 51, 1),
+(2, 7, 1, 52, 1),
+(3, 7, 1, 52, 2),
+(4, 7, 1, 52, 3),
+(5, 7, 1, 52, 4),
+(6, 7, 1, 52, 5),
+(7, 7, 1, 52, 6),
+(8, 7, 1, 52, 7),
+(9, 7, 1, 52, 8),
+(10, 7, 1, 52, 9),
+(11, 7, 1, 52, 10),
+(12, 7, 1, 53, 11),
+(13, 7, 1, 53, 12),
+(14, 7, 1, 53, 13),
+(15, 7, 1, 53, 14),
+(16, 7, 1, 53, 15),
+(17, 7, 1, 53, 16),
+(18, 7, 1, 53, 17),
+(19, 7, 1, 53, 18),
+(20, 7, 1, 53, 19),
+(21, 7, 1, 53, 20),
+(22, 7, 1, 54, 21),
+(23, 7, 1, 54, 22),
+(24, 7, 1, 54, 23),
+(25, 7, 1, 54, 24),
+(26, 7, 1, 54, 25),
+(27, 7, 1, 54, 26),
+(28, 7, 1, 54, 27),
+(29, 7, 1, 54, 28),
+(30, 7, 1, 54, 29),
+(31, 7, 1, 54, 30),
+(32, 7, 1, 55, 31),
+(33, 7, 1, 55, 32),
+(34, 7, 1, 55, 33),
+(35, 7, 1, 55, 34),
+(36, 7, 1, 55, 35),
+(37, 7, 1, 55, 36),
+(38, 7, 1, 55, 37),
+(39, 7, 1, 55, 38),
+(40, 7, 1, 55, 39),
+(41, 7, 1, 55, 40);
 
 -- --------------------------------------------------------
 
@@ -327,8 +402,30 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_dni`, `user_email`, `user_birthday`, `user_role`, `deleted`) VALUES
-(1, 'admin', '$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 9999999, 'admin@localhost', '2020-10-15', 2, 0),
-(12, 'Graciela Astudillo', '$2y$10$Dg0jp5OeJzzgex.RzNFXW.eJoryWNBZ.TgR5YcCpHEI7JIpbTDtwW', 9999998, 'astudillograciela@hotmail.com', '2020-10-31', 1, 0);
+(1, 'admin', '$2y$10$Y8uv.LImHjTsBXCoorLwnOUUlBBgViNUUJnoone7lWsNhZ1ZUIu8m', 9999999, 'dev.groupthree@gmail.com', '2020-10-15', 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usersxcreditcardinfo`
+--
+
+CREATE TABLE `usersxcreditcardinfo` (
+  `userid` int(11) NOT NULL,
+  `creditCardId` int(11) NOT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usersxcreditcardinfo`
+--
+
+INSERT INTO `usersxcreditcardinfo` (`userid`, `creditCardId`, `deleted`, `id`) VALUES
+(1, 3, 0, 2),
+(1, 5, 0, 4),
+(1, 6, 0, 5),
+(1, 7, 0, 6);
 
 --
 -- Índices para tablas volcadas
@@ -383,7 +480,9 @@ ALTER TABLE `movies`
 -- Indices de la tabla `purchase`
 --
 ALTER TABLE `purchase`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_purchase_discountId` (`discountId`),
+  ADD KEY `fk_purchase_idCreditCard` (`creditCardId`);
 
 --
 -- Indices de la tabla `roles`
@@ -420,6 +519,14 @@ ALTER TABLE `users`
   ADD KEY `fk_users_role` (`user_role`);
 
 --
+-- Indices de la tabla `usersxcreditcardinfo`
+--
+ALTER TABLE `usersxcreditcardinfo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_usersXcreditCardInfo_userid` (`userid`),
+  ADD KEY `fk_usersXcreditCardInfo_creditCardId` (`creditCardId`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -433,19 +540,19 @@ ALTER TABLE `cinemas`
 -- AUTO_INCREMENT de la tabla `creditcardinfo`
 --
 ALTER TABLE `creditcardinfo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `discountpolicy`
 --
 ALTER TABLE `discountpolicy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `functions`
 --
 ALTER TABLE `functions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `genres`
@@ -457,7 +564,7 @@ ALTER TABLE `genres`
 -- AUTO_INCREMENT de la tabla `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -475,13 +582,19 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `usersxcreditcardinfo`
+--
+ALTER TABLE `usersxcreditcardinfo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -502,6 +615,14 @@ ALTER TABLE `genresxmovies`
   ADD CONSTRAINT `fk_idMovie` FOREIGN KEY (`idMovie`) REFERENCES `movies` (`id`);
 
 --
+-- Filtros para la tabla `purchase`
+--
+ALTER TABLE `purchase`
+  ADD CONSTRAINT `fk_purchase_creditCardXUserId` FOREIGN KEY (`creditCardId`) REFERENCES `usersxcreditcardinfo` (`id`),
+  ADD CONSTRAINT `fk_purchase_discountId` FOREIGN KEY (`discountId`) REFERENCES `discountpolicy` (`id`),
+  ADD CONSTRAINT `fk_purchase_idCreditCard` FOREIGN KEY (`creditCardId`) REFERENCES `usersxcreditcardinfo` (`id`);
+
+--
 -- Filtros para la tabla `rooms`
 --
 ALTER TABLE `rooms`
@@ -520,6 +641,13 @@ ALTER TABLE `tickets`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_users_role` FOREIGN KEY (`user_role`) REFERENCES `roles` (`role_id`);
+
+--
+-- Filtros para la tabla `usersxcreditcardinfo`
+--
+ALTER TABLE `usersxcreditcardinfo`
+  ADD CONSTRAINT `fk_usersXcreditCardInfo_creditCardId` FOREIGN KEY (`creditCardId`) REFERENCES `creditcardinfo` (`id`),
+  ADD CONSTRAINT `fk_usersXcreditCardInfo_userid` FOREIGN KEY (`userid`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -12,8 +12,8 @@ use Models\Movie;
             <input type="hidden" name="time" value="<?php echo $time ?>">
             <input type="hidden" name="day" value="<?php echo $date ?>">
             <input type="hidden" name="room" value="<?php echo $roomId ?>">
-            <button class="botons-chico" style="margin-left: 25%" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" type="submit" name="page" value="<?php echo $page - 1 ?>">Back Page</button>
-            <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" type="submit" name="page" value="<?php echo $page + 1 ?>">Next Page</button>
+            <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" type="submit" name="page" value="<?php echo $page - 1 ?>">Back Page</button>
+            <button class="btn btn-primary mb-2" formaction="<?php echo FRONT_ROOT ?>Functions/SelectMovieAdd" type="submit" name="page" value="<?php echo $page + 1 ?>">Next Page</button>
         </div>
     </form>
 
@@ -46,7 +46,7 @@ use Models\Movie;
                                         }
                                         ?></td>
                                     <td><?php if ($movie->getPoster() != null) {
-                                            echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="100" height="147">';
+                                            echo '<img src="https://image.tmdb.org/t/p/w500' . $movie->getPoster() . '" width="250" height="357">';
                                         } ?></td>
                                     <td>
                                         <div class="col-auto">

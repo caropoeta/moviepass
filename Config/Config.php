@@ -17,8 +17,11 @@ define('DATA_PATH', 'Data/');
 define('APP_ID', '383668786136123');
 define('APP_SECRET', '07cde429233190afc3f433c626dbfc0e');
 
+//Facebook login & mailing
+define('HOST_NAME', $_SERVER['HTTP_HOST']);
+
 //The movie db
-define('API_KEY', '69b28faa719e69ade504cc5f24994250');
+define('API_KEY', 'daaea3a3b1e2571ed4a7d51041531d32');
 
 //Default timezone
 date_default_timezone_set('America/Argentina/Buenos_Aires');
@@ -33,3 +36,8 @@ define('DB_NAME', "moviepass");
 define('ADMIN_ROLE_NAME', "Admin");
 define('CLIENT_ROLE_NAME', "Client");
 define('GUEST_ROLE_NAME', "Guest");
+
+//php ini file changes, for mailing purposes
+define('APP_MAIL', "dev.groupthree@gmail.com");
+define('APP_MAIL_PASSWORD', "carolina.3");
+
