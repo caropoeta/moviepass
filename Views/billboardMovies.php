@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <section>
     <?php
 
@@ -75,7 +76,7 @@
                             <small style="color:black">
                                              *Search by year.
                                         </small style="color:black">
-                                <input type="number" min="0000" max="9999" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?>>
+                                <input type="number" min="0000" max="9999" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?> required>
                             </div>
 
                             <button class="botons" formaction="<?php echo FRONT_ROOT ?>Billboard/List/" name="page" value="1" type="submit">Search</button>
@@ -139,4 +140,8 @@
                 </table>
             </div>
         </div>
+<<<<<<< Updated upstream
     </div>
+=======
+    </div>
+>>>>>>> Stashed changes
