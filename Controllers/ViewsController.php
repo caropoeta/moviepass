@@ -21,6 +21,14 @@ abstract class ViewsController
         echo '")</script>';
     }
 
+    public static function GetTicketsMailMessage(
+        String $hostname,
+        Array $tickets
+    ) {
+        return require_once(VIEWS_PATH . 'getTicketsMailMessage.php');
+    }
+
+
     public static function ApiMovies(
         array $currMov,
         array $movies,

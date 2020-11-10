@@ -6,6 +6,8 @@ use Models\Cinema as Cinema;
 use Models\Statistics as Statistics;
 use Controllers\ViewsController as ViewsHandler;
 use DAO\Session;
+use DAO\TicketDAO;
+use Models\Ticket;
 
 class CinemaController
 {
@@ -154,10 +156,9 @@ class CinemaController
         require_once (VIEWS_PATH . 'statistics.php');
     }
 
-    public function ShowStatistics($cinemaId, $startDate, $finishDate)
+    public function ShowStatistics(String $startDate, String $finishDate, int $cinemaId)
     {
-        $CinemaDBDAO = new CinemaDBDAO();
-        $stats = $CinemaDBDAO->getStatisticsByCinemaId($cinemaId, $startDate, $finishDate);
+        $stats = TicketDAO::getStatisticsFromCinema($cinemaId, $startDate, $finishDate);
         require_once (VIEWS_PATH . 'showStatistics.php');
     }
 }

@@ -44,7 +44,7 @@ class FacebookSessionController
 
         try {
             header('Location: ' . FacebookDAO::GetInstance()->GetLoginUrl(
-                'http://' . $_SERVER['HTTP_HOST'] . '/personal/moviepass/FacebookSession/Login/'
+                'http://' . HOST_NAME . '/personal/moviepass/FacebookSession/Login/'
             ));
         } catch (Exception $l) {
             ViewsHandler::Show(array('Error processing request'));

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <section>
     <?php
 
@@ -21,19 +20,19 @@
     <div class="container-fluid">
         <h2 class="title-secondary">Billboard</h2>
         <form method="POST">
-                  <div class="fuente4 text-center">
-                      <button formaction="<?php echo FRONT_ROOT ?>home/MainPage" class="btn btn-secondary" type="submit">Back</button>
-                  </div>
-              </form>
+            <div class="fuente4 text-center">
+                <button formaction="<?php echo FRONT_ROOT ?>home/MainPage" class="btn btn-secondary" type="submit">Back</button>
+            </div>
+        </form>
         <br>
         <div>
             <div class="form-group-movies">
                 <h3>Choose an option to filter</h3>
                 <br>
                 <div class="container-movies">
-                <small style="color:black;">
-                              *Search either by name or date and genres.
-                         </small>
+                    <small style="color:black;">
+                        *Search either by name or date and genres.
+                    </small>
                     <form method="POST">
                         <div>
                             <div class="form-group">
@@ -73,9 +72,9 @@
                             </div>
                             <br>
                             <div class="form-group">
-                            <small style="color:black">
-                                             *Search by year.
-                                        </small style="color:black">
+                                <small style="color:black">
+                                    *Search by year.
+                                </small style="color:black">
                                 <input type="number" min="0000" max="9999" class="form-control" name="year" placeholder="Enter movie year of release" value=<?php echo $year ?> required>
                             </div>
 
@@ -84,7 +83,7 @@
                 </div>
             </div>
             <hr>
-            <div class="align-items-center" >
+            <div class="align-items-center">
                 <button class="botons-chico" style="margin-left: 25%" formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage - 1 ?>">Back Page</button>
                 <button class="botons-chico" formaction="<?php echo FRONT_ROOT ?>Billboard/List/" type="submit" name="page" value="<?php echo $currPage + 1 ?>">Next Page</button>
             </div>
@@ -125,7 +124,7 @@
                                         </td>
                                         <?php if ($currRole == CLIENT_ROLE_NAME || $currRole == ADMIN_ROLE_NAME && $movHasFreeSeats[$movie->getId()]) { ?>
                                             <td>
-                                                <button  class="botons" name="movieId" value="<?php echo $movie->getId(); ?>" type="submit">Buy ticket</button>
+                                                <button class="botons" name="movieId" value="<?php echo $movie->getId(); ?>" type="submit">Buy ticket</button>
                                             </td>
                                         <?php
                                         }
@@ -140,8 +139,5 @@
                 </table>
             </div>
         </div>
-<<<<<<< Updated upstream
     </div>
-=======
-    </div>
->>>>>>> Stashed changes
+</section>

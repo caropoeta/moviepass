@@ -2,11 +2,117 @@
 
 namespace DAO;
 
+use Models\Statistics;
 use Models\Ticket;
 use PDOException;
 
 class TicketDAO
 {
+    public static function getStatisticsFromCinema(int $idCinema, String $strPeriod = "", String $endPeriod = "")
+    {
+        $query = "
+        select
+  cinStatistics.cinemaName,
+  cinStatistics.idCinema,
+  sum(capacity) as totCapacity,
+  sum(moneyRecolected) as totMoneyRecolected,
+  sum(asists) as totAsists
+from
+  (
+    select
+      cinemas.cinemaName,
+      cinemas.idCinema,
+      ifnull(functionsStatistics.capacity, 0) as capacity,
+      ifnull(asists, 0) as asists,
+      ifnull(amount, 0) as moneyRecolected,
+      day
+    from
+      cinemas
+      left join (
+        select
+          functions.id,
+          functions.idMovie,
+          functions.day,
+          rooms.capacity,
+          rooms.roomName,
+          rooms.idCinema,
+          ifnull(purchase.amount, 0) as amount,
+          ifnull(count(tickets.id), 0) as asists
+        from
+          functions
+          inner join rooms on rooms.idRoom = functions.idRoom
+          left join tickets on tickets.idFunction = functions.id
+          left join (
+            select
+              sum(amount) as amount,
+              idFunction as idFunctionPay
+            from
+              (
+                select
+                  purchase.*,
+                  tickets.idFunction
+                from
+                  purchase
+                  inner join tickets on tickets.idPayment = purchase.id
+                group by
+                  purchase.id
+              ) as payment
+            group by
+              payment.idFunction
+          ) as purchase on purchase.idFunctionPay = functions.id
+        ";
+
+        $params = [];
+
+        if ($strPeriod != "" && $endPeriod != "") {
+            $query = $query . "
+            where
+            day between :strPeriod
+            and :endPeriod
+            ";
+
+            $params['strPeriod'] = $strPeriod;
+            $params['endPeriod'] = $endPeriod;
+        }
+
+        $query = $query . "     
+                    
+        group by
+        functions.id
+    ) as functionsStatistics on functionsStatistics.idCinema = cinemas.idCinema
+) as cinStatistics
+#where
+#idCinema = :idCinema
+group by
+cinStatistics.idCinema
+        ";
+
+        $params['idCinema'] = $idCinema;
+
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute(
+                $query,
+                $params
+            );
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
+
+        if (! empty($response)) {
+            $stats = new Statistics();
+            $stats->setCinemaName($response[0]['cinemaName']);
+            $stats->setTicketsSold($response[0]['totAsists']);
+            $stats->setRevenue($response[0]['totMoneyRecolected']);
+            $stats->setUnsoldTickets($response[0]['totCapacity'] - $response[0]['totAsists']);
+            $stats->setStartDate($strPeriod);
+            $stats->setFinishDate($endPeriod);
+            
+            return $stats;
+        } else
+            return false;
+    }
+
     public static function getStatisticsFromMovie(int $idMov, String $strPeriod = "", String $endPeriod = "")
     {
         $query = "
@@ -231,6 +337,65 @@ from
 
             $tickToReturn->setQr(GoogleQRDAO::GetQrImgUrl($qr));
 
+
+            return $tickToReturn;
+        }, $response);
+    }
+
+    public static function getTicketsFromUserPurchase(
+        int $idUser,
+        int $purchaseId
+    ) {
+        $query = " 
+        select tickets.*, functions.day, movies.title, rooms.roomName, cinemaName, functions.time
+        from tickets
+        inner join functions
+        on functions.id = tickets.idFunction
+        inner join movies
+        on movies.id = functions.idMovie
+        inner join rooms
+        on rooms.idRoom = functions.idRoom
+        inner join cinemas
+        on rooms.idCinema = cinemas.idCinema
+        where idUser = :idUser
+        and idPayment = :purchaseId
+        ";
+
+        $params = [];
+        $params['idUser'] = $idUser;
+        $params['purchaseId'] = $purchaseId;
+
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute(
+                $query,
+                $params
+            );
+        } catch (PDOException $ex) {
+            throw $ex;
+        }
+
+        return array_map(function (array $obj) {
+            $tickToReturn = new Ticket();
+            $tickToReturn->setId($obj['id']);
+            $tickToReturn->setFunctionName($obj['roomName']);
+            $tickToReturn->setSeat($obj['seatNumber']);
+            $tickToReturn->setMovieTitle($obj['title']);
+            $tickToReturn->setDate($obj['day']);
+            $tickToReturn->setCinemaName($obj['cinemaName']);
+            $tickToReturn->setHour($obj['time']);
+
+            $qr =
+                "Ticket id: " . $obj['id'] .
+                ", Cinema name: " . $obj['cinemaName'] .
+                ", Room name: " . $obj['roomName'] .
+                ", Seat number: " . $obj['seatNumber'] .
+                ", Movie title: " . $obj['title'] .
+                ", Function date: " . $obj['day'] .
+                ", Function hour: " . $obj['time'] .
+                ".";
+
+            $tickToReturn->setQr(GoogleQRDAO::GetQrImgUrl($qr));
 
             return $tickToReturn;
         }, $response);

@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use DAO\DiscountDAO;
+use DAO\MailDAO;
 use DAO\MovieDAO;
 use DAO\PurchaseDAO;
 use DAO\Session;
@@ -10,6 +11,7 @@ use DAO\TicketDAO;
 use DAO\UserXCreditCardDAO;
 use Exception;
 use Models\Exceptions\ArrayException;
+use Models\Ticket;
 
 class TicketController
 {
@@ -156,6 +158,14 @@ class TicketController
                     $lstLastPurchaseId
                 );
             }
+
+            $tickets = TicketDAO::getTicketsFromUserPurchase(Session::GetUserId(), $lstLastPurchaseId);
+
+            MailDAO::sendMail(
+                Session::GetUserEmail(),
+                "Buying tickets at " . HOST_NAME,
+                ViewsController::GetTicketsMailMessage(HOST_NAME, $tickets)
+            );
         } catch (Exception $th) {
             ViewsController::Show(array('Error processing request'));
         }
