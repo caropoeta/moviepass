@@ -1,8 +1,3 @@
-<?php
-
-use Models\UserRole; ?>
-
-
 <h2 class="title-secondary">Edit Information</h2>
 <div class="login-form" style="margin: auto">
     <div style="margin: auto">
@@ -61,5 +56,4 @@ use Models\UserRole; ?>
         
     </div>
 </div>
-
 <br>
