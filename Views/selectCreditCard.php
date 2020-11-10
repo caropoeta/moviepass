@@ -57,7 +57,7 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
                                         <input type="hidden" name="functionId" value="<?php echo $functionId ?>">
 
                                         <label for="ccsc">Credit card security code:</label>
-                                        <input id="ccsc" type="number" name="ccsc" min="0" maxlength="6" required>
+                                        <input id="ccsc" type="number" name="ccsc" min="100" max="999" required>
 
                                         <input type="hidden" name="ccn" value="<?php echo $cc->getNumber() ?>">
                                     </div>

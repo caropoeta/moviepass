@@ -170,7 +170,7 @@ class TicketController
             ViewsController::Show(array('Error processing request'));
         }
 
-        HomeController::MainPage();
+        TicketController::List();
     }
 
     public static function List(String $movieName = "", String $date = "", String $orderby = "none")
