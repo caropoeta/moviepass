@@ -41,15 +41,15 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
                         <label for="non">None</label>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button formaction="<?php echo FRONT_ROOT ?>Ticket/List" class="btn btn-primary offset-6 btn-md active" type="submit">Set</button>
+                        <button type="button" class="botons-chico" data-dismiss="modal">Close</button>
+                        <button formaction="<?php echo FRONT_ROOT ?>Ticket/List" class="botons-chico" type="submit">Set</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#stfilters">
+    <button type="button" class="botons-chico" data-toggle="modal" data-target="#stfilters">
         Set filters
     </button>
 

@@ -32,17 +32,17 @@ if ($currRole == CLIENT_ROLE_NAME) include('navbarclient.php');
             </tr>
         </tbody>
     </table>
-
+    
     <input id="price" type="hidden" value="<?php echo $data['price'] ?>">
     <input id="discountMinTickets" type="hidden" value="<?php echo $discountMinTickets ?>">
     <input id="discountPercentaje" type="hidden" value="<?php echo $discountPercentaje ?>">
 
-    <label>Total price: $</label><input type="number" readonly id="priceHolder"></input>
+    <label style="color:#fff">Total price: $</label><input type="number" readonly id="priceHolder"></input>
     <br>
     <form action="<?php echo FRONT_ROOT ?>Ticket/SelectCreditCard" method="POST">
-        <label>Tickets to buy: </label><input id="numberOfTickets" type="number" min="1" max="<?php echo $maxTickets ?>" value="1" name="TicketsToBuy" onchange="getPrice()">
+        <label style="color:#fff">Tickets to buy: </label><input id="numberOfTickets" type="number" min="1" max="<?php echo $maxTickets ?>" value="1" name="TicketsToBuy" onchange="getPrice()">
         <br>
-        <button type="submit" name="funid" value="<?php echo $data['id'] ?>">Select credit card</button>
+        <button type="submit" class="botons-chico"name="funid" value="<?php echo $data['id'] ?>">Select credit card</button>
     </form>
 
     <script>

@@ -21,7 +21,11 @@
         <h2 class="title-secondary">Billboard</h2>
         <form method="POST">
             <div class="fuente4 text-center">
+                <?php
+            if ($currRole == GUEST_ROLE_NAME) 
+            { ?>
                 <button formaction="<?php echo FRONT_ROOT ?>home/MainPage" class="btn btn-secondary" type="submit">Back</button>
+            <?php }?>
             </div>
         </form>
         <br>
