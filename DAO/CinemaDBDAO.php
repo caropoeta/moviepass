@@ -143,14 +143,12 @@ class CinemaDBDAO
     public function Update(Cinema $cinemaToUpdate)
     {
         $sql = "UPDATE cinemas 
-  SET cinemaName= :cineName,
+  SET cinemaName= :cinemaName,
   address= :address,
   openingTime=:openingTime,
   closingTime=:closingTime,
   ticket_value=:ticket_value ,
-
   capacity=:capacity
-
   WHERE idCinema = :idCinema ";
 
         $parameters = [];

@@ -1,10 +1,12 @@
 <?php
+
 namespace Controllers;
 
 use DAO\CinemaDBDAO as CinemaDBDAO;
 use Models\Cinema as Cinema;
 use Models\Statistics as Statistics;
 use Controllers\ViewsController as ViewsHandler;
+use DAO\FunctionsDAO;
 use DAO\Session;
 use DAO\TicketDAO;
 use Models\Ticket;
@@ -94,11 +96,13 @@ class CinemaController
 
     public function DeleteCinema($deleteId)
     {
-        $CinemaDBDAO = new CinemaDBDAO();
-        $delete = $CinemaDBDAO->Remove($deleteId);
-        if ($delete == true)
-            ViewsHandler::Show(["Message:", "Cinema removed"]);
-
+        if (!FunctionsDAO::getAllFromCinema($deleteId)) {
+            $CinemaDBDAO = new CinemaDBDAO();
+            $delete = $CinemaDBDAO->Remove($deleteId);
+            if ($delete == true)
+                ViewsHandler::Show(["Message:", "Cinema removed"]);
+        } else
+            ViewsHandler::Show(array("The cinema cannot be deleted because it has loaded functions"));
         require_once(VIEWS_PATH . 'indexCinema.php');
     }
 
@@ -148,17 +152,17 @@ class CinemaController
             $CinemaDBDAO->Update($cinema);
         }
 
-        require_once (VIEWS_PATH . 'indexCinema.php');
+        require_once(VIEWS_PATH . 'indexCinema.php');
     }
 
     public function Statistics($cinemaId)
     {
-        require_once (VIEWS_PATH . 'statistics.php');
+        require_once(VIEWS_PATH . 'statistics.php');
     }
 
     public function ShowStatistics(String $startDate, String $finishDate, int $cinemaId)
     {
         $stats = TicketDAO::getStatisticsFromCinema($cinemaId, $startDate, $finishDate);
-        require_once (VIEWS_PATH . 'showStatistics.php');
+        require_once(VIEWS_PATH . 'showStatistics.php');
     }
 }

@@ -295,4 +295,34 @@ class FunctionsDAO
 
         return $roleArray;
     }
+
+    public static function getAllFromCinema(int $id)
+    {
+        $query = "
+        select count(*) as cnt from (
+        select functions.*, cinemas.idCinema from functions 
+        inner join rooms on rooms.idRoom = functions.idRoom
+        inner join cinemas on rooms.idCinema = cinemas.idCinema
+        where functions.deleted = 0
+        and cinemas.idCinema = :id
+        group by cinemas.idCinema
+        ) as x 
+        having cnt > 0
+        ";
+
+        $param = [];
+        $param['id'] = $id;
+
+        try {
+            $conection = Connection::GetInstance();
+            $response = $conection->Execute($query, $param);
+        } catch (PDOException $th) {
+            throw $th;
+        }
+
+        if ($response != null)
+            return (sizeof($response) > 0) ? true : false;
+
+        return false;
+    }
 }

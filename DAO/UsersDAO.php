@@ -295,7 +295,7 @@ class UsersDAO
     {
         try {
             $conection = Connection::GetInstance();
-            $query = "update users set deleted = :deleted where id = :id;";
+            $query = "update users set deleted = :deleted where user_id = :id;";
             $conection->ExecuteNonQuery($query, array('id' => $id, 'deleted' => 1));
         } catch (PDOException $th) {
             throw $th;
