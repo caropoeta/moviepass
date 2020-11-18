@@ -32,6 +32,7 @@ class CreditCardDAO
             $params['company'] = $company;
             $params['expirationDate'] = $monthAndYear;
             $params['number'] = $creditCardNumber;
+
         }
 
         try {

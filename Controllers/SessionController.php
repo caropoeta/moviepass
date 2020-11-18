@@ -96,9 +96,15 @@ class SessionController
     {
         try {
             if (!Session::ValidateSession()) {
+              
                 $logUser = UserDAO::validateUserCredentials($username, $password);
+                
                 if ($logUser instanceof UserModel)
                     Session::SetSession($logUser);
+                $_SESSION['user']=Session::GetUserName();
+
+               
+
             }
         } catch (ValidateUserCredentialsException $vuce) {
             ViewsHandler::Show($vuce->getExceptionArray());
@@ -111,7 +117,7 @@ class SessionController
 
     public function Logout()
     {
-        if (Session::ValidateSession())
+        
             Session::SetSession(null);
 
         HomeController::MainPage();
@@ -127,8 +133,8 @@ class SessionController
                 $newUser = new UserModel($username, $password, CLIENT_ROLE_NAME, $dni, $email, $newformat);
                 $result = UserDAO::addUser($newUser);
 
-                if ($result instanceof UserModel)
-                    Session::SetSession(UserDAO::getUserByEmail($email));
+                //if ($result instanceof UserModel)
+                  //  Session::SetSession(UserDAO::getUserByEmail($email));
             }
         } catch (AddUserException $adu) {
             ViewsHandler::Show($adu->getExceptionArray());
@@ -136,6 +142,6 @@ class SessionController
             ViewsHandler::Show(array('Error processing request'));
         }
 
-        HomeController::MainPage();
+        ViewsHandler::Login();
     }
 }

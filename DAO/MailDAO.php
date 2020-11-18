@@ -9,10 +9,15 @@ class MailDAO
         $headers = "From:" . APP_MAIL . " \r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html\r\n";
+  
 
         if (mail($to, $subject, $htmlBody, $headers))
-            return true;
+        
+            return true;    
+        
+    
         else
             return false;
+       
     }
 }
