@@ -6,15 +6,14 @@ use PDOException;
 
 class PurchaseDAO
 {
-    public static function addPurchase(int $numberOfTickets, int $functionId, int $creditCardId, int $idDiscount, int $usid)
+    public static function addPurchase(int $numberOfTickets, int $functionId, int $idDiscount, int $usid)
     {
         try {
             $conection = Connection::GetInstance();
             $query = "
-                    INSERT INTO purchase(amount, creditCardId, numberOfTickets, discountId) 
-                    VALUES (:amount,:creditCardId,:numberOfTickets,:discountId);
+                    INSERT INTO purchase(amount, numberOfTickets, discountId) 
+                    VALUES (:amount,:numberOfTickets,:discountId);
                 ";
-
             $data = TicketDAO::getFunctionRoomAndCinemaDataFromFunctionId($functionId);
             $datDisArray = DiscountDAO::GetDiscountAndMinTicketsFromId($idDiscount);
 
@@ -29,7 +28,6 @@ class PurchaseDAO
 
             $params = [];
             $params['amount'] = $totalPrice;
-            $params['creditCardId'] = UserXCreditCardDAO::getCreditCardIdFromNumber($creditCardId, $usid);
             $params['numberOfTickets'] = $numberOfTickets;
             $params['discountId'] = $idDiscount;
 

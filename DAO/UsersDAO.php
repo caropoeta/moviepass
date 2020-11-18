@@ -69,12 +69,15 @@ class UsersDAO
 
     public static function existsUsername(String $username)
     {
+
         if (!UsersDAO::isThisUsernameValid($username))
             return false;
-
+  
         try {
             $conection = Connection::GetInstance();
+          
             $query = "select true from users where user_name = :username;";
+          
             $response = $conection->Execute($query, array('username' => $username));
         } catch (Exception $ex) {
             throw $ex;
@@ -237,6 +240,7 @@ class UsersDAO
 
     public static function validateUserCredentials(String $username, String $password)
     {
+
         $exceptionArray = [];
 
         if (!UsersDAO::isThisUsernameValid($username))
@@ -244,18 +248,22 @@ class UsersDAO
 
         if (!UsersDAO::isThisPasswordValid($password))
             array_push($exceptionArray, 'This password is wrong');
-
+            
         if (!empty($exceptionArray))
             throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
 
         if (!UsersDAO::existsUsername($username)) {
+            
             array_push($exceptionArray, 'This user name does not exist');
+
             throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
         }
+
 
         if (UsersDAO::isUserDeletedByUsername($username)) {
             array_push($exceptionArray, 'This account is banned');
             throw new ValidateUserCredentialsException("Error Processing Request", $exceptionArray, 1);
+            
         }
 
         try {
@@ -265,11 +273,12 @@ class UsersDAO
             INNER JOIN roles
             ON roles.role_id=users.user_role
             WHERE user_name = :username";
-
+            
             $response = $conection->Execute(
                 $query,
                 array('username' => $username)
             );
+        
         } catch (PDOException $ex) {
             throw $ex;
         }

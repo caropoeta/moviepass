@@ -52,6 +52,17 @@ class Session
         return null;
     }
 
+    public static function GetUserName()
+    {
+        if (Session::ValidateSession()) {
+            $currUsr = Session::GetCurrentUser();
+            if ($currUsr instanceof UserModel)
+                return $currUsr->getName();
+        }
+
+        return null;
+    }
+
     public static function GetUserEmail()
     {
         if (Session::ValidateSession()) {

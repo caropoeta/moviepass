@@ -67,7 +67,7 @@ class UsersController
     public static function Edit(String $email, int $dni, String $birthday, String $role, int $id)
     {
 
-        var_dump($email,  $dni,  $birthday,  $role,  $id);
+        
         try {
             if (Session::ValidateSession() && $id != Session::GetUserId()) {
                 $user = UserDAO::getUserById($id);
